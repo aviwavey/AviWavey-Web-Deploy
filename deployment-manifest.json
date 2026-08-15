@@ -1,7 +1,9 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "5a40229664710f1882a2cdcf8f8da2edea5cf661",
+  "sourceCommit": "d1561677cc0102ebb856c7e0c27568c65f08ff2c",
+  "sourceRef": "main",
+  "workflowRun": "https://github.com/AVI-Wavey/PublicInterface/actions/runs/31894643773",
   "artifactDirectory": "dist",
-  "releaseDate": "2026-08-15",
+  "publishedAt": "2026-08-15T16:08:10Z",
   "contents": "Compiled public website output only"
 }

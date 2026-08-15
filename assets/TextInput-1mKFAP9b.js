@@ -1,2 +1,0 @@
-import{j as e}from"./index-BaoOGGvj.js";const n=({placeHolder:t,required:l})=>e.jsx("div",{className:"w-full flex",children:e.jsx("input",{type:"text",className:`w-full h-9 md:h-[40px] bg-white rounded-sm md:rounded-md border-none outline-none ring ring-black/60 focus:ring-2 px-4\r
-            text-sm md:text-lg placeholder:text-sm md:placeholder:text-lg placeholder:text-black/60 transition-all duration-200`,placeholder:t,required:l})});export{n as T};
