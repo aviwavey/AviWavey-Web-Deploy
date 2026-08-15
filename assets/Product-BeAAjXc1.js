@@ -1,0 +1,1 @@
+import{j as r}from"./index-C8XIwDKi.js";const o=()=>r.jsx("div",{children:"Product"});export{o as default};
