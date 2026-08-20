@@ -1,9 +1,9 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "990ba3dd29cbb817c5b48eeba5c5bbf837220d03",
+  "sourceCommit": "8964b651d0121c269c0fe9a69b76cb23535c288b",
   "sourceRef": "main",
-  "workflowRun": "https://github.com/AVI-Wavey/PublicInterface/actions/runs/32394187792",
+  "workflowRun": "https://github.com/AVI-Wavey/PublicInterface/actions/runs/32399503143",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-08-20T16:50:21Z",
+  "publishedAt": "2026-08-20T17:47:31Z",
   "contents": "Compiled public website and bundled server-side authentication output only"
 }
