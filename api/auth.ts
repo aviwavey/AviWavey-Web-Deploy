@@ -17,6 +17,13 @@ const b64 = (bytes: Uint8Array) => Buffer.from(bytes).toString("base64url");
 const tempCookie = (name: string, value: string, maxAge = 600) => `${name}=${value}; Path=/api/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`;
 const clearCookie = (name: string, path = "/api/auth") => `${name}=; Path=${path}; HttpOnly; Secure; SameSite=Lax; Max-Age=0`;
 const string = (value: unknown) => typeof value === "string" ? value.trim() : "";
+type UploadedFile = { size: number; type: string; arrayBuffer(): Promise<ArrayBuffer> };
+const uploadedFile = (value: unknown): value is UploadedFile => Boolean(
+  value && typeof value === "object" &&
+  typeof (value as UploadedFile).size === "number" &&
+  typeof (value as UploadedFile).type === "string" &&
+  typeof (value as UploadedFile).arrayBuffer === "function",
+);
 
 const json = (response: ServerResponse, status: number, body: unknown, headers?: Record<string, string | string[]>) => {
   response.statusCode = status;
@@ -118,7 +125,7 @@ export default async function handler(request: IncomingMessage, response: Server
       const form = await formBody(request, requestUrl.toString());
       const photo = form.get("profilePicture");
       let picture: string | undefined;
-      if (photo instanceof File && photo.size > 0) {
+      if (uploadedFile(photo) && photo.size > 0) {
         if (photo.size > 2_000_000 || !photo.type.startsWith("image/")) return json(response, 400, { code: "INVALID_PROFILE_PICTURE", message: "Choose an image smaller than 2 MB." });
         picture = `data:${photo.type};base64,${Buffer.from(await photo.arrayBuffer()).toString("base64")}`;
       }
@@ -154,7 +161,7 @@ export default async function handler(request: IncomingMessage, response: Server
       if (!authenticated) return json(response, 401, { code: "AUTHENTICATION_REQUIRED", message: "Sign in again to continue." });
       const form = await formBody(request, requestUrl.toString());
       const photo = form.get("profilePicture");
-      if (!(photo instanceof File) || photo.size === 0 || photo.size > 2_000_000 || !photo.type.startsWith("image/")) return json(response, 400, { code: "PROFILE_PICTURE_REQUIRED", message: "Choose an image smaller than 2 MB." });
+      if (!uploadedFile(photo) || photo.size === 0 || photo.size > 2_000_000 || !photo.type.startsWith("image/")) return json(response, 400, { code: "PROFILE_PICTURE_REQUIRED", message: "Choose an image smaller than 2 MB." });
       const picture = `data:${photo.type};base64,${Buffer.from(await photo.arrayBuffer()).toString("base64")}`;
       const user = await identities.completeProfile(authenticated.userId, { username: string(form.get("username")), telephone: string(form.get("telephone")), profilePictureKey: picture });
       return json(response, 200, { completed: profileComplete(user), telephoneVerified: user.telephoneVerified });
