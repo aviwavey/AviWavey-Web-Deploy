@@ -1,6 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/auth.ts": {
+      "maxDuration": 30
+    }
+  },
   "routes": [
+    { "src": "/api/auth/(.*)", "dest": "/api/auth.ts?path=$1" },
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
   ]
