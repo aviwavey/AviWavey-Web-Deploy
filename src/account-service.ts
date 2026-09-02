@@ -37,13 +37,11 @@ export class AccountService {
     let user = await this.identities.findUserByProvider(identity.provider, identity.subject);
     if (!user) {
       const possibleExistingUser = await this.identities.findUserByVerifiedEmail(normalizeEmail(identity.verifiedEmail));
-      if (possibleExistingUser) throw new Error("EXPLICIT_LINK_REQUIRED");
-      user = await this.identities.createUser({ firstName: identity.firstName ?? "", lastName: identity.lastName ?? "", email: normalizeEmail(identity.verifiedEmail), product, emailVerified: true });
+      user = possibleExistingUser ?? await this.identities.createUser({ firstName: identity.firstName ?? "", lastName: identity.lastName ?? "", email: normalizeEmail(identity.verifiedEmail), product, emailVerified: true });
       const credential: Credential = { id: this.newId(), userId: user.id, kind: identity.provider, providerSubject: identity.subject, accountLabel: normalizeEmail(identity.verifiedEmail) };
       await this.identities.saveCredential(credential);
-    } else {
-      await this.identities.addMembership(user.id, product);
     }
+    await this.identities.addMembership(user.id, product);
     const session = await this.sessions.issue({ userId: user.id, product, remember: true });
     return { session, profileComplete: profileComplete(user) };
   }
