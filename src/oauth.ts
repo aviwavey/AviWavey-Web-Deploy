@@ -57,7 +57,11 @@ export async function exchangeGoogleCode(config: TrueMarkConfig, product: Produc
     body: new URLSearchParams({ code, client_id: client.clientId, client_secret: client.clientSecret, redirect_uri: config.google.redirectUri.toString(), grant_type: "authorization_code", code_verifier: verifier }),
   });
   const token = await response.json() as { id_token?: string; error?: string };
-  if (!response.ok || !token.id_token) throw new Error("GOOGLE_TOKEN_EXCHANGE_FAILED");
+  if (!response.ok || !token.id_token) {
+    if (token.error === "invalid_client") throw new Error("GOOGLE_CLIENT_CONFIGURATION_ERROR");
+    if (token.error === "invalid_grant") throw new Error("GOOGLE_AUTHORIZATION_EXPIRED");
+    throw new Error("GOOGLE_TOKEN_EXCHANGE_FAILED");
+  }
   const verified = await jwtVerify(token.id_token, googleKeys, { issuer: ["https://accounts.google.com", "accounts.google.com"], audience: client.clientId });
   const claims = verified.payload;
   if (claims.nonce !== expectedNonce || !claims.sub || !claims.email || claims.email_verified !== true) throw new Error("GOOGLE_IDENTITY_INVALID");
