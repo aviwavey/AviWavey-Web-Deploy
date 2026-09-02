@@ -159,11 +159,21 @@ export default async function handler(request: IncomingMessage, response: Server
     if (request.method === "POST" && requestUrl.pathname.endsWith("/profile/complete")) {
       const authenticated = await current();
       if (!authenticated) return json(response, 401, { code: "AUTHENTICATION_REQUIRED", message: "Sign in again to continue." });
-      const form = await formBody(request, requestUrl.toString());
-      const photo = form.get("profilePicture");
-      if (!uploadedFile(photo) || photo.size === 0 || photo.size > 2_000_000 || !photo.type.startsWith("image/")) return json(response, 400, { code: "PROFILE_PICTURE_REQUIRED", message: "Choose an image smaller than 2 MB." });
-      const picture = `data:${photo.type};base64,${Buffer.from(await photo.arrayBuffer()).toString("base64")}`;
-      const user = await identities.completeProfile(authenticated.userId, { username: string(form.get("username")), telephone: string(form.get("telephone")), profilePictureKey: picture });
+      const contentType = String(request.headers["content-type"] ?? "");
+      let username = ""; let telephone = ""; let picture = "";
+      if (contentType.includes("application/json")) {
+        const body = await jsonBody(request);
+        username = string(body.username); telephone = string(body.telephone); picture = string(body.profilePicture);
+        const match = /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(picture);
+        if (!match || Buffer.from(match[2], "base64").byteLength > 2_000_000) return json(response, 400, { code: "PROFILE_PICTURE_REQUIRED", message: "Choose a JPEG, PNG or WebP image smaller than 2 MB." });
+      } else {
+        const form = await formBody(request, requestUrl.toString());
+        const photo = form.get("profilePicture");
+        if (!uploadedFile(photo) || photo.size === 0 || photo.size > 2_000_000 || !photo.type.startsWith("image/")) return json(response, 400, { code: "PROFILE_PICTURE_REQUIRED", message: "Choose an image smaller than 2 MB." });
+        username = string(form.get("username")); telephone = string(form.get("telephone"));
+        picture = `data:${photo.type};base64,${Buffer.from(await photo.arrayBuffer()).toString("base64")}`;
+      }
+      const user = await identities.completeProfile(authenticated.userId, { username, telephone, profilePictureKey: picture });
       return json(response, 200, { completed: profileComplete(user), telephoneVerified: user.telephoneVerified });
     }
     if (request.method === "POST" && requestUrl.pathname.endsWith("/logout")) {

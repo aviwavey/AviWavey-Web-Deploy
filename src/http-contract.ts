@@ -27,6 +27,9 @@ export function publicAuthError(error: unknown): { status: number; body: { messa
   if (code === "EXPLICIT_LINK_REQUIRED") {
     return { status: 409, body: { code, message: "Sign in to your existing account first, then link this sign-in method in account security." } };
   }
+  if (code === "USERNAME_REQUIRED") return { status: 400, body: { code, message: "Choose a username." } };
+  if (code === "USERNAME_ALREADY_IN_USE") return { status: 409, body: { code, message: "That username is already in use. Please choose another." } };
+  if (code === "CONTACT_ALREADY_IN_USE") return { status: 409, body: { code, message: "That telephone number is already connected to another account." } };
   if (code === "TELEPHONE_VERIFICATION_REQUIRED") {
     return { status: 409, body: { code, message: "Verify this telephone number before completing your profile." } };
   }

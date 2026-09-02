@@ -68,13 +68,17 @@ export class NeonIdentityRepository implements IdentityRepository {
   }
 
   async completeProfile(userId: string, input: { username: string; telephone: string; profilePictureKey: string }) {
+    const username = input.username.trim();
+    if (!username) throw new Error("USERNAME_REQUIRED");
+    const usernameOwner = await this.sql`SELECT id FROM users WHERE LOWER(username)=LOWER(${username}) AND id<>${userId} LIMIT 1`;
+    if (usernameOwner[0]) throw new Error("USERNAME_ALREADY_IN_USE");
     const telephone = input.telephone.trim();
     if (!telephone) throw new Error("TELEPHONE_REQUIRED");
     const existing = await this.sql`SELECT user_id FROM contacts WHERE kind='telephone' AND normalized_value=${telephone} LIMIT 1`;
     if (existing[0] && String(existing[0].user_id) !== userId) throw new Error("CONTACT_ALREADY_IN_USE");
     await this.sql`DELETE FROM contacts WHERE user_id=${userId} AND kind='telephone' AND normalized_value<>${telephone}`;
     await this.sql`INSERT INTO contacts (id,user_id,kind,normalized_value,verified_at,is_primary) VALUES (${crypto.randomUUID()},${userId},'telephone',${telephone},NULL,TRUE) ON CONFLICT (kind,normalized_value) DO UPDATE SET is_primary=TRUE`;
-    await this.sql`UPDATE users SET username=${input.username},profile_picture_key=${input.profilePictureKey},profile_completed_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP WHERE id=${userId}`;
+    await this.sql`UPDATE users SET username=${username},profile_picture_key=${input.profilePictureKey},profile_completed_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP WHERE id=${userId}`;
     return (await this.findUserById(userId))!;
   }
 }
