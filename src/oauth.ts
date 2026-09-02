@@ -2,7 +2,7 @@ import { SignJWT, createRemoteJWKSet, importPKCS8, jwtVerify } from "jose";
 import type { TrueMarkConfig } from "./config.js";
 import type { Product } from "./domain.js";
 
-export function googleAuthorizationUrl(config: TrueMarkConfig, input: { product: Product; state: string; codeChallenge: string }) {
+export function googleAuthorizationUrl(config: TrueMarkConfig, input: { product: Product; state: string; codeChallenge: string; nonce: string }) {
   const client = config.google.clients[input.product];
   const target = new URL("https://accounts.google.com/o/oauth2/v2/auth");
   target.search = new URLSearchParams({
@@ -11,6 +11,7 @@ export function googleAuthorizationUrl(config: TrueMarkConfig, input: { product:
     response_type: "code",
     scope: "openid email profile",
     state: input.state,
+    nonce: input.nonce,
     code_challenge: input.codeChallenge,
     code_challenge_method: "S256",
     prompt: "select_account",

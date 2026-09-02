@@ -81,7 +81,7 @@ export default async function handler(request: IncomingMessage, response: Server
       response.setHeader("Set-Cookie", [tempCookie("avi_oauth_state", state), tempCookie("avi_oauth_verifier", verifier)]);
       response.statusCode = 302;
       response.setHeader("Cache-Control", "no-store");
-      response.setHeader("Location", provider === "google" ? googleAuthorizationUrl(config, { product, state, codeChallenge: challenge }).toString() : appleAuthorizationUrl(config, state, nonce).toString());
+      response.setHeader("Location", provider === "google" ? googleAuthorizationUrl(config, { product, state, codeChallenge: challenge, nonce }).toString() : appleAuthorizationUrl(config, state, nonce).toString());
       return response.end();
     }
     if (request.method === "GET" && requestUrl.pathname.endsWith("/callback")) {
