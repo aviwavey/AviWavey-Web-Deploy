@@ -1,9 +1,9 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "aaaa51aaebc4b12c79d78139138d9492d6e03808",
+  "sourceCommit": "7517ef627d3ac3651887fae5d1e0138c73be4cb3",
   "sourceRef": "main",
-  "workflowRun": "https://github.com/AVI-Wavey/PublicInterface/actions/runs/33766756866",
+  "workflowRun": "https://github.com/AVI-Wavey/PublicInterface/actions/runs/33767231847",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-09-03T14:26:04Z",
+  "publishedAt": "2026-09-03T14:30:54Z",
   "contents": "Compiled public website with the shared TrueMarkGate backend preserved"
 }

@@ -1,1 +1,0 @@
-import{j as s}from"./index-BcDKDbfP.js";const r=()=>s.jsx("div",{children:"ServicesLabs"});export{r as default};
