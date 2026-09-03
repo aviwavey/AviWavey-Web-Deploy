@@ -16,6 +16,13 @@ import { AccountSettingsService } from "../src/account-settings.js";
 const b64 = (bytes: Uint8Array) => Buffer.from(bytes).toString("base64url");
 const tempCookie = (name: string, value: string, maxAge = 600) => `${name}=${value}; Path=/api/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`;
 const clearCookie = (name: string, path = "/api/auth") => `${name}=; Path=${path}; HttpOnly; Secure; SameSite=Lax; Max-Age=0`;
+const sessionCookies = (cookieName: string, sessionCookie: string) => [
+  // Older deployments scoped the session cookie to /api/auth. Browsers prefer
+  // that more-specific stale cookie over the current site-wide cookie on API
+  // requests, so remove it whenever a fresh session is established.
+  clearCookie(cookieName, "/api/auth"),
+  sessionCookie,
+];
 const string = (value: unknown) => typeof value === "string" ? value.trim() : "";
 type UploadedFile = { size: number; type: string; arrayBuffer(): Promise<ArrayBuffer> };
 const uploadedFile = (value: unknown): value is UploadedFile => Boolean(
@@ -68,12 +75,12 @@ export default async function handler(request: IncomingMessage, response: Server
     if (request.method === "POST" && requestUrl.pathname.endsWith("/register")) {
       const body = await jsonBody(request);
       const result = await accounts.register({ firstName: string(body.firstName), lastName: string(body.lastName), email: string(body.email), password: string(body.password), product: parseProduct(body.product), termsAccepted: body.termsAccepted === true });
-      return json(response, 201, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": result.session.cookie });
+      return json(response, 201, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": sessionCookies(config.sessionCookieName, result.session.cookie) });
     }
     if (request.method === "POST" && requestUrl.pathname.endsWith("/login")) {
       const body = await jsonBody(request);
       const result = await accounts.login({ email: string(body.email), password: string(body.password), product: parseProduct(body.product), remember: body.remember === true });
-      return json(response, 200, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": result.session.cookie });
+      return json(response, 200, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": sessionCookies(config.sessionCookieName, result.session.cookie) });
     }
     if (request.method === "GET" && requestUrl.pathname.endsWith("/start")) {
       const product = parseProduct(requestUrl.searchParams.get("product"));
@@ -102,7 +109,7 @@ export default async function handler(request: IncomingMessage, response: Server
       const returnTo = validatedReturnPath(product, String(verifiedState.payload.returnTo ?? ""));
       response.statusCode = 302;
       response.setHeader("Cache-Control", "no-store");
-      response.setHeader("Set-Cookie", [result.session.cookie, clearCookie("avi_oauth_state"), clearCookie("avi_oauth_verifier")]);
+      response.setHeader("Set-Cookie", [...sessionCookies(config.sessionCookieName, result.session.cookie), clearCookie("avi_oauth_state"), clearCookie("avi_oauth_verifier")]);
       response.setHeader("Location", new URL(result.profileComplete ? returnTo : product === "avi" ? "/complete-profile" : "/AuraAI/complete-profile/", config.baseUrl).toString());
       return response.end();
     }
@@ -179,7 +186,7 @@ export default async function handler(request: IncomingMessage, response: Server
     if (request.method === "POST" && requestUrl.pathname.endsWith("/logout")) {
       const authenticated = await current();
       if (authenticated) await sessions.revoke(authenticated.sessionId);
-      return json(response, 200, { authenticated: false }, { "Set-Cookie": clearCookie(config.sessionCookieName, "/") });
+      return json(response, 200, { authenticated: false }, { "Set-Cookie": [clearCookie(config.sessionCookieName, "/api/auth"), clearCookie(config.sessionCookieName, "/")] });
     }
     return json(response, 404, { code: "AUTH_ROUTE_NOT_FOUND", message: "This authentication route is not available." });
   } catch (error) {
