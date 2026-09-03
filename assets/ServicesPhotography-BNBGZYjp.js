@@ -1,0 +1,1 @@
+import{j as r}from"./index-DDcn8eHT.js";const o=()=>r.jsx("div",{children:"ServicesPhotography"});export{o as default};
