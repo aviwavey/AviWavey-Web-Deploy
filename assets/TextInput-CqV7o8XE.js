@@ -1,2 +1,0 @@
-import{j as e}from"./index-DSx9dW_X.js";const a=({placeHolder:t,required:l,name:n,type:r="text",value:o,autoComplete:x,onChange:d})=>e.jsx("div",{className:"w-full flex",children:e.jsx("input",{type:r,name:n,value:o,autoComplete:x,onChange:d,className:`w-full h-9 md:h-[50px] bg-white rounded-sm md:rounded-[10px] border-none outline-none ring ring-black/60 focus:ring-2 px-4
-            text-sm md:text-xl placeholder:text-sm md:placeholder:text-xl placeholder:text-black/60 transition-all duration-200`,placeholder:t,required:l})});export{a as T};
