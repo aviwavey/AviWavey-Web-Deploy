@@ -1,0 +1,2 @@
+import{j as e}from"./index-B8WNVyVs.js";const r=({placeHolder:t,required:l})=>e.jsx("div",{className:"w-full flex",children:e.jsx("input",{type:"text",className:`w-full h-9 md:h-[40px] bg-white rounded-sm md:rounded-md border-none outline-none ring ring-black/60 focus:ring-2 px-4
+            text-sm md:text-lg placeholder:text-sm md:placeholder:text-lg placeholder:text-black/60 transition-all duration-200`,placeholder:t,required:l})});export{r as T};
