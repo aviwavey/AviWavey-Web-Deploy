@@ -29,9 +29,14 @@ export class DatabaseSessionIssuer implements SessionIssuer {
 }
 
 export function cookieValue(header: string | undefined, name: string) {
+  return cookieValues(header, name)[0];
+}
+
+export function cookieValues(header: string | undefined, name: string) {
+  const values: string[] = [];
   for (const item of (header ?? "").split(";")) {
     const [key, ...parts] = item.trim().split("=");
-    if (key === name) return parts.join("=");
+    if (key === name) values.push(parts.join("="));
   }
-  return undefined;
+  return values;
 }

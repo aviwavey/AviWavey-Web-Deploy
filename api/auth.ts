@@ -9,18 +9,21 @@ import { parseProduct, publicAuthError, validatedReturnPath } from "../src/http-
 import { NeonIdentityRepository } from "../src/neon-repository.js";
 import { appleAuthorizationUrl, exchangeGoogleCode, googleAuthorizationUrl } from "../src/oauth.js";
 import { ScryptPasswordHasher } from "../src/passwords.js";
-import { cookieValue, DatabaseSessionIssuer } from "../src/sessions.js";
+import { cookieValue, cookieValues, DatabaseSessionIssuer } from "../src/sessions.js";
 import { profileComplete } from "../src/domain.js";
 import { AccountSettingsService } from "../src/account-settings.js";
 
 const b64 = (bytes: Uint8Array) => Buffer.from(bytes).toString("base64url");
 const tempCookie = (name: string, value: string, maxAge = 600) => `${name}=${value}; Path=/api/auth; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`;
 const clearCookie = (name: string, path = "/api/auth") => `${name}=; Path=${path}; HttpOnly; Secure; SameSite=Lax; Max-Age=0`;
-const sessionCookies = (cookieName: string, sessionCookie: string) => [
+const clearDomainCookie = (name: string, hostname: string, path = "/") => `${name}=; Path=${path}; Domain=.${hostname}; HttpOnly; Secure; SameSite=Lax; Max-Age=0`;
+const sessionCookies = (cookieName: string, sessionCookie: string, hostname: string) => [
   // Older deployments scoped the session cookie to /api/auth. Browsers prefer
   // that more-specific stale cookie over the current site-wide cookie on API
   // requests, so remove it whenever a fresh session is established.
   clearCookie(cookieName, "/api/auth"),
+  clearDomainCookie(cookieName, hostname, "/api/auth"),
+  clearDomainCookie(cookieName, hostname, "/"),
   sessionCookie,
 ];
 const string = (value: unknown) => typeof value === "string" ? value.trim() : "";
@@ -62,7 +65,15 @@ export default async function handler(request: IncomingMessage, response: Server
     const accounts = new AccountService(identities, new ScryptPasswordHasher(), sessions, () => crypto.randomUUID());
     const contacts = new ContactVerificationService(config);
     const settings = new AccountSettingsService(config.databaseUrl);
-    const current = () => sessions.authenticate(cookieValue(request.headers.cookie, config.sessionCookieName));
+    const current = async () => {
+      // Legacy host-only, domain-wide and path-scoped cookies can arrive in any
+      // order. Select the first token that is still a valid database session.
+      for (const token of cookieValues(request.headers.cookie, config.sessionCookieName)) {
+        const authenticated = await sessions.authenticate(token);
+        if (authenticated) return authenticated;
+      }
+      return undefined;
+    };
 
     if (request.method === "GET" && requestUrl.pathname.endsWith("/health")) {
       const database = new NeonIdentityRepository(config.databaseUrl);
@@ -75,12 +86,12 @@ export default async function handler(request: IncomingMessage, response: Server
     if (request.method === "POST" && requestUrl.pathname.endsWith("/register")) {
       const body = await jsonBody(request);
       const result = await accounts.register({ firstName: string(body.firstName), lastName: string(body.lastName), email: string(body.email), password: string(body.password), product: parseProduct(body.product), termsAccepted: body.termsAccepted === true });
-      return json(response, 201, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": sessionCookies(config.sessionCookieName, result.session.cookie) });
+      return json(response, 201, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": sessionCookies(config.sessionCookieName, result.session.cookie, config.baseUrl.hostname) });
     }
     if (request.method === "POST" && requestUrl.pathname.endsWith("/login")) {
       const body = await jsonBody(request);
       const result = await accounts.login({ email: string(body.email), password: string(body.password), product: parseProduct(body.product), remember: body.remember === true });
-      return json(response, 200, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": sessionCookies(config.sessionCookieName, result.session.cookie) });
+      return json(response, 200, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": sessionCookies(config.sessionCookieName, result.session.cookie, config.baseUrl.hostname) });
     }
     if (request.method === "GET" && requestUrl.pathname.endsWith("/start")) {
       const product = parseProduct(requestUrl.searchParams.get("product"));
@@ -109,7 +120,7 @@ export default async function handler(request: IncomingMessage, response: Server
       const returnTo = validatedReturnPath(product, String(verifiedState.payload.returnTo ?? ""));
       response.statusCode = 302;
       response.setHeader("Cache-Control", "no-store");
-      response.setHeader("Set-Cookie", [...sessionCookies(config.sessionCookieName, result.session.cookie), clearCookie("avi_oauth_state"), clearCookie("avi_oauth_verifier")]);
+      response.setHeader("Set-Cookie", [...sessionCookies(config.sessionCookieName, result.session.cookie, config.baseUrl.hostname), clearCookie("avi_oauth_state"), clearCookie("avi_oauth_verifier")]);
       response.setHeader("Location", new URL(result.profileComplete ? returnTo : product === "avi" ? "/complete-profile" : "/AuraAI/complete-profile/", config.baseUrl).toString());
       return response.end();
     }
@@ -186,7 +197,7 @@ export default async function handler(request: IncomingMessage, response: Server
     if (request.method === "POST" && requestUrl.pathname.endsWith("/logout")) {
       const authenticated = await current();
       if (authenticated) await sessions.revoke(authenticated.sessionId);
-      return json(response, 200, { authenticated: false }, { "Set-Cookie": [clearCookie(config.sessionCookieName, "/api/auth"), clearCookie(config.sessionCookieName, "/")] });
+      return json(response, 200, { authenticated: false }, { "Set-Cookie": [clearCookie(config.sessionCookieName, "/api/auth"), clearDomainCookie(config.sessionCookieName, config.baseUrl.hostname, "/api/auth"), clearDomainCookie(config.sessionCookieName, config.baseUrl.hostname, "/"), clearCookie(config.sessionCookieName, "/")] });
     }
     return json(response, 404, { code: "AUTH_ROUTE_NOT_FOUND", message: "This authentication route is not available." });
   } catch (error) {
