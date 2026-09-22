@@ -3,11 +3,26 @@
   "functions": {
     "api/auth.ts": {
       "maxDuration": 30
+    },
+    "api/aura.ts": {
+      "maxDuration": 120
     }
   },
   "routes": [
-    { "src": "/api/auth/(.*)", "dest": "/api/auth.ts?path=$1" },
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
+    {
+      "src": "/api/aura/(.*)",
+      "dest": "/api/aura.ts?route=$1"
+    },
+    {
+      "src": "/api/auth/(.*)",
+      "dest": "/api/auth.ts?path=$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/.*",
+      "dest": "/index.html"
+    }
   ]
 }
