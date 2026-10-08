@@ -1,0 +1,4 @@
+Realistic sculpting head: CC0, Blender Studio / Dan Ulrich, Paul Kotelevets, Tonatiuh de San Julian and Julien Kaspar.
+Original: https://commons.wikimedia.org/wiki/File:Head_(Sculpting)_-_Realistic_by_Dan_Ulrich_(CC0).stl
+Source download: https://upload.wikimedia.org/wikipedia/commons/8/84/Head_%28Sculpting%29_-_Realistic_by_Dan_Ulrich_%28CC0%29.stl
+This is a reduced-resolution preview derived with meshoptimizer. Original: 1,690,880 triangles; preview: 51,949 triangles. The catalogue download continues to link to the original file.
