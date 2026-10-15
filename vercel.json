@@ -6,9 +6,23 @@
     },
     "api/aura.ts": {
       "maxDuration": 120
+    },
+    "api/asset-preview.ts": {
+      "maxDuration": 60
+    },
+    "api/directory-session.ts": {
+      "maxDuration": 30
     }
   },
   "routes": [
+    {
+      "src": "/api/directory-session/(.*)",
+      "dest": "/api/directory-session.ts?route=$1"
+    },
+    {
+      "src": "/api/asset-preview/(.*)",
+      "dest": "/api/asset-preview.ts?route=$1"
+    },
     {
       "src": "/api/aura/(.*)",
       "dest": "/api/aura.ts?route=$1"
