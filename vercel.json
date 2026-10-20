@@ -12,9 +12,16 @@
     },
     "api/directory-session.ts": {
       "maxDuration": 30
+    },
+    "api/toolkit.ts": {
+      "maxDuration": 90
     }
   },
   "routes": [
+    {
+      "src": "/api/toolkit/(.*)",
+      "dest": "/api/toolkit.ts?route=$1"
+    },
     {
       "src": "/api/directory-session/(.*)",
       "dest": "/api/directory-session.ts?route=$1"

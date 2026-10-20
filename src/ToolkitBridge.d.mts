@@ -1,0 +1,1 @@
+export function toolkitBridge(request: Request, options: { authenticate: (request: Request) => Promise<{id: string} | undefined>; speechUrl?: string; secret?: string; fetcher?: typeof fetch }): Promise<Response>;
