@@ -20,3 +20,13 @@ export function allowedMutation(origin,site,expected) {
 export function safePortrait(value) {
  return typeof value==='string'&&/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(value)&&value.length<2800000 ? value : null;
 }
+
+// A public/uploaded portrait must never become an identity-card portrait.
+export function verifiedSelfieUrl(payload, expected) {
+ const state=personaOutcome(payload,expected);
+ if(!state.verified)return null;
+ const linked=new Set((payload.data.relationships?.verifications?.data||[]).map(v=>v.id));
+ const selfie=(payload.included||[]).find(v=>linked.has(v.id)&&v.type==='verification/selfie'&&v.attributes?.status==='passed');
+ const value=selfie?.attributes?.['center-photo-url'];
+ try{const url=new URL(value);return url.protocol==='https:'&&url.hostname==='files.withpersona.com'&&!url.username&&!url.password&&(!url.port||url.port==='443')?url.href:null;}catch{return null;}
+}
