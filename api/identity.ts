@@ -1,11 +1,11 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { randomBytes, randomUUID } from 'node:crypto';
+import { randomBytes, randomUUID, createPrivateKey, sign } from 'node:crypto';
 import { neon } from '@neondatabase/serverless';
 import { loadConfig } from '../src/config.js';
 import { cookieValues, DatabaseSessionIssuer } from '../src/sessions.js';
 import { NeonIdentityRepository } from '../src/neon-repository.js';
 import { AccountSettingsService } from '../src/account-settings.js';
-import { personaOutcome, allowedMutation, verifiedSelfieUrl } from '../src/IdentityPolicy.mjs';
+import { personaOutcome, allowedMutation, verifiedSelfieUrl, validBirthdate, identityAge } from '../src/IdentityPolicy.mjs';
 import { createRequire } from 'node:module';
 const require=createRequire(import.meta.url);
 const QRCode=require('qrcode');const bwip=require('bwip-js');
@@ -24,6 +24,10 @@ export default async function handler(req:IncomingMessage,res:ServerResponse){
  await sql`CREATE TABLE IF NOT EXISTS truemark_identity_cards(owner_id text PRIMARY KEY,card_code text UNIQUE NOT NULL,created_at timestamptz NOT NULL DEFAULT now())`;
  await sql`CREATE TABLE IF NOT EXISTS truemark_persona_inquiries(owner_id text NOT NULL,environment_id text NOT NULL,attempt_id text NOT NULL UNIQUE,inquiry_id text UNIQUE,template_id text NOT NULL,created_at timestamptz NOT NULL DEFAULT now(),consented_at timestamptz NOT NULL DEFAULT now(),PRIMARY KEY(owner_id,environment_id))`;
  await sql`ALTER TABLE truemark_persona_inquiries ADD COLUMN IF NOT EXISTS portrait_consented_at timestamptz`;
+ await sql`ALTER TABLE truemark_identity_cards ADD COLUMN IF NOT EXISTS avid text`;
+ await sql`CREATE UNIQUE INDEX IF NOT EXISTS truemark_identity_avid_unique ON truemark_identity_cards(avid)`;
+ await sql`CREATE TABLE IF NOT EXISTS truemark_private_details(owner_id text PRIMARY KEY,birthdate text NOT NULL DEFAULT '',gender text NOT NULL DEFAULT '',address text NOT NULL DEFAULT '',updated_at timestamptz NOT NULL DEFAULT now())`;
+ const privateDetails=(await sql`SELECT birthdate,gender,address FROM truemark_private_details WHERE owner_id=${owner}`)[0]||{birthdate:'',gender:'',address:''};
  const apiKey=process.env.PERSONA_API_KEY||'',templateId=process.env.PERSONA_TEMPLATE_ID||'',environmentId=process.env.PERSONA_ENVIRONMENT_ID||'',mode=process.env.PERSONA_MODE||'disabled';
  const configured=Boolean(apiKey&&/^itmpl_/.test(templateId)&&/^env_/.test(environmentId)&&['sandbox','production'].includes(mode));
  const persona=async(path:string,method='GET',body?:unknown,key?:string)=>{
@@ -43,8 +47,10 @@ export default async function handler(req:IncomingMessage,res:ServerResponse){
  };
  if(req.method==='GET'){
   await sql`INSERT INTO truemark_identity_cards(owner_id,card_code) VALUES(${owner},${randomBytes(10).toString('hex').toUpperCase()}) ON CONFLICT(owner_id) DO NOTHING`;
-  const cards=await sql`SELECT card_code,created_at FROM truemark_identity_cards WHERE owner_id=${owner}`;
+  const cards=await sql`SELECT card_code,created_at,avid FROM truemark_identity_cards WHERE owner_id=${owner}`;
   const card=cards[0],code=String(card.card_code);
+  if(!card.avid){const alphabet='0123456789ABCDEFGHJKMNPQRSTVWXYZ';const chars=Array.from(randomBytes(25),b=>alphabet[b%alphabet.length]).join('');const candidate='AW-'+chars.match(/.{5}/g)!.join('-');await sql`UPDATE truemark_identity_cards SET avid=${candidate} WHERE owner_id=${owner} AND avid IS NULL`;card.avid=(await sql`SELECT avid FROM truemark_identity_cards WHERE owner_id=${owner}`)[0].avid;}
+  const avid=String(card.avid);
   let verification;try{verification=await outcome();}catch{verification={status:'unavailable',verified:false,document:false,selfie:false};}
   let portrait:string|null=null;
   if(record?.portrait_consented_at&&verifiedPayload){
@@ -58,14 +64,26 @@ export default async function handler(req:IncomingMessage,res:ServerResponse){
     }
    }catch{/* Keep a neutral placeholder if evidence is unavailable or expired. */}
   }
+  const fields=verifiedPayload?.data?.attributes?.fields||{};
+  const birthdate=verification.verified&&validBirthdate(fields.birthdate?.value)?fields.birthdate.value:String(privateDetails.birthdate||'');
+  const details={birthdate,age:identityAge(birthdate),gender:String(privateDetails.gender||''),address:String(privateDetails.address||''),birthdateVerified:Boolean(verification.verified&&validBirthdate(fields.birthdate?.value)),locked:Boolean(verification.verified)};
+  let signature:string|null=null;
+  const signingKey=process.env.IDENTITY_CARD_SIGNING_PRIVATE_KEY;
+  if(signingKey){const key=createPrivateKey(signingKey);if(key.asymmetricKeyType!=='ed25519')throw new Error('INVALID_CARD_KEY');signature=sign(null,Buffer.from('AVI-CARD-v1:'+avid+':'+code),key).toString('base64url');}
   const barcode=bwip.toSVG({bcid:'code128',text:code,height:10,scale:2,paddingwidth:12,paddingheight:4});
   // Fixed trusted destinations; the fragment keeps the opaque reference out of server request logs.
-  const cardUrl=(url.searchParams.get('brand')==='aura'?'https://aviwavey.com/AuraAI/':'https://aviwavey.com/')+'#identity-card='+encodeURIComponent(code);
+  const cardUrl=(url.searchParams.get('brand')==='aura'?'https://aviwavey.com/AuraAI/':'https://aviwavey.com/')+'#identity-card='+encodeURIComponent(code)+(signature?'&avid='+encodeURIComponent(avid)+'&signature='+signature:'');
   const qr=await QRCode.toString(cardUrl,{type:'svg',errorCorrectionLevel:'M',margin:4,color:{dark:'#000000ff',light:'#ffffff00'}});
-  return send(200,{accountId:owner,cardCode:code,cardUrl,issuedAt:card.created_at,name:[settings.private.firstName,settings.private.lastName].filter(Boolean).join(' ')||'Legal name not provided',portrait,portraitConsent:Boolean(record?.portrait_consented_at),barcode:'data:image/svg+xml;base64,'+Buffer.from(barcode).toString('base64'),qr:'data:image/svg+xml;base64,'+Buffer.from(qr).toString('base64'),configured,mode,verification});
+  return send(200,{accountId:owner,avid,details,paymentCard:{status:'unissued',number:null,securityCode:null,expiry:null},signatureStatus:signature?'signed':'not_configured',cardCode:code,cardUrl,issuedAt:card.created_at,name:[settings.private.firstName,settings.private.lastName].filter(Boolean).join(' ')||'Legal name not provided',portrait,portraitConsent:Boolean(record?.portrait_consented_at),barcode:'data:image/svg+xml;base64,'+Buffer.from(barcode).toString('base64'),qr:'data:image/svg+xml;base64,'+Buffer.from(qr).toString('base64'),configured,mode,verification});
  }
- let raw='';for await(const chunk of req){raw+=chunk.toString();if(Buffer.byteLength(raw)>2048)return send(413,{error:'Request too large.'});}
+ let raw='';for await(const chunk of req){raw+=chunk.toString();if(Buffer.byteLength(raw)>4096)return send(413,{error:'Request too large.'});}
  let input;try{input=JSON.parse(raw);}catch{return send(400,{error:'Invalid request.'});}
+ if(input?.action==='save-details'){
+  const state=await outcome();if(state.verified)return send(409,{error:'Verified identity changes require evidence and review.'});
+  if(typeof input.birthdate!=='string'||(input.birthdate&&!validBirthdate(input.birthdate))||typeof input.gender!=='string'||input.gender.length>80||typeof input.address!=='string'||input.address.length>600)return send(400,{error:'Provide a valid date of birth, gender (up to 80 characters) and address (up to 600 characters).'});
+  await sql`INSERT INTO truemark_private_details(owner_id,birthdate,gender,address) VALUES(${owner},${input.birthdate},${input.gender.trim()},${input.address.trim()}) ON CONFLICT(owner_id) DO UPDATE SET birthdate=EXCLUDED.birthdate,gender=EXCLUDED.gender,address=EXCLUDED.address,updated_at=now()`;
+  return send(200,{saved:true});
+ }
  if(!input||input.consent!==true)return send(400,{error:'Please consent to Persona processing your identity evidence.'});
  if(!configured)return send(503,{error:'Government ID verification is not available yet. Persona must be configured before documents can be submitted.'});
  if(!record){

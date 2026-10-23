@@ -3,3 +3,6 @@ export function allowedMutation(origin:unknown,site:string,expected:string):bool
 export function safePortrait(value:unknown):string|null;
 
 export function verifiedSelfieUrl(payload:unknown,expected:Parameters<typeof personaOutcome>[1]):string|null;
+
+export function validBirthdate(value:unknown,now?:Date):boolean;
+export function identityAge(value:unknown,now?:Date):number|null;

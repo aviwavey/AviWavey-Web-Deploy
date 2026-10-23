@@ -7,7 +7,8 @@ export function personaOutcome(payload, expected) {
  const checks=(payload.included||[]).filter(v=>v.type?.startsWith('verification/'));
  const linked=new Set((d.relationships?.verifications?.data||[]).map(v=>v.id));
  const passed=type=>checks.some(v=>linked.has(v.id)&&v.type===type&&v.attributes?.status==='passed');
- const document=passed('verification/government-id'),selfie=passed('verification/selfie'),address=passed('verification/document');
+ const document=checks.some(v=>linked.has(v.id)&&v.type==='verification/government-id'&&v.attributes?.status==='passed'&&v.attributes?.['id-class']==='pp');
+ const selfie=passed('verification/selfie'),address=passed('verification/document');
  const fields=a.fields||{};const first=fields['name-first']?.value,last=fields['name-last']?.value,birthdate=fields.birthdate?.value;
  const normalized=v=>String(v||'').normalize('NFKC').trim().replace(/\s+/g,' ').toLocaleLowerCase('en');
  const nameMatches=Boolean(first&&last&&normalized(first)===normalized(expected.firstName)&&normalized(last)===normalized(expected.lastName));
@@ -29,4 +30,15 @@ export function verifiedSelfieUrl(payload, expected) {
  const selfie=(payload.included||[]).find(v=>linked.has(v.id)&&v.type==='verification/selfie'&&v.attributes?.status==='passed');
  const value=selfie?.attributes?.['center-photo-url'];
  try{const url=new URL(value);return url.protocol==='https:'&&url.hostname==='files.withpersona.com'&&!url.username&&!url.password&&(!url.port||url.port==='443')?url.href:null;}catch{return null;}
+}
+
+export function validBirthdate(value, now=new Date()) {
+ if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;
+ const d=new Date(value+'T00:00:00Z');
+ return Number.isFinite(d.getTime())&&d.toISOString().slice(0,10)===value&&value<=now.toISOString().slice(0,10)&&Number(value.slice(0,4))>=1900;
+}
+export function identityAge(value,now=new Date()) {
+ if(!validBirthdate(value,now))return null;
+ const [y,m,d]=value.split('-').map(Number);
+ return now.getUTCFullYear()-y-((now.getUTCMonth()+1<m||(now.getUTCMonth()+1===m&&now.getUTCDate()<d))?1:0);
 }
