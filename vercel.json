@@ -18,9 +18,16 @@
     },
     "api/notes.ts": {
       "maxDuration": 30
+    },
+    "api/tasksync.ts": {
+      "maxDuration": 30
     }
   },
   "routes": [
+    {
+      "src": "/api/tasksync/(.*)",
+      "dest": "/api/tasksync.ts?route=$1"
+    },
     {
       "src": "/api/notes/(.*)",
       "dest": "/api/notes.ts?route=$1"

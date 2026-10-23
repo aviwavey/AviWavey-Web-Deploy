@@ -32,6 +32,8 @@ export function validateNote(input) {
   if(src.pages!==undefined)content.pages=clean;else content.strokes=clean[0];
   if(src.thumbnail!==undefined){if(typeof src.thumbnail!=='string'||src.thumbnail.length>12000||!/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(src.thumbnail))throw Error('Invalid page thumbnail.');content.thumbnail=src.thumbnail;}
  }
+ if(input.kind==='text'&&src.checklist!==undefined){if(!Array.isArray(src.checklist)||src.checklist.length>100)throw Error('Use up to 100 checklist items.');const ids=new Set();content.checklist=src.checklist.map(i=>{if(!i||typeof i.id!=='string'||! /^[\w-]{1,80}$/.test(i.id)||ids.has(i.id)||typeof i.text!=='string'||i.text.length>300||typeof i.done!=='boolean')throw Error('Invalid checklist item.');ids.add(i.id);return {id:i.id,text:i.text,done:i.done};});}
+ if(input.kind!=='folder'&&src.links!==undefined){if(!Array.isArray(src.links)||src.links.length>50)throw Error('Use up to 50 connections.');content.links=src.links.map(l=>{if(!l||!['day','task','event','meeting'].includes(l.kind)||typeof l.id!=='string'||! /^[\w-]{1,80}$/.test(l.id)||typeof l.title!=='string'||l.title.length>150||(l.date!==undefined&&!/^\d{4}-\d{2}-\d{2}$/.test(l.date)))throw Error('Invalid note connection.');return {kind:l.kind,id:l.id,title:l.title,...(l.date?{date:l.date}:{})};});}
  if(input.kind!=='folder'){
   for(const [key,values] of [['paper',['plain','lined','grid','dots']],['colour',['cream','sage','rose','sky']]])if(src[key]!==undefined){if(!values.includes(src[key]))throw Error('Invalid notebook appearance.');content[key]=src[key];}
   for(const key of ['pinned','handwriting'])if(src[key]!==undefined){if(typeof src[key]!=='boolean')throw Error('Invalid note option.');content[key]=src[key];}
