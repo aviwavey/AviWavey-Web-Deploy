@@ -43,6 +43,7 @@ export class AccountSettingsService {
   }
 
   async updatePrivateTelephone(userId: string, rawTelephone: string) {
+    const previous=await this.read(userId);if(previous.private.telephone===rawTelephone.trim())return previous;
     const value = phone(rawTelephone);
     if (!/^\+[1-9]\d{7,14}$/.test(value)) throw new Error("INVALID_TELEPHONE");
     const collision = await this.sql`SELECT user_id FROM contacts WHERE kind='telephone' AND normalized_value=${value} AND user_id<>${userId} LIMIT 1`;

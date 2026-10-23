@@ -20,7 +20,7 @@ export class AccountService {
     const user = await this.identities.createUser({ firstName: input.firstName.trim(), lastName: input.lastName.trim(), email, product: input.product, emailVerified: false });
     await this.identities.saveCredential({ id: this.newId(), userId: user.id, kind: "password", accountLabel: email, secretHash: await this.passwords.hash(input.password) });
     const session = await this.sessions.issue({ userId: user.id, product: input.product, remember: false });
-    return { session, profileComplete: profileComplete(user) };
+    return { session, userId:user.id, profileComplete: profileComplete(user) };
   }
 
   async login(input: { email: string; password: string; product: Product; remember: boolean }) {
@@ -30,20 +30,22 @@ export class AccountService {
     if (!credential || !await this.passwords.verify(input.password, credential.secretHash)) throw new Error("AUTHENTICATION_FAILED");
     await this.identities.addMembership(user.id, input.product);
     const session = await this.sessions.issue({ userId: user.id, product: input.product, remember: input.remember });
-    return { session, profileComplete: profileComplete(user) };
+    return { session, userId:user.id, profileComplete: profileComplete(user) };
   }
 
   async finishProviderSignIn(identity: ProviderIdentity, product: Product) {
     let user = await this.identities.findUserByProvider(identity.provider, identity.subject);
     if (!user) {
-      const possibleExistingUser = await this.identities.findUserByVerifiedEmail(normalizeEmail(identity.verifiedEmail));
-      user = possibleExistingUser ?? await this.identities.createUser({ firstName: identity.firstName ?? "", lastName: identity.lastName ?? "", email: normalizeEmail(identity.verifiedEmail), product, emailVerified: true });
+      const possibleExistingUser = await this.identities.findUserByEmail(normalizeEmail(identity.verifiedEmail));
+      if(possibleExistingUser)throw new Error("EXPLICIT_LINK_REQUIRED");
+      user = await this.identities.createUser({ firstName: identity.firstName ?? "", lastName: identity.lastName ?? "", email: normalizeEmail(identity.verifiedEmail), product, emailVerified: true });
       const credential: Credential = { id: this.newId(), userId: user.id, kind: identity.provider, providerSubject: identity.subject, accountLabel: normalizeEmail(identity.verifiedEmail) };
       await this.identities.saveCredential(credential);
     }
+    if(user.status!=="active")throw new Error("AUTHENTICATION_FAILED");
     await this.identities.addMembership(user.id, product);
     const session = await this.sessions.issue({ userId: user.id, product, remember: true });
-    return { session, profileComplete: profileComplete(user) };
+    return { session, userId:user.id, profileComplete: profileComplete(user) };
   }
 
   async linkProvider(authenticatedUserId: string, identity: ProviderIdentity) {

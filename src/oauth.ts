@@ -67,3 +67,13 @@ export async function exchangeGoogleCode(config: TrueMarkConfig, product: Produc
   if (claims.nonce !== expectedNonce || !claims.sub || !claims.email || claims.email_verified !== true) throw new Error("GOOGLE_IDENTITY_INVALID");
   return { provider: "google" as const, subject: claims.sub, verifiedEmail: String(claims.email), firstName: typeof claims.given_name === "string" ? claims.given_name : undefined, lastName: typeof claims.family_name === "string" ? claims.family_name : undefined };
 }
+
+const appleKeys=createRemoteJWKSet(new URL("https://appleid.apple.com/auth/keys"));
+export async function exchangeAppleCode(config:TrueMarkConfig,code:string,expectedNonce:string){
+ if(!config.apple)throw new Error("OAUTH_PROVIDER_INVALID");
+ const r=await fetch("https://appleid.apple.com/auth/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({code,client_id:config.apple.clientId,client_secret:await appleClientSecret(config),redirect_uri:config.apple.redirectUri.toString(),grant_type:"authorization_code"}),signal:AbortSignal.timeout(15000)});
+ const t=await r.json() as {id_token?:string};if(!r.ok||!t.id_token)throw new Error("OAUTH_PROVIDER_INVALID");
+ const {payload:c}=await jwtVerify(t.id_token,appleKeys,{issuer:"https://appleid.apple.com",audience:config.apple.clientId,algorithms:["RS256"]});
+ if(c.nonce!==expectedNonce||!c.sub||typeof c.email!=="string"||![true,"true"].includes(c.email_verified as boolean|string))throw new Error("OAUTH_PROVIDER_INVALID");
+ return {provider:"apple" as const,subject:c.sub,verifiedEmail:c.email};
+}
