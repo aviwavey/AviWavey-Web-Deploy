@@ -59,8 +59,10 @@ export default async function handler(req:IncomingMessage,res:ServerResponse){
    }catch{/* Keep a neutral placeholder if evidence is unavailable or expired. */}
   }
   const barcode=bwip.toSVG({bcid:'code128',text:code,height:10,scale:2,paddingwidth:12,paddingheight:4});
-  const qr=await QRCode.toString(code,{type:'svg',errorCorrectionLevel:'M',margin:4,color:{dark:'#000000ff',light:'#ffffff00'}});
-  return send(200,{accountId:owner,cardCode:code,issuedAt:card.created_at,name:[settings.private.firstName,settings.private.lastName].filter(Boolean).join(' ')||'Legal name not provided',portrait,portraitConsent:Boolean(record?.portrait_consented_at),barcode:'data:image/svg+xml;base64,'+Buffer.from(barcode).toString('base64'),qr:'data:image/svg+xml;base64,'+Buffer.from(qr).toString('base64'),configured,mode,verification});
+  // Fixed trusted destinations; the fragment keeps the opaque reference out of server request logs.
+  const cardUrl=(url.searchParams.get('brand')==='aura'?'https://aviwavey.com/AuraAI/':'https://aviwavey.com/')+'#identity-card='+encodeURIComponent(code);
+  const qr=await QRCode.toString(cardUrl,{type:'svg',errorCorrectionLevel:'M',margin:4,color:{dark:'#000000ff',light:'#ffffff00'}});
+  return send(200,{accountId:owner,cardCode:code,cardUrl,issuedAt:card.created_at,name:[settings.private.firstName,settings.private.lastName].filter(Boolean).join(' ')||'Legal name not provided',portrait,portraitConsent:Boolean(record?.portrait_consented_at),barcode:'data:image/svg+xml;base64,'+Buffer.from(barcode).toString('base64'),qr:'data:image/svg+xml;base64,'+Buffer.from(qr).toString('base64'),configured,mode,verification});
  }
  let raw='';for await(const chunk of req){raw+=chunk.toString();if(Buffer.byteLength(raw)>2048)return send(413,{error:'Request too large.'});}
  let input;try{input=JSON.parse(raw);}catch{return send(400,{error:'Invalid request.'});}
