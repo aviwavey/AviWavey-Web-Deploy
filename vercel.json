@@ -15,9 +15,16 @@
     },
     "api/toolkit.ts": {
       "maxDuration": 90
+    },
+    "api/notes.ts": {
+      "maxDuration": 30
     }
   },
   "routes": [
+    {
+      "src": "/api/notes/(.*)",
+      "dest": "/api/notes.ts?route=$1"
+    },
     {
       "src": "/api/toolkit/(.*)",
       "dest": "/api/toolkit.ts?route=$1"
