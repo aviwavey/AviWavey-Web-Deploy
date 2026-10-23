@@ -24,9 +24,23 @@
     },
     "api/identity.ts": {
       "maxDuration": 30
+    },
+    "api/capital.ts": {
+      "maxDuration": 60
+    },
+    "api/support.ts": {
+      "maxDuration": 60
     }
   },
   "routes": [
+    {
+      "src": "/api/support/(.*)",
+      "dest": "/api/support.ts?route=$1"
+    },
+    {
+      "src": "/api/capital/(.*)",
+      "dest": "/api/capital.ts?route=$1"
+    },
     {
       "src": "/api/identity/(.*)",
       "dest": "/api/identity.ts?route=$1"
