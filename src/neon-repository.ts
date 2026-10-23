@@ -1,3 +1,4 @@
+import { assertMobileChangeAllowed } from './ProtectedProfilePolicy.mjs';
 import { neon } from "@neondatabase/serverless";
 import type { Credential, IdentityAccount, Product } from "./domain.js";
 import type { IdentityRepository } from "./ports.js";
@@ -74,6 +75,7 @@ export class NeonIdentityRepository implements IdentityRepository {
     if (usernameOwner[0]) throw new Error("USERNAME_ALREADY_IN_USE");
     const telephone = input.telephone.trim();
     if (!telephone) throw new Error("TELEPHONE_REQUIRED");
+    await assertMobileChangeAllowed(this.sql,userId,telephone);
     const existing = await this.sql`SELECT user_id FROM contacts WHERE kind='telephone' AND normalized_value=${telephone} LIMIT 1`;
     if (existing[0] && String(existing[0].user_id) !== userId) throw new Error("CONTACT_ALREADY_IN_USE");
     await this.sql`DELETE FROM contacts WHERE user_id=${userId} AND kind='telephone' AND normalized_value<>${telephone}`;

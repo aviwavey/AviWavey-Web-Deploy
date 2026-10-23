@@ -1,3 +1,4 @@
+import { assertMobileChangeAllowed } from './ProtectedProfilePolicy.mjs';
 import { randomInt } from "node:crypto";
 import { neon } from "@neondatabase/serverless";
 import type { TrueMarkConfig } from "./config.js";
@@ -26,6 +27,7 @@ export class ContactVerificationService {
 
   async verifyTelephone(userId: string, telephone: string, otp: string) {
     const value = telephone.replace(/[\s()-]/g, "");
+    await assertMobileChangeAllowed(this.sql,userId,value);
     const rows = await this.sql`SELECT id,secret_hash,attempts FROM contact_verification_challenges WHERE user_id=${userId} AND kind='telephone' AND destination=${value} AND consumed_at IS NULL AND expires_at>CURRENT_TIMESTAMP ORDER BY created_at DESC LIMIT 1`;
     const challenge = rows[0];
     if (!challenge || Number(challenge.attempts) >= 5 || !await this.hasher.verify(otp, String(challenge.secret_hash))) {

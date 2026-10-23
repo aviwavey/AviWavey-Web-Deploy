@@ -20,6 +20,7 @@ export function parseProduct(value: unknown): Product {
 }
 
 export function publicAuthError(error: unknown): { status: number; body: { message: string; code: string } } {
+  if(error instanceof Error&&error.message==='IDENTITY_DETAILS_LOCKED')return {status:409,body:{code:'IDENTITY_DETAILS_LOCKED',message:'Verified details are locked. Submit a correction request with evidence.'}};
   const code = error instanceof Error ? error.message : "AUTHENTICATION_FAILED";
   if (code === "LEGAL_CONSENT_REQUIRED" || code === "PASSWORD_TOO_SHORT" || code === "INVALID_PRODUCT") {
     return { status: 400, body: { code, message: "Please check the information and try again." } };

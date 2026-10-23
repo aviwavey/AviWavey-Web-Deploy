@@ -219,7 +219,7 @@ export default async function handler(request: IncomingMessage, response: Server
         picture = `data:${photo.type};base64,${Buffer.from(await photo.arrayBuffer()).toString("base64")}`;
       }
       const updated = await settings.updatePublic(authenticated.userId, {
-        displayName: string(form.get("displayName")), bio: string(form.get("bio")).slice(0, 500), profilePicture: picture,
+        gender:string(form.get("publicGender")).slice(0,80), displayName: string(form.get("displayName")), bio: string(form.get("bio")).slice(0, 500), profilePicture: picture,
         contactEmail: string(form.get("contactEmail")), contactTelephone: string(form.get("contactTelephone")),
         usePrivateTelephone: form.get("usePrivateTelephone") === "true",
       });
