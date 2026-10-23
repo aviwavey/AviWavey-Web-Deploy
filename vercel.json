@@ -21,9 +21,16 @@
     },
     "api/tasksync.ts": {
       "maxDuration": 30
+    },
+    "api/identity.ts": {
+      "maxDuration": 30
     }
   },
   "routes": [
+    {
+      "src": "/api/identity/(.*)",
+      "dest": "/api/identity.ts?route=$1"
+    },
     {
       "src": "/api/tasksync/(.*)",
       "dest": "/api/tasksync.ts?route=$1"
