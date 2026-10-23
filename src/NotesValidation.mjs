@@ -6,7 +6,7 @@ export function validateNote(input) {
  if(parent!==null&&(typeof parent!=='string'||!/^[\w-]{1,80}$/.test(parent)))throw Error('Invalid folder.');
  const src=input.content||{},content={};
  const text=(key)=>{if(src[key]!==undefined){if(typeof src[key]!=='string'||src[key].length>50000)throw Error('Notes support up to 50,000 characters.');content[key]=src[key];}};
- if(input.kind==='text'){if(typeof src.text!=='string')throw Error('Enter note text.');text('text');}
+ if(input.kind==='text'){if(typeof src.text!=='string')throw Error('Enter note text.');text('text');if(src.textPages!==undefined){if(!Array.isArray(src.textPages)||src.textPages.length<1||src.textPages.length>20||src.textPages.some(p=>typeof p!=='string')||src.textPages.join('\n\n').length>50000)throw Error('Use up to 20 pages and 50,000 characters.');content.textPages=src.textPages;content.text=src.textPages.join('\n\n');}}
  if(input.kind==='voice'){
   const audio=src.audio;
   if(typeof audio!=='string'||audio.length>3100000||!/^data:audio\/(webm|ogg|mp4)(;codecs=[a-zA-Z0-9.,-]+)?;base64,[A-Za-z0-9+/=]+$/.test(audio))throw Error('Record a voice note within the 2.3 MB limit.');
