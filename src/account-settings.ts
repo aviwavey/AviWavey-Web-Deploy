@@ -8,12 +8,12 @@ export class AccountSettingsService {
   constructor(databaseUrl: string) { this.sql = neon(databaseUrl); }
 
   async read(userId: string) {
-    await this.sql`ALTER TABLE public_profiles ADD COLUMN IF NOT EXISTS public_gender text NOT NULL DEFAULT ''`;
+    await this.sql`ALTER TABLE public_profiles ADD COLUMN IF NOT EXISTS public_gender text NOT NULL DEFAULT '', ADD COLUMN IF NOT EXISTS public_pronouns text NOT NULL DEFAULT ''`;
     const rows = await this.sql`
       SELECT u.id,u.first_name,u.last_name,u.username,u.profile_picture_key,u.assurance_level,
         email.normalized_value AS email,
         telephone.normalized_value AS private_telephone,
-        p.public_gender,p.display_name,p.bio,p.profile_picture_key AS public_picture,p.contact_email,p.contact_telephone,p.use_private_telephone
+        p.public_pronouns,p.public_gender,p.display_name,p.bio,p.profile_picture_key AS public_picture,p.contact_email,p.contact_telephone,p.use_private_telephone
       FROM users u
       LEFT JOIN contacts email ON email.user_id=u.id AND email.kind='email' AND email.is_primary=TRUE
       LEFT JOIN contacts telephone ON telephone.user_id=u.id AND telephone.kind='telephone' AND telephone.is_primary=TRUE
@@ -28,20 +28,20 @@ export class AccountSettingsService {
         profilePicture: String(row.profile_picture_key ?? ""), assurance: String(row.assurance_level ?? "basic_account"),
       },
       public: {
-        gender: String(row.public_gender ?? ""), displayName: String(row.display_name ?? row.username ?? ""), bio: String(row.bio ?? ""),
+        pronouns: String(row.public_pronouns ?? ""), gender: String(row.public_gender ?? ""), displayName: String(row.display_name ?? row.username ?? ""), bio: String(row.bio ?? ""),
         profilePicture: String(row.public_picture ?? row.profile_picture_key ?? ""), contactEmail: String(row.contact_email ?? ""),
         contactTelephone: String(row.contact_telephone ?? ""), usePrivateTelephone: Boolean(row.use_private_telephone),
       },
     };
   }
 
-  async updatePublic(userId: string, input: { gender?: string; displayName: string; bio: string; profilePicture?: string; contactEmail: string; contactTelephone: string; usePrivateTelephone: boolean }) {
-    await this.sql`ALTER TABLE public_profiles ADD COLUMN IF NOT EXISTS public_gender text NOT NULL DEFAULT ''`;
-    await this.sql`INSERT INTO public_profiles (user_id,display_name,bio,profile_picture_key,contact_email,contact_telephone,use_private_telephone,public_gender)
-      VALUES (${userId},${input.displayName},${input.bio},${input.profilePicture || null},${input.contactEmail || null},${input.contactTelephone || null},${input.usePrivateTelephone},${(input.gender||'').trim().slice(0,80)})
+  async updatePublic(userId: string, input: { pronouns?: string; gender?: string; displayName: string; bio: string; profilePicture?: string; contactEmail: string; contactTelephone: string; usePrivateTelephone: boolean }) {
+    await this.sql`ALTER TABLE public_profiles ADD COLUMN IF NOT EXISTS public_gender text NOT NULL DEFAULT '', ADD COLUMN IF NOT EXISTS public_pronouns text NOT NULL DEFAULT ''`;
+    await this.sql`INSERT INTO public_profiles (user_id,display_name,bio,profile_picture_key,contact_email,contact_telephone,use_private_telephone,public_gender,public_pronouns)
+      VALUES (${userId},${input.displayName},${input.bio},${input.profilePicture || null},${input.contactEmail || null},${input.contactTelephone || null},${input.usePrivateTelephone},${(input.gender||'').trim().slice(0,80)},${(input.pronouns||'').trim().slice(0,80)})
       ON CONFLICT (user_id) DO UPDATE SET display_name=EXCLUDED.display_name,bio=EXCLUDED.bio,
       profile_picture_key=COALESCE(EXCLUDED.profile_picture_key,public_profiles.profile_picture_key),contact_email=EXCLUDED.contact_email,
-      contact_telephone=EXCLUDED.contact_telephone,use_private_telephone=EXCLUDED.use_private_telephone,public_gender=EXCLUDED.public_gender,updated_at=CURRENT_TIMESTAMP`;
+      contact_telephone=EXCLUDED.contact_telephone,use_private_telephone=EXCLUDED.use_private_telephone,public_gender=EXCLUDED.public_gender,public_pronouns=EXCLUDED.public_pronouns,updated_at=CURRENT_TIMESTAMP`;
     return this.read(userId);
   }
 

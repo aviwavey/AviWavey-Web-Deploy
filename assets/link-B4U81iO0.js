@@ -1,1 +1,0 @@
-import{j as a,L as o}from"./index-DtFaum_a.js";import{m}from"./PaymentPortal-7F6sO1_B.js";function r({href:t,...s}){return/^https?:/.test(t)?a.jsx("a",{href:t,...s}):a.jsx(o,{to:m(t),...s})}export{r as P};
