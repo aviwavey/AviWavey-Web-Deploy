@@ -1,1 +1,0 @@
-import{j as a,L as o}from"./index-CfJyvW8D.js";import{m}from"./PaymentPortal-BrrX_NgY.js";function r({href:t,...s}){return/^https?:/.test(t)?a.jsx("a",{href:t,...s}):a.jsx(o,{to:m(t),...s})}export{r as P};
