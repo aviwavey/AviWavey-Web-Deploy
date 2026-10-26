@@ -201,7 +201,7 @@ export default async function handler(request: IncomingMessage, response: Server
       const user = await identities.findUserById(authenticated.userId);
       if (!user) return json(response, 200, { authenticated: false });
       const completed = profileComplete(user);
-      return json(response, 200, { authenticated: true, profileComplete: completed, name: [user.firstName, user.lastName].filter(Boolean).join(" "), email: user.primaryEmail, picture: user.profilePictureKey, memberships: user.memberships, assurance: user.assurance });
+      return json(response, 200, { authenticated: true, profileComplete: completed, name: [user.firstName, user.lastName].filter(Boolean).join(" "), email: user.primaryEmail, picture: (await settings.read(authenticated.userId)).public.profilePicture || user.profilePictureKey, memberships: user.memberships, assurance: user.assurance });
     }
     if (request.method === "GET" && requestUrl.pathname.endsWith("/settings")) {
       const authenticated = await current();
