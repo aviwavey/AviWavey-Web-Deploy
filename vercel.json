@@ -30,6 +30,9 @@
     },
     "api/support.ts": {
       "maxDuration": 60
+    },
+    "api/social-link.ts": {
+      "maxDuration": 30
     }
   },
   "routes": [
@@ -48,6 +51,10 @@
     {
       "src": "/api/tasksync/(.*)",
       "dest": "/api/tasksync.ts?route=$1"
+    },
+    {
+      "src": "/api/social-link/(.*)",
+      "dest": "/api/social-link.ts?route=$1"
     },
     {
       "src": "/api/notes/(.*)",

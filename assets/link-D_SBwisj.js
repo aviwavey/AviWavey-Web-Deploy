@@ -1,0 +1,1 @@
+import{j as a,e as o}from"./index-CzLVtiP7.js";import{m}from"./PaymentPortal-DAcCAniL.js";function r({href:t,...s}){return/^https?:/.test(t)?a.jsx("a",{href:t,...s}):a.jsx(o,{to:m(t),...s})}export{r as P};
