@@ -37,6 +37,21 @@
   },
   "routes": [
     {
+      "src": "/MikeT\\.MMT",
+      "dest": "https://mike-t-mmt-web-deploy.vercel.app/MikeT.MMT"
+    },
+    {
+      "src": "/MikeT\\.MMT/(.*)",
+      "dest": "https://mike-t-mmt-web-deploy.vercel.app/MikeT.MMT/$1"
+    },
+    {
+      "src": "/(?:mike-t|miket\\.mmt)(/.*)?",
+      "status": 307,
+      "headers": {
+        "Location": "/MikeT.MMT$1"
+      }
+    },
+    {
       "src": "/api/support/(.*)",
       "dest": "/api/support.ts?route=$1"
     },
