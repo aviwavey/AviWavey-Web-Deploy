@@ -1,1 +1,0 @@
-import{j as a,e as o}from"./index-M4tLGvei.js";import{m}from"./PaymentPortal-CmjtVFIP.js";function r({href:t,...s}){return/^https?:/.test(t)?a.jsx("a",{href:t,...s}):a.jsx(o,{to:m(t),...s})}export{r as P};

@@ -35,12 +35,13 @@ export function socialPublicKey(record, secret) {
   return { kty: key.kty, n: key.n, e: key.e, kid: record.kid, use: 'sig', alg: 'RS256' };
 }
 
-export function socialToken(record, secret, accountId, now = Date.now()) {
+export function socialToken(record, secret, accountId, now = Date.now(), community) {
   if (typeof accountId !== 'string' || !accountId || accountId.length > 256) throw new Error('An authenticated account is required.');
   const issued = Math.floor(now / 1000);
   // This identifier is never returned in public feed, Realm or chat records.
   const subject = 'avw:' + createHash('sha256').update('social-link:' + accountId).digest('hex');
   const unsigned = encode({ kid: record.kid, typ: 'JWT', alg: 'RS256' }) + '.' + encode({
+    ...(community ? { community: { username: community.username, displayName: community.displayName } } : {}),
     iss: socialIssuer, aud: socialAudience, sub: subject, iat: issued, nbf: issued, exp: issued + 120, jti: randomUUID(),
   });
   return unsigned + '.' + sign('RSA-SHA256', Buffer.from(unsigned), openKey(record, secret)).toString('base64url');

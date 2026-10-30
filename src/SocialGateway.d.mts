@@ -1,2 +1,2 @@
 export const socialRoutes: Readonly<Record<string, string[]>>;
-export function socialGateway(request: Request, options: { origin: string; authenticate(): Promise<{ id: string } | undefined>; issueToken(id: string): Promise<string>; serviceUrl: string; fetcher?: typeof fetch }): Promise<Response>;
+export function socialGateway(request: Request, options: { origin: string; authenticate(): Promise<{ id: string; community?: { username: string; displayName: string } } | undefined>; issueToken(id: string, community?: { username: string; displayName: string }): Promise<string>; serviceUrl: string; fetcher?: typeof fetch }): Promise<Response>;

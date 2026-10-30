@@ -49,7 +49,12 @@ export default async function handler(incoming: IncomingMessage, outgoing: Serve
         const session = await sessions.authenticate(token);
         if (!session) continue;
         const user = await identities.findUserById(session.userId);
-        if (user?.status === 'active') return { id: session.userId };
+        if (user?.status === 'active') {
+          const sql = neon(config.databaseUrl);
+          const rows = await sql`SELECT u.username,p.display_name FROM users u LEFT JOIN public_profiles p ON p.user_id=u.id WHERE u.id=${session.userId} LIMIT 1`;
+          const username = String(rows[0]?.username || '').trim();
+          return { id: session.userId, ...(username ? { community: { username, displayName: String(rows[0]?.display_name || username).slice(0,100) } } : {}) };
+        }
       }
     };
     if (path === 'session') {
@@ -66,7 +71,7 @@ export default async function handler(incoming: IncomingMessage, outgoing: Serve
     for (const [name, value] of Object.entries(incoming.headers)) if (value !== undefined) headers.set(name, Array.isArray(value) ? value.join(',') : value);
     const method = incoming.method || 'GET';
     const init = { method, headers, ...(method === 'GET' || method === 'HEAD' ? {} : { body: Readable.toWeb(incoming), duplex: 'half' }) } as RequestInit & { duplex?: string };
-    const result = await socialGateway(new Request(url, init), { origin: config.baseUrl.origin, authenticate, issueToken: async id => socialToken(await key(), secret, id), serviceUrl });
+    const result = await socialGateway(new Request(url, init), { origin: config.baseUrl.origin, authenticate, issueToken: async (id, community) => socialToken(await key(), secret, id, Date.now(), community), serviceUrl });
     outgoing.statusCode = result.status; result.headers.forEach((value, name) => outgoing.setHeader(name, value)); outgoing.end(await result.text());
   } catch { send(503, { error: 'Social Link could not connect. Please retry; your draft is still available.' }); }
 }

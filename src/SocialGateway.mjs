@@ -1,4 +1,9 @@
 const routes = {
+  'messages.profile': ['query', 'messages:profile'], 'messages.configure': ['mutation', 'messages:configure'],
+  'messages.inbox': ['query', 'messages:inbox'], 'messages.get': ['query', 'messages:get'], 'messages.start': ['mutation', 'messages:start'],
+  'messages.history': ['query', 'messages:history'], 'messages.send': ['mutation', 'messages:send'], 'messages.respond': ['mutation', 'messages:respond'],
+  'messages.markRead': ['mutation', 'messages:markRead'], 'messages.saveDraft': ['mutation', 'messages:saveDraft'],
+  'messages.organise': ['mutation', 'messages:organise'], 'messages.report': ['mutation', 'messages:report'],
   'capabilities': ['query', 'capabilities:get'],
   'posts.get': ['query', 'posts:get'], 'posts.list': ['query', 'posts:list'], 'posts.create': ['mutation', 'posts:create'],
   'posts.react': ['mutation', 'posts:react'], 'posts.bookmark': ['mutation', 'posts:bookmark'],
@@ -35,7 +40,7 @@ export async function socialGateway(request, { origin, authenticate, issueToken,
     const endpoint = new URL(serviceUrl);
     if (endpoint.protocol !== 'https:' || !endpoint.hostname.endsWith('.convex.cloud') || endpoint.username || endpoint.password || endpoint.pathname !== '/' || endpoint.search || endpoint.hash) return reply(503, { error: 'Social Link needs its service connection configured.' });
     const [kind, path] = routes[command.action]; endpoint.pathname = '/api/' + kind;
-    const token = await issueToken(account.id);
+    const token = await issueToken(account.id, command.action === 'messages.configure' ? account.community : undefined);
     const response = await fetcher(endpoint, { method: 'POST', redirect: 'error', signal: AbortSignal.any([request.signal, AbortSignal.timeout(20000)]), headers: { 'content-type': 'application/json', authorization: 'Bearer ' + token }, body: JSON.stringify({ path, args: command.args || {}, format: 'json' }) });
     if (!response.headers.get('content-type')?.includes('application/json')) return reply(502, { error: 'Social Link returned an unexpected response.' });
     const result = await response.json();
