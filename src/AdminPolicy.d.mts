@@ -1,0 +1,11 @@
+export const adminCookie: string, challengeCookie: string;
+export const products: string[], roles: string[];
+export function permitted(account: {role:string; status:string; products:string[]} | null, product:string, permission:string):boolean;
+export function token():string;
+export function digest(value:string):string;
+export function matchesEnrollment(value:unknown, hash:string|undefined, expiresAt:string|undefined, now?:number):boolean;
+export function cookie(name:string,value:string,seconds:number):string;
+export function readCookie(header:string|undefined,name:string):string|null;
+export function validSession(row:any,now?:number):boolean;
+export function requireSameOrigin(method:string,origin:string|undefined,site:string|undefined,expected:string):boolean;
+export function publicAccount(row:any):{id:string;email:string;role:string;products:string[]};
