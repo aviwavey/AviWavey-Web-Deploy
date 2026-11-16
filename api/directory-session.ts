@@ -1,3 +1,4 @@
+import {guardModules} from '../src/ModuleAccess.mjs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { loadConfig } from '../src/config.js';
 import { cookieValues, DatabaseSessionIssuer } from '../src/sessions.js';
@@ -6,6 +7,8 @@ import { directorySession } from '../src/DirectorySessionBridge.mjs';
 
 // Install beside the existing TrueMarkGate backend, never in the Sites handler.
 export default async function handler(incoming: IncomingMessage, outgoing: ServerResponse) {
+ if(!await guardModules(incoming,outgoing,["events","assets","atelier"]))return;
+
  try {
   const config = loadConfig();
   const url = new URL(incoming.url || '/', config.baseUrl);

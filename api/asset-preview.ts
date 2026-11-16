@@ -1,9 +1,12 @@
+import {guardModules} from '../src/ModuleAccess.mjs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import { assetPreviewService } from '../src/AssetPreviewService.mjs';
 
 export default async function handler(incoming: IncomingMessage, outgoing: ServerResponse) {
+ if(!await guardModules(incoming,outgoing,["assets"]))return;
+
   try {
     const url = new URL(incoming.url || '/', 'https://localhost');
     const route = url.searchParams.get('route');

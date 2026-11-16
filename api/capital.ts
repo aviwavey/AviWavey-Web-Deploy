@@ -1,3 +1,4 @@
+import {guardModules} from '../src/ModuleAccess.mjs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { loadConfig } from '../src/config.js';
 import { cookieValues, DatabaseSessionIssuer } from '../src/sessions.js';
@@ -6,6 +7,8 @@ import {capitalBridge} from '../src/CapitalBridge.mjs';
 import {Readable} from 'node:stream';
 import {pipeline} from 'node:stream/promises';
 export default async function handler(req:IncomingMessage,res:ServerResponse){
+ if(!await guardModules(req,res,["finance"]))return;
+
  try{const config=loadConfig();const url=new URL(req.url||'/',config.baseUrl);const route=url.searchParams.get('route');if(route!==null)url.pathname='/api/capital/'+route;url.searchParams.delete('route');
  const headers=new Headers();for(const [k,v] of Object.entries(req.headers))if(v!==undefined)headers.set(k,Array.isArray(v)?v.join(','):v);
  const method=req.method||'GET';let body:Buffer|undefined;

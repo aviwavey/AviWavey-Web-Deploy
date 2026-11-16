@@ -1,3 +1,4 @@
+import {guardModules} from '../src/ModuleAccess.mjs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { randomUUID } from 'node:crypto';
 import { neon } from '@neondatabase/serverless';
@@ -6,6 +7,8 @@ import { cookieValues, DatabaseSessionIssuer } from '../src/sessions.js';
 import { NeonIdentityRepository } from '../src/neon-repository.js';
 import { validateNote } from '../src/NotesValidation.mjs';
 export default async function handler(req:IncomingMessage,res:ServerResponse){
+ if(!await guardModules(req,res,["organiser"]))return;
+
  const send=(status:number,data:unknown)=>{res.statusCode=status;res.setHeader('content-type','application/json');res.setHeader('cache-control','no-store, private');res.setHeader('x-content-type-options','nosniff');res.end(JSON.stringify(data));};
  try{
  const config=loadConfig();const url=new URL(req.url||'/',config.baseUrl);const method=req.method||'GET';

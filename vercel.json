@@ -13,9 +13,6 @@
     "api/directory-session.ts": {
       "maxDuration": 30
     },
-    "api/toolkit.ts": {
-      "maxDuration": 90
-    },
     "api/notes.ts": {
       "maxDuration": 30
     },
@@ -36,34 +33,27 @@
     },
     "api/admin.ts": {
       "maxDuration": 30
+    },
+    "api/modules.js": {
+      "maxDuration": 90
     }
   },
   "routes": [
     {
-      "src": "/api/admin/(.*)",
-      "dest": "/api/admin.ts?route=$1"
+      "src": "/api/lms/(.*)",
+      "dest": "/api/modules.js?service=lms&route=$1"
     },
     {
-      "src": "/administration(?:/.*)?",
-      "headers": {
-        "X-Robots-Tag": "noindex, nofollow",
-        "Cache-Control": "no-store"
-      },
-      "continue": true
+      "src": "/api/lms",
+      "dest": "/api/modules.js?service=lms&route=v1/session"
     },
     {
-      "src": "/admin(?:/(.*))?",
-      "status": 307,
-      "headers": {
-        "Location": "/administration/$1"
-      }
+      "src": "/api/toolkit/(.*)",
+      "dest": "/api/modules.js?service=toolkit&route=$1"
     },
     {
-      "src": "/admin\\.html",
-      "status": 307,
-      "headers": {
-        "Location": "/administration"
-      }
+      "src": "/api/toolkit(?:\\.ts)?",
+      "dest": "/api/modules.js?service=toolkit"
     },
     {
       "src": "/MikeT\\.MMT",
@@ -105,10 +95,6 @@
       "dest": "/api/notes.ts?route=$1"
     },
     {
-      "src": "/api/toolkit/(.*)",
-      "dest": "/api/toolkit.ts?route=$1"
-    },
-    {
       "src": "/api/directory-session/(.*)",
       "dest": "/api/directory-session.ts?route=$1"
     },
@@ -119,6 +105,32 @@
     {
       "src": "/api/aura/(.*)",
       "dest": "/api/aura.ts?route=$1"
+    },
+    {
+      "src": "/api/admin/(.*)",
+      "dest": "/api/admin.ts?route=$1"
+    },
+    {
+      "src": "/administration(?:/.*)?",
+      "headers": {
+        "X-Robots-Tag": "noindex, nofollow",
+        "Cache-Control": "no-store"
+      },
+      "continue": true
+    },
+    {
+      "src": "/admin(?:/(.*))?",
+      "status": 307,
+      "headers": {
+        "Location": "/administration/$1"
+      }
+    },
+    {
+      "src": "/admin\\.html",
+      "status": 307,
+      "headers": {
+        "Location": "/administration"
+      }
     },
     {
       "src": "/api/auth/(.*)",

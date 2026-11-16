@@ -1,3 +1,4 @@
+import {guardModules} from '../src/ModuleAccess.mjs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { Readable } from 'node:stream';
 import { neon } from '@neondatabase/serverless';
@@ -41,6 +42,7 @@ export default async function handler(incoming: IncomingMessage, outgoing: Serve
       return record;
     };
     if (path === 'keys' && incoming.method === 'GET') return send(200, { keys: [socialPublicKey(await key(), secret)] });
+    if(!await guardModules(incoming,outgoing,['social-link']))return;
     if (!['command', 'session'].includes(path || '')) return send(404, { error: 'Not found.' });
     const authenticate = async() => {
       const sessions = new DatabaseSessionIssuer(config.databaseUrl, config.sessionCookieName, config.production);
