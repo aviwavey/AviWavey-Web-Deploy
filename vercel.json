@@ -40,6 +40,14 @@
   },
   "routes": [
     {
+      "src": "/api/cloud9/(.*)",
+      "dest": "/api/modules.js?service=cloud9&route=$1"
+    },
+    {
+      "src": "/api/cloud9",
+      "dest": "/api/modules.js?service=cloud9&route=v1/status"
+    },
+    {
       "src": "/api/lms/(.*)",
       "dest": "/api/modules.js?service=lms&route=$1"
     },
