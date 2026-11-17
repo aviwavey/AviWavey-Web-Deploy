@@ -1,1 +1,0 @@
-import{c as e}from"./DashboardLayout-kkhL8j0E.js";const o={name:"arrow-down-to-line",size:24,node:[["path",{d:"M12 17V3",key:"1cwfxf"}],["path",{d:"m6 11 6 6 6-6",key:"12ii2o"}],["path",{d:"M19 21H5",key:"150jfl"}]]};o.node;const a=e(o);export{a as A};
