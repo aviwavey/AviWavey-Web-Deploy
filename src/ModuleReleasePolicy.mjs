@@ -1,5 +1,5 @@
 /** Shared server policy. Closed unless explicitly released; preview access uses the stable account ID. */
-export const moduleKeys = Object.freeze(["labs-products","labs-beta","labs-research","flow-hub","connect-center","social-link","distribution","licences","credits","publishing","royalties","promotion","showcase","events","assets","atelier","organiser","meetings","correspondence","contracts","commerce","inventory","logistics","tools","cloud","learn","lms","finance","markets","holdings","agreements"]);
+export const moduleKeys = Object.freeze(["labs-products","labs-beta","labs-research","flow-hub","connect-center","social-link","distribution","licences","credits","publishing","royalties","promotion","showcase","events","assets","atelier","organiser","meetings","correspondence","contracts","commerce","inventory","logistics","tools","cloud","learn","lms","link","finance","markets","holdings","agreements"]);
 const known = new Set(moduleKeys);
 export function moduleAccess(user,env={}){
  const active=Boolean(user?.id&&user.status==='active'&&Array.isArray(user.memberships)&&user.memberships.includes('avi'));
