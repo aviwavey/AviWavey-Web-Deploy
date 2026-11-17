@@ -40,6 +40,32 @@
   },
   "routes": [
     {
+      "src": "/api/admin/(.*)",
+      "dest": "/api/admin.ts?route=$1"
+    },
+    {
+      "src": "/administration(?:/.*)?",
+      "headers": {
+        "X-Robots-Tag": "noindex, nofollow",
+        "Cache-Control": "no-store"
+      },
+      "continue": true
+    },
+    {
+      "src": "/admin(?:/(.*))?",
+      "status": 307,
+      "headers": {
+        "Location": "/administration/$1"
+      }
+    },
+    {
+      "src": "/admin\\.html",
+      "status": 307,
+      "headers": {
+        "Location": "/administration"
+      }
+    },
+    {
       "src": "/api/lms/(.*)",
       "dest": "/api/modules.js?service=lms&route=$1"
     },
@@ -105,32 +131,6 @@
     {
       "src": "/api/aura/(.*)",
       "dest": "/api/aura.ts?route=$1"
-    },
-    {
-      "src": "/api/admin/(.*)",
-      "dest": "/api/admin.ts?route=$1"
-    },
-    {
-      "src": "/administration(?:/.*)?",
-      "headers": {
-        "X-Robots-Tag": "noindex, nofollow",
-        "Cache-Control": "no-store"
-      },
-      "continue": true
-    },
-    {
-      "src": "/admin(?:/(.*))?",
-      "status": 307,
-      "headers": {
-        "Location": "/administration/$1"
-      }
-    },
-    {
-      "src": "/admin\\.html",
-      "status": 307,
-      "headers": {
-        "Location": "/administration"
-      }
     },
     {
       "src": "/api/auth/(.*)",
