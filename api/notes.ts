@@ -47,5 +47,5 @@ export default async function handler(req:IncomingMessage,res:ServerResponse){
  }
  const created=await sql`INSERT INTO avw_organiser_notes(owner_id,id,title,kind,parent,content) VALUES(${owner},${randomUUID()},${note.title},${note.kind},${note.parent},${JSON.stringify(note.content)}::jsonb) RETURNING id,title,kind,parent,content,version,updated_at`;
  send(201,created[0]);
- }catch{send(503,{error:'Notes could not connect to account storage. Your unsaved note is still in the editor.'});}
+ }catch(e){if(String((e as Error)?.message||'').includes('CLOUD9_STORAGE_FULL'))return send(413,{error:'Your Cloud9 storage is full. Clear space or reduce this item before saving.'});send(503,{error:'Notes could not connect to account storage. Your unsaved note is still in the editor.'});}
 }

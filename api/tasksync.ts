@@ -26,5 +26,5 @@ export default async function handler(req:IncomingMessage,res:ServerResponse){
  const document=JSON.stringify({items:data.items,logs:data.logs});
  const rows=data.version===0?await sql`INSERT INTO avw_tasksync_states(owner_id,document,version) VALUES(${owner},${document}::jsonb,1) ON CONFLICT(owner_id) DO NOTHING RETURNING version`:await sql`UPDATE avw_tasksync_states SET document=${document}::jsonb,version=version+1 WHERE owner_id=${owner} AND version=${data.version} RETURNING version`;
  return rows.length?send(200,rows[0]):send(409,{error:'Tasks changed in another window. Reload before saving.'});
- }catch{return send(503,{error:'Organiser could not connect to account storage. Please retry.'});}
+ }catch(e){if(String((e as Error)?.message||'').includes('CLOUD9_STORAGE_FULL'))return send(413,{error:'Your Cloud9 storage is full. Clear space or reduce this item before saving.'});return send(503,{error:'Organiser could not connect to account storage. Please retry.'});}
 }
