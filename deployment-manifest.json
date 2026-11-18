@@ -1,21 +1,23 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "db6a33fe35bb25a87155371722e335fa50fd49b7",
+  "sourceCommit": "5e9e003e458cc7773abb0f09f676d9454765d46e",
   "sourceRef": "main",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/68",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/69",
   "publicationMethod": "Validated local build from the authorised existing Desktop preview, published to the existing Vercel deployment mirror",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-18T10:39:59.038Z",
-  "contents": "Universal creative discipline filters; Labs R&D submissions and guarded file review; global Payment Portal basket with grouped purchases and approval requests; reusable populated basket example; Finance naming and removal of navbar Demo Workspace control.",
+  "publishedAt": "2026-11-18T11:08:41.431Z",
+  "contents": [
+    "Existing connected Payment Portal and R&D release",
+    "Independent OAuth attempts and existing-session reuse",
+    "Recoverable profile completion and 2 MB images",
+    "Country-specific E.164 telephone inputs",
+    "Required Creative discipline onboarding",
+    "Additional breadcrumb spacing"
+  ],
   "validation": {
-    "typecheck": "passed",
-    "productionBuild": "passed",
-    "connectedRegressionChecks": 64,
-    "learnAndStorageGuardChecks": 19,
-    "browserVisualReview": "Desktop and mobile component inspection in isolated Chrome QA session",
-    "sourceFilesVerified": 46,
-    "canonicalFrontendFilesVerified": 37,
-    "remoteJobs": "Local validation explicitly authorised; hosted build spending block was not bypassed"
+    "frontend": "TypeScript build and Vite production build passed",
+    "authentication": "16 regression checks passed",
+    "liveGoogleConsent": "Requires a real account/browser; not covered by automated checks"
   },
   "demo": {
     "accounts": 100,
@@ -49,63 +51,67 @@
   },
   "repositories": {
     "PublicInterface": "db6a33fe35bb25a87155371722e335fa50fd49b7",
-    "UserDashboard": "33ac707ee56888cf0fef3099e0a6aa80480fdab7",
+    "UserDashboard": "e03cb7ce7cc6495fb4f2d6cd6a08c16b16ebd66b",
     "IUWLearn": "ee50b2e30f1e9e393c62d4da5ab66a157ca30f2e",
     "Academy": "a6d5a1c3383acfc400bcde8d1fc6810630ed67a0",
     "Cloud9Reserve": "c359e23a20b37efad8e95c9472f78ffb5d3df0db",
     "Garage": "e01f9c1c24767131ea4f41279e454ddff7618c81",
     "CREATIVE": "15e192c053ff41f4a7dce98196a698cdbaf81ffa",
     "Modules": "d6075b4269d342cee2cf25e300c79897e01fa54d",
-    "BackendLogic": "3d8cc36c22491877a98a055c224ca15a58ed9708",
-    "FrontendView": "e6e4444e25df5e3e4514701f8f9809100ff518f3",
-    "Website": "2ea4bbb65ca2dbeef88e392fc17286c586ee85aa",
-    "AVIWavey": "a84cbf7f952b0153f4bec16efa87dce92334278d",
-    "DigitalPlatforms": "e10ce8cbe13935b22e49eca137dadfa0bfcee795"
+    "BackendLogic": "4943b0ad37085b333ac667a45fc9b62cc50856b6",
+    "FrontendView": "cb5bf7f7c21589a2d1a3a87ac0b3427fa9809149",
+    "Website": "553e11690c44b6a896cbdc42af80e93cd69ce4fb",
+    "AVIWavey": "0120fbb61b1669e85596e12561317e9dc106a6a5",
+    "DigitalPlatforms": "c1af68cdd5b2c530e35286b71f29df385b592857",
+    "TrueMarkGate": "6acbfdc0bd1d66bf9fbbc464deabd6ac32d846d0",
+    "SystemLayers": "3a75d1afb572c9f8c65761286348f6f601e3a90d"
   },
   "artifactHashes": [
     {
       "path": "index.html",
-      "gitBlobSha": "684dee3e32ab410c8870167c4ceae65699acd99c",
-      "sha256": "fc22e624298e8a1dfdc661c87b1c8e5035080928e953985461405ba87b656cc1"
+      "sha256": "6622baea2fde4e9e577565ea76c63dc5225ed0bc76038c802236203849637181",
+      "bytes": 1386
     },
     {
-      "path": "assets/DashboardLayout-Bt5yoBW5.js",
-      "gitBlobSha": "19ccb769e2d80884cbacb12f395792e0ed04e510",
-      "sha256": "cdc50e6a8922eea7f94feb2daf3dc2c985ebad349b9c8d77976f036d82f8406a"
+      "path": "assets/Login-KBpzVNAM.js",
+      "sha256": "49d7e91eebaa544faa0704a67f133688f1d7acd8b1c08bb081de0786caf0e2b8",
+      "bytes": 9938
     },
     {
-      "path": "assets/IUWLMS-Gex8vqSo.js",
-      "gitBlobSha": "5aa297641fa3cbc0df72cf9ae5cbcf253c7f6af3",
-      "sha256": "ed72ac1913ecad951769abe8fe5771d5972e1adee38b108deb4bb5748d10ef71"
+      "path": "assets/CompleteProfile-BJhn4efG.js",
+      "sha256": "da13ad59ab2ace732343d227e89e90b356e34d1c34f50ca63c20b8532a77e12b",
+      "bytes": 3590
     },
     {
-      "path": "assets/Planner-C4VTLK7d.js",
-      "gitBlobSha": "cc83132c3b33bfa990a4175670b5e84bdbe22f6a",
-      "sha256": "696616b314fd2ac8b91531cdb60d43edd07c7b12b86b63496ad653bcc92e30a3"
+      "path": "assets/DashboardLayout-5a9xoHZP.js",
+      "sha256": "5ba6a533d36a51d5c73195816eea7dbdfeba728d2ad65f63bdc1d6b46a9c93f7",
+      "bytes": 5297538
     },
     {
-      "path": "assets/PaymentPortal-DtCNsEFW.js",
-      "gitBlobSha": "c3f3d93c366a59e16e304d79044b8442e062829a",
-      "sha256": "70ec06da57dd0d9fa05266160965f868f579d2db85fbfc18156145f8475d4b38"
+      "path": "assets/main-BWbMUmhL.js",
+      "sha256": "5c00789968d1a74ed49d207c9aca466cfb44c2976c7bf04f958ed61a282ff3eb",
+      "bytes": 248038
     },
     {
-      "path": "assets/main-CQK6gg2w.js",
-      "gitBlobSha": "92c7149aaae7bba533d884455e9f1a62baf794c6",
-      "sha256": "641a4215468bdb11d6e2238db2d64b2c96bb1049f749d3508199f2adfe80b44b"
+      "path": "assets/main-moTs7NLZ.css",
+      "sha256": "85f4070e806e98115042f7a96c465c2de815f16ecae3d4e7c576706c856b51ac",
+      "bytes": 198544
     },
     {
-      "path": "assets/DashboardLayout-TIsekLnS.css",
-      "gitBlobSha": "6f2a5544eaf17dd09e35aae83cc54b05cfa50895",
-      "sha256": "125a67b692fbe5327b5e5f3703152618b3f166e8cd6285e7a4a8750afe064558"
+      "path": "assets/DashboardLayout-BNXOjcZ0.css",
+      "sha256": "ff900a58c48e39dcde45c48c0fb46c893c47ab6091b725da18d2b8adcaf0049a",
+      "bytes": 570726
     },
     {
-      "path": "assets/main-Cqwrv3GF.css",
-      "gitBlobSha": "037783d0b0959d13582c9b584f32b1be44d2b889",
-      "sha256": "09a9515c3db97f3ab21cd034705a24d2c2e626f6291e7404c8ecbe093b6570c8"
+      "path": "assets/Settings-ATyWXhDJ.js",
+      "sha256": "d0e9b5600c10ccb234a4a37ffd52c20a2e1841637097eb1dfeee68842d1ae49a",
+      "bytes": 39748
     }
   ],
   "relatedPullRequests": [
-    "https://github.com/AVI-Wavey/PublicInterface/pull/68"
+    "https://github.com/AVI-Wavey/PublicInterface/pull/68",
+    "https://github.com/AVI-Wavey/PublicInterface/pull/69",
+    "https://github.com/AVI-Wavey/PublicInterface/pull/70"
   ],
   "limitations": [
     "Payment collection, live payouts and recurring billing are not connected. Checkout is simulated.",

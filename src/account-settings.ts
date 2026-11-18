@@ -1,12 +1,27 @@
+import {validateCreativeDisciplines} from './creative-profile.js';
 import { assertMobileChangeAllowed } from './ProtectedProfilePolicy.mjs';
 import { neon } from "@neondatabase/serverless";
 
-const phone = (value: string) => value.replace(/[\s()-]/g, "");
+import {normalizeTelephone} from './phone-number.js';
 
 export class AccountSettingsService {
   private readonly sql;
   constructor(databaseUrl: string) { this.sql = neon(databaseUrl); }
 
+
+  private async creativeSchema(){
+    await this.sql`ALTER TABLE public_profiles ADD COLUMN IF NOT EXISTS creative_disciplines jsonb NOT NULL DEFAULT '[]'::jsonb, ADD COLUMN IF NOT EXISTS creative_onboarding_completed_at timestamptz`;
+  }
+  async readCreative(userId:string){
+    await this.creativeSchema();
+    const rows=await this.sql`SELECT creative_disciplines,creative_onboarding_completed_at FROM public_profiles WHERE user_id=${userId}`;
+    return {disciplines:rows[0]?.creative_disciplines||[],completed:Boolean(rows[0]?.creative_onboarding_completed_at)};
+  }
+  async saveCreative(userId:string,value:unknown){
+    const disciplines=validateCreativeDisciplines(value);await this.creativeSchema();
+    await this.sql`INSERT INTO public_profiles(user_id,creative_disciplines,creative_onboarding_completed_at) VALUES(${userId},${JSON.stringify(disciplines)}::jsonb,now()) ON CONFLICT(user_id) DO UPDATE SET creative_disciplines=EXCLUDED.creative_disciplines,creative_onboarding_completed_at=EXCLUDED.creative_onboarding_completed_at,updated_at=now()`;
+    return this.readCreative(userId);
+  }
   async read(userId: string) {
     await this.sql`ALTER TABLE public_profiles ADD COLUMN IF NOT EXISTS public_gender text NOT NULL DEFAULT '', ADD COLUMN IF NOT EXISTS public_pronouns text NOT NULL DEFAULT ''`;
     const rows = await this.sql`
@@ -37,6 +52,7 @@ export class AccountSettingsService {
 
   async updatePublic(userId: string, input: { pronouns?: string; gender?: string; displayName: string; bio: string; profilePicture?: string; contactEmail: string; contactTelephone: string; usePrivateTelephone: boolean }) {
     await this.sql`ALTER TABLE public_profiles ADD COLUMN IF NOT EXISTS public_gender text NOT NULL DEFAULT '', ADD COLUMN IF NOT EXISTS public_pronouns text NOT NULL DEFAULT ''`;
+    if(input.contactTelephone)input.contactTelephone=normalizeTelephone(input.contactTelephone);
     await this.sql`INSERT INTO public_profiles (user_id,display_name,bio,profile_picture_key,contact_email,contact_telephone,use_private_telephone,public_gender,public_pronouns)
       VALUES (${userId},${input.displayName},${input.bio},${input.profilePicture || null},${input.contactEmail || null},${input.contactTelephone || null},${input.usePrivateTelephone},${(input.gender||'').trim().slice(0,80)},${(input.pronouns||'').trim().slice(0,80)})
       ON CONFLICT (user_id) DO UPDATE SET display_name=EXCLUDED.display_name,bio=EXCLUDED.bio,
@@ -46,14 +62,15 @@ export class AccountSettingsService {
   }
 
   async updatePrivateTelephone(userId: string, rawTelephone: string) {
-    const previous=await this.read(userId);if(previous.private.telephone===rawTelephone.trim())return previous;
-    const value = phone(rawTelephone);
-    if (!/^\+[1-9]\d{7,14}$/.test(value)) throw new Error("INVALID_TELEPHONE");
+    const value=normalizeTelephone(rawTelephone);
+    const previous=await this.read(userId);if(previous.private.telephone===value)return previous;
     await assertMobileChangeAllowed(this.sql,userId,value);
     const collision = await this.sql`SELECT user_id FROM contacts WHERE kind='telephone' AND normalized_value=${value} AND user_id<>${userId} LIMIT 1`;
     if (collision[0]) throw new Error("CONTACT_ALREADY_IN_USE");
-    await this.sql`DELETE FROM contacts WHERE user_id=${userId} AND kind='telephone'`;
-    await this.sql`INSERT INTO contacts (id,user_id,kind,normalized_value,verified_at,is_primary) VALUES (${crypto.randomUUID()},${userId},'telephone',${value},NULL,TRUE)`;
+    await this.sql.transaction([
+      this.sql`DELETE FROM contacts WHERE user_id=${userId} AND kind='telephone'`,
+      this.sql`INSERT INTO contacts (id,user_id,kind,normalized_value,verified_at,is_primary) VALUES (${crypto.randomUUID()},${userId},'telephone',${value},NULL,TRUE)`
+    ]);
     return this.read(userId);
   }
 }

@@ -45,9 +45,9 @@ const json = (response: ServerResponse, status: number, body: unknown, headers?:
   response.end(JSON.stringify(body));
 };
 
-async function jsonBody(request: IncomingMessage) {
+async function jsonBody(request: IncomingMessage, limit = 16384) {
   const chunks: Buffer[] = [];
-  let size=0;for await (const chunk of request){const b=Buffer.isBuffer(chunk)?chunk:Buffer.from(chunk);size+=b.length;if(size>16384)throw new Error("REQUEST_TOO_LARGE");chunks.push(b);}
+  let size=0;for await (const chunk of request){const b=Buffer.isBuffer(chunk)?chunk:Buffer.from(chunk);size+=b.length;if(size>limit)throw new Error("REQUEST_TOO_LARGE");chunks.push(b);}
   return chunks.length ? JSON.parse(Buffer.concat(chunks).toString("utf8")) as Record<string, unknown> : {};
 }
 
@@ -78,6 +78,20 @@ export default async function handler(request: IncomingMessage, response: Server
     };
 
     const sql=neon(config.databaseUrl);
+    const verifyAttempt=async(state:string)=>{
+      if(!state)throw new Error('OAUTH_STATE_INVALID');
+      const verified=await jwtVerify(state,config.sessionSigningKey,{algorithms:['HS256']});
+      const id=verified.payload.jti||'';
+      if(verified.payload.transaction===2){
+        if(!/^[A-Za-z0-9_-]{22}$/.test(id))throw new Error('OAUTH_STATE_INVALID');
+        const verifier=cookieValue(request.headers.cookie,'avi_oauth_'+id);
+        if(!verifier)throw new Error('OAUTH_STATE_INVALID');
+        return {verified,verifier,clear:[clearCookie('avi_oauth_'+id)]};
+      }
+      if(state!==cookieValue(request.headers.cookie,'avi_oauth_state'))throw new Error('OAUTH_STATE_INVALID');
+      return {verified,verifier:cookieValue(request.headers.cookie,'avi_oauth_verifier')||'',clear:[clearCookie('avi_oauth_state'),clearCookie('avi_oauth_verifier')]};
+    };
+
     const settingsPath=(product:string)=>product==='aura'?'/AuraAI/settings/':'/dashboard/settings';
     const redirect=(path:string,cookies:string[]=[])=>{response.statusCode=303;response.setHeader('Cache-Control','no-store');response.setHeader('Location',new URL(path,config.baseUrl).toString());if(cookies.length)response.setHeader('Set-Cookie',cookies);response.end();};
     const proof=async(kind:string,payload:Record<string,unknown>)=>new SignJWT({...payload,kind}).setProtectedHeader({alg:'HS256'}).setIssuer('TrueMarkGate').setAudience('account-change').setIssuedAt().setExpirationTime('5m').setJti(b64(randomBytes(24))).sign(config.sessionSigningKey);
@@ -104,7 +118,7 @@ export default async function handler(request: IncomingMessage, response: Server
     }
     if(request.method==='POST'&&requestUrl.pathname.endsWith('/callback')){
       const form=await formBody(request,requestUrl.toString()),state=string(form.get('state'));
-      if(!state||state!==cookieValue(request.headers.cookie,'avi_oauth_state'))throw new Error('OAUTH_STATE_INVALID');
+      await verifyAttempt(state);
       // Apple form_post arrives cross-site; continue on a same-site GET so the account session is available.
       return redirect('/api/auth/callback?'+new URLSearchParams({state,code:string(form.get('code'))}));
     }
@@ -125,7 +139,7 @@ export default async function handler(request: IncomingMessage, response: Server
       }
       const a=await current();const signedIn=a?.userId===p.target;
       response.setHeader('Content-Type','text/html; charset=utf-8');response.setHeader('Cache-Control','no-store');response.setHeader('Content-Security-Policy',"default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'");
-      return response.end(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><title>Link your account</title><style>body{font:16px system-ui;background:#f4f7f6;color:#23483f;margin:0;padding:24px}main{max-width:440px;margin:8vh auto;background:white;padding:28px;border:1px solid #d4e1dd;border-radius:12px}label{display:block;margin:16px 0}input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #adc9bf;border-radius:6px}input[type=checkbox]{width:auto}button,a{display:inline-block;padding:12px;color:#176f61}button{background:#f7e7ee;border:1px solid #ddbbc9;border-radius:6px}</style><main><h1>Link your account</h1><p>An existing account needs your approval before this sign-in method can be linked.</p><form method="post">${signedIn?'': '<label>Existing account email<input name="email" type="email" autocomplete="username" required></label><label>Existing account password<input name="password" type="password" autocomplete="current-password" required></label>'}<label><input type="checkbox" name="consent" value="yes" required> Link this Google or Apple sign-in to my account</label><button type="submit">Confirm link</button></form><p>If your original account uses Google or Apple, sign in using that account first, then link the other account in Settings.</p><a href="${p.product==='aura'?'/AuraAI/sign-in/':'/login'}">Return to sign in</a></main>`);
+      return response.end(`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><title>Link your account</title><style>body{font:16px system-ui;background:#f4f7f6;color:#23483f;margin:0;padding:24px}main{max-width:440px;margin:8vh auto;background:white;padding:28px;border:1px solid #d4e1dd;border-radius:12px}label{display:block;margin:16px 0}input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #adc9bf;border-radius:6px}input[type=checkbox]{width:auto}button,a{display:inline-block;padding:12px;color:#176f61}button{background:#f7e7ee;border:1px solid #ddbbc9;border-radius:6px}</style><main><h1>Link your account</h1><p>An existing account needs your approval before this sign-in method can be linked.</p><form method="post">${signedIn?'': '<label>Existing account email<input name="email" type="email" autocomplete="username" required></label><label>Existing account password<input name="password" type="password" autocomplete="current-password" required></label>'}<label><input type="checkbox" name="consent" value="yes" required> Link this Google or Apple sign-in to my account</label><button type="submit">Confirm link</button></form><p>If your original account uses Google or Apple, sign in using that account first, then link the other account in Settings.</p><a href="${p.product==='aura'?'/AuraAI/sign-in/':'/home?authError=retry'}">Return to sign in</a></main>`);
     }
     if (request.method === "GET" && requestUrl.pathname.endsWith("/health")) {
       const database = new NeonIdentityRepository(config.databaseUrl);
@@ -152,14 +166,19 @@ export default async function handler(request: IncomingMessage, response: Server
       if (provider === "apple" && !config.apple) return json(response, 503, { code: "PROVIDER_NOT_CONFIGURED", message: "Apple sign-in is not available yet." });
       const intent=requestUrl.searchParams.get('intent')||'signin';
       if(!['signin','link','password'].includes(intent))throw new Error('OAUTH_STATE_INVALID');
-      const actor=intent==='signin'?undefined:await current();
+      const actor=await current();
+      if(intent==='signin' && actor && requestUrl.searchParams.get('switch')!=='1'){
+        const user=await identities.findUserById(actor.userId);
+        if(user?.status==='active' && user.memberships.includes(product))return redirect(profileComplete(user)?validatedReturnPath(product,requestUrl.searchParams.get('returnTo')||undefined):product==='avi'?'/complete-profile':'/AuraAI/complete-profile/');
+      }
       if(intent!=='signin'&&!actor)return json(response,401,{message:'Sign in before changing account access.'});
       const returnTo = validatedReturnPath(product, requestUrl.searchParams.get("returnTo") ?? undefined);
       const verifier = b64(randomBytes(32));
       const challenge = b64(createHash("sha256").update(verifier).digest());
       const nonce = b64(randomBytes(24));
-      const state = await new SignJWT({ product, provider, returnTo, nonce, intent, userId:actor?.userId, sessionId:actor?.sessionId }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("10m").setJti(b64(randomBytes(16))).sign(config.sessionSigningKey);
-      response.setHeader("Set-Cookie", [tempCookie("avi_oauth_state", state).replace("SameSite=Lax","SameSite=None"), tempCookie("avi_oauth_verifier", verifier)]);
+      const attempt=b64(randomBytes(16));
+      const state = await new SignJWT({ transaction:2, product, provider, returnTo, nonce, intent, userId:actor?.userId, sessionId:actor?.sessionId }).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("10m").setJti(attempt).sign(config.sessionSigningKey);
+      response.setHeader("Set-Cookie", [tempCookie("avi_oauth_"+attempt, verifier).replace("SameSite=Lax",provider==="apple"?"SameSite=None":"SameSite=Lax")]);
       response.statusCode = 302;
       response.setHeader("Cache-Control", "no-store");
       response.setHeader("Location", provider === "google" ? googleAuthorizationUrl(config, { product, state, codeChallenge: challenge, nonce }).toString() : appleAuthorizationUrl(config, state, nonce).toString());
@@ -167,13 +186,13 @@ export default async function handler(request: IncomingMessage, response: Server
     }
     if (request.method === "GET" && requestUrl.pathname.endsWith("/callback")) {
       const state = requestUrl.searchParams.get("state") ?? "";
-      if (!state || state !== cookieValue(request.headers.cookie, "avi_oauth_state")) throw new Error("OAUTH_STATE_INVALID");
-      const verifiedState = await jwtVerify(state, config.sessionSigningKey,{algorithms:["HS256"]});
+      const attempt = await verifyAttempt(state);
+      const verifiedState = attempt.verified;
       const product = parseProduct(verifiedState.payload.product);
       const provider=verifiedState.payload.provider;
       if(provider!=='google'&&provider!=='apple')throw new Error('OAUTH_PROVIDER_INVALID');
-      const identity=provider==='apple'?await exchangeAppleCode(config,requestUrl.searchParams.get('code')||'',String(verifiedState.payload.nonce||'')):await exchangeGoogleCode(config,product,requestUrl.searchParams.get('code')||'',cookieValue(request.headers.cookie,'avi_oauth_verifier')||'',String(verifiedState.payload.nonce||''));
-      const clear=[clearCookie('avi_oauth_state'),clearCookie('avi_oauth_verifier')];
+      const identity=provider==='apple'?await exchangeAppleCode(config,requestUrl.searchParams.get('code')||'',String(verifiedState.payload.nonce||'')):await exchangeGoogleCode(config,product,requestUrl.searchParams.get('code')||'',attempt.verifier,String(verifiedState.payload.nonce||''));
+      const clear=attempt.clear;
       if(['link','password'].includes(String(verifiedState.payload.intent))){
         const a=await current();if(!a||a.userId!==verifiedState.payload.userId||a.sessionId!==verifiedState.payload.sessionId)throw new Error('OAUTH_STATE_INVALID');
         const user=await identities.findUserById(a.userId);if(user?.status!=='active')throw new Error('AUTHENTICATION_FAILED');
@@ -192,7 +211,7 @@ export default async function handler(request: IncomingMessage, response: Server
       const returnTo = validatedReturnPath(product, String(verifiedState.payload.returnTo ?? ""));
       response.statusCode = 302;
       response.setHeader("Cache-Control", "no-store");
-      response.setHeader("Set-Cookie", [...sessionCookies(config.sessionCookieName, result.session.cookie, config.baseUrl.hostname), clearCookie("avi_oauth_state"), clearCookie("avi_oauth_verifier")]);
+      response.setHeader("Set-Cookie", [...sessionCookies(config.sessionCookieName, result.session.cookie, config.baseUrl.hostname), ...clear]);
       response.setHeader("Location", new URL(result.profileComplete ? returnTo : product === "avi" ? "/complete-profile" : "/AuraAI/complete-profile/", config.baseUrl).toString());
       return response.end();
     }
@@ -200,9 +219,20 @@ export default async function handler(request: IncomingMessage, response: Server
       const authenticated = await current();
       if (!authenticated) return json(response, 200, { authenticated: false });
       const user = await identities.findUserById(authenticated.userId);
-      if (!user) return json(response, 200, { authenticated: false });
+      if (!user || user.status !== "active") return json(response, 200, { authenticated: false });
       const completed = profileComplete(user);
-      return json(response, 200, { authenticated: true, profileComplete: completed, name: [user.firstName, user.lastName].filter(Boolean).join(" "), email: user.primaryEmail, picture: (await settings.read(authenticated.userId)).public.profilePicture || user.profilePictureKey, memberships: user.memberships, assurance: user.assurance, moduleAccess: moduleAccess(user,process.env) });
+      const publicSettings = await settings.read(authenticated.userId).catch(() => undefined);
+      return json(response, 200, { authenticated: true, profileComplete: completed, name: [user.firstName, user.lastName].filter(Boolean).join(" "), email: user.primaryEmail, picture: publicSettings?.public.profilePicture || user.profilePictureKey, memberships: user.memberships, assurance: user.assurance, moduleAccess: moduleAccess(user,process.env) });
+    }
+
+    if(requestUrl.pathname.endsWith('/creative-profile')&&['GET','POST'].includes(request.method||'')){
+      const a=await current();
+      if(!a)return json(response,401,{message:'Sign in to continue.'});
+      const user=await identities.findUserById(a.userId);
+      if(!user||user.status!=='active'||!profileComplete(user))return json(response,403,{message:'Complete your account profile first.'});
+      if(request.method==='GET')return json(response,200,await settings.readCreative(a.userId));
+      const body=await jsonBody(request);
+      return json(response,200,await settings.saveCreative(a.userId,body.disciplines));
     }
     if (request.method === "GET" && requestUrl.pathname.endsWith("/settings")) {
       const authenticated = await current();
@@ -252,7 +282,7 @@ export default async function handler(request: IncomingMessage, response: Server
       const contentType = String(request.headers["content-type"] ?? "");
       let username = ""; let telephone = ""; let picture = "";
       if (contentType.includes("application/json")) {
-        const body = await jsonBody(request);
+        const body = await jsonBody(request, 2_800_000);
         username = string(body.username); telephone = string(body.telephone); picture = string(body.profilePicture);
         const match = /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(picture);
         if (!match || Buffer.from(match[2], "base64").byteLength > 2_000_000) return json(response, 400, { code: "PROFILE_PICTURE_REQUIRED", message: "Choose a JPEG, PNG or WebP image smaller than 2 MB." });
@@ -273,11 +303,16 @@ export default async function handler(request: IncomingMessage, response: Server
     }
     return json(response, 404, { code: "AUTH_ROUTE_NOT_FOUND", message: "This authentication route is not available." });
   } catch (error) {
+    const callbackUrl=new URL(request.url||'/','https://aviwavey.com');
+    if(callbackUrl.pathname.endsWith('/callback')||callbackUrl.searchParams.get('path')==='callback'){
+      response.statusCode=303;response.setHeader('Cache-Control','no-store');
+      response.setHeader('Location','/home?authError=retry');return response.end();
+    }
     const configurationError = error instanceof Error && error.message.startsWith("Missing required configuration:");
     if (!configurationError) {
       const publicError = publicAuthError(error);
       if (publicError.body.code !== "AUTHENTICATION_FAILED" || publicError.status !== 401) return json(response, publicError.status, publicError.body);
     }
-    return json(response, configurationError ? 503 : 401, { code: configurationError ? "SERVICE_NOT_CONFIGURED" : "AUTHENTICATION_FAILED", message: configurationError ? "TrueMarkGate is awaiting secure deployment configuration." : "We could not complete that sign-in request." });
+    return json(response, configurationError || (request.method==="GET" && (request.url||"").includes("session")) ? 503 : 401, { code: configurationError ? "SERVICE_NOT_CONFIGURED" : "AUTHENTICATION_FAILED", message: configurationError ? "TrueMarkGate is awaiting secure deployment configuration." : "We could not complete that sign-in request." });
   }
 }

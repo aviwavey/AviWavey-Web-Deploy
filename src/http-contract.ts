@@ -22,12 +22,17 @@ export function parseProduct(value: unknown): Product {
 export function publicAuthError(error: unknown): { status: number; body: { message: string; code: string } } {
   if(error instanceof Error&&error.message==='IDENTITY_DETAILS_LOCKED')return {status:409,body:{code:'IDENTITY_DETAILS_LOCKED',message:'Verified details are locked. Submit a correction request with evidence.'}};
   const code = error instanceof Error ? error.message : "AUTHENTICATION_FAILED";
+  if(code==='REQUEST_TOO_LARGE')return {status:413,body:{code,message:'Choose a profile picture smaller than 2 MB.'}};
+  if(error instanceof SyntaxError)return {status:400,body:{code:'INVALID_REQUEST',message:'Please check the information and try again.'}};
+  if((error as {code?:string})?.code==='23505')return {status:409,body:{code:'DETAILS_ALREADY_IN_USE',message:'That username or number is already in use. Please check your details.'}};
+
   if (code === "LEGAL_CONSENT_REQUIRED" || code === "PASSWORD_TOO_SHORT" || code === "INVALID_PRODUCT") {
     return { status: 400, body: { code, message: "Please check the information and try again." } };
   }
   if (code === "EXPLICIT_LINK_REQUIRED") {
     return { status: 409, body: { code, message: "Sign in to your existing account first, then link this sign-in method in account security." } };
   }
+  if(code==='INVALID_DISCIPLINES')return {status:400,body:{code,message:'Choose at least one discipline from the list.'}};
   if (code === "USERNAME_REQUIRED") return { status: 400, body: { code, message: "Choose a username." } };
   if (code === "USERNAME_ALREADY_IN_USE") return { status: 409, body: { code, message: "That username is already in use. Please choose another." } };
   if (code === "CONTACT_ALREADY_IN_USE") return { status: 409, body: { code, message: "That telephone number is already connected to another account." } };
