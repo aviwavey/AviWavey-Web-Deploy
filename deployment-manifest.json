@@ -1,21 +1,21 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "8d34fca768ef2f39c21166d5c19431fdf9ef2f2e",
+  "sourceCommit": "db6a33fe35bb25a87155371722e335fa50fd49b7",
   "sourceRef": "main",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/67",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/68",
   "publicationMethod": "Validated local build from the authorised existing Desktop preview, published to the existing Vercel deployment mirror",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-18T09:28:30.147Z",
-  "contents": "Releases and Socials navigation; grouped production schedules and promotional handoffs; fixed module/dialog navigation; declared directory owners, logos and tag counts; inbox categories and 50-message pagination; persistent Store bags, saved sellers, purchase/hire auctions and return/deposit simulation; populated profile banners, highlights and personal posts. Multi-select Merch, Equipment, Gift cards and Accessories filters, persisted categories and fixed auction hire windows. Shop filters reset when opening Inventory and Logistics.",
+  "publishedAt": "2026-11-18T10:39:59.038Z",
+  "contents": "Universal creative discipline filters; Labs R&D submissions and guarded file review; global Payment Portal basket with grouped purchases and approval requests; reusable populated basket example; Finance naming and removal of navbar Demo Workspace control.",
   "validation": {
     "typecheck": "passed",
     "productionBuild": "passed",
-    "connectedReleaseMailTradingChecks": 57,
-    "moduleGateChecks": 5,
-    "existingRepositoryChecks": 23,
-    "browserVisualReview": "unavailable",
-    "remoteJobs": "Failed before running steps; local validation explicitly authorised",
-    "latestRegressionChecks": 42
+    "connectedRegressionChecks": 64,
+    "learnAndStorageGuardChecks": 19,
+    "browserVisualReview": "Desktop and mobile component inspection in isolated Chrome QA session",
+    "sourceFilesVerified": 46,
+    "canonicalFrontendFilesVerified": 37,
+    "remoteJobs": "Local validation explicitly authorised; hosted build spending block was not bypassed"
   },
   "demo": {
     "accounts": 100,
@@ -33,75 +33,82 @@
       "depositPercent": 50,
       "protectionPercent": 2,
       "status": "Illustrative preview assumptions; no active insurance or payments"
-    }
+    },
+    "basketExample": {
+      "modules": [
+        "Store",
+        "Learn",
+        "Atelier Index",
+        "Connect Center"
+      ],
+      "reusable": true,
+      "preservesExistingSelections": true,
+      "discountCode": "WAVE5"
+    },
+    "researchExamples": 6
   },
   "repositories": {
-    "PublicInterface": "8d34fca768ef2f39c21166d5c19431fdf9ef2f2e",
-    "UserDashboard": "a7c718e3f4e7578daacee0b80fc8fef3b9a52b69",
-    "Cloud9Reserve": "8b97bc2b7a7c7ed45fea5c38e71da8994e2cb5a2",
-    "Garage": "13b8d43db2f0630a592e09912f56d206b04db9ec",
-    "FrontendView": "01949a8734128b8516ca3a5183c3c4ac0c321757",
-    "CREATIVE": "760782032b9260c7120e1d683c3921115af95b88",
-    "Modules": "cd70c33b8bfdb1eb3c5272289ad20604b7de7a34",
-    "BackendLogic": "d233eb28a02818f4c392909ccd69aa56509df198",
-    "Website": "9b84df0ee03b09e3a66e4dfad54f4c27e75bf830",
-    "AVIWavey": "f1846a76fd8eaa176f193502336d423358935598",
-    "DigitalPlatforms": "2645952fda9cb2c9fd1e82d05094d5ed088860ac"
+    "PublicInterface": "db6a33fe35bb25a87155371722e335fa50fd49b7",
+    "UserDashboard": "33ac707ee56888cf0fef3099e0a6aa80480fdab7",
+    "IUWLearn": "ee50b2e30f1e9e393c62d4da5ab66a157ca30f2e",
+    "Academy": "a6d5a1c3383acfc400bcde8d1fc6810630ed67a0",
+    "Cloud9Reserve": "c359e23a20b37efad8e95c9472f78ffb5d3df0db",
+    "Garage": "e01f9c1c24767131ea4f41279e454ddff7618c81",
+    "CREATIVE": "15e192c053ff41f4a7dce98196a698cdbaf81ffa",
+    "Modules": "d6075b4269d342cee2cf25e300c79897e01fa54d",
+    "BackendLogic": "3d8cc36c22491877a98a055c224ca15a58ed9708",
+    "FrontendView": "e6e4444e25df5e3e4514701f8f9809100ff518f3",
+    "Website": "2ea4bbb65ca2dbeef88e392fc17286c586ee85aa",
+    "AVIWavey": "a84cbf7f952b0153f4bec16efa87dce92334278d",
+    "DigitalPlatforms": "e10ce8cbe13935b22e49eca137dadfa0bfcee795"
   },
   "artifactHashes": [
     {
-      "path": "assets/DashboardLayout-95f1Alpl.js",
-      "gitBlobSha": "67846bb5c0519ecd0094122d3bf644e147bbb008",
-      "sha256": "efd7ff59f6f18a7b79ed5ea9f0fe327d268d708baa7fa89252c83be402b2b4e5"
-    },
-    {
-      "path": "assets/DashboardLayout-ehVC6ChV.css",
-      "gitBlobSha": "76a1c67e4aaec0ecef18ef1f3728f65a9de576a9",
-      "sha256": "e2fced626dac92b832271f7313a530d9fbe7537ac15e0055cc762d35f85dcad5"
-    },
-    {
-      "path": "assets/IUWLMS-BlAvCyt2.js",
-      "gitBlobSha": "cf0c931619a25a6c5f529a974fcdaca2ab1036f2",
-      "sha256": "a62aed7f0d33b56a5295ba6eb36851bf4f8a2f7d9f1e3cd1119014e04c2a7266"
-    },
-    {
-      "path": "assets/Planner-B9uLI7ZK.css",
-      "gitBlobSha": "d10af4c4ad9eea3b7bc40a8987e214ee37a0d546",
-      "sha256": "fee6fd330224d0ec79097cc544a2320d4a4d6d6275274b1514bdf3298dbc3c6f"
-    },
-    {
-      "path": "assets/Planner-BHO56_7H.js",
-      "gitBlobSha": "755ce1f554ef2a4a1a0317ee2ec3e98371c34c0d",
-      "sha256": "e97a84e30f8502d211eff950bbc787327ac9f2393aadc8cc7bd124ee0d312bf8"
-    },
-    {
-      "path": "assets/SocialLink-1L2nLX7-.js",
-      "gitBlobSha": "9afee6a9196c49fe33f9b0fff5bc65b3ab823ed1",
-      "sha256": "11b6925f85a40a10324295f9b31aa9b6a7a28d126717e8b0f32673b0bf193f85"
-    },
-    {
-      "path": "assets/SocialLink-CdBYB864.css",
-      "gitBlobSha": "f78aa31f35c99605681d85e6fcf13d81360e341b",
-      "sha256": "18b04f87c69548388d5fb542d58bcb853f949f30e045684ffb22105313b73de8"
-    },
-    {
-      "path": "assets/main-BQaVEL3e.css",
-      "gitBlobSha": "4a8168a61c3af1395476e978e3d0832457430d10",
-      "sha256": "1771b21ca9c0798f25a44821dca16a451f36849303a953350da8b23c283cb051"
-    },
-    {
-      "path": "assets/main-CyUQV5sq.js",
-      "gitBlobSha": "e73783a1b86f93af41a0db38b18b5da4ab2d9c7e",
-      "sha256": "46057d97cb4266022edd69ae0c183e296a3807d89d883c99616353a1bef3b5d5"
-    },
-    {
       "path": "index.html",
-      "gitBlobSha": "4021011fa7090404df488061ac3d351319b1c51a",
-      "sha256": "063f5274ebed4a962d5acee988ab052a293c6515ef1e4e1abad8c9aac9c1969c"
+      "gitBlobSha": "684dee3e32ab410c8870167c4ceae65699acd99c",
+      "sha256": "fc22e624298e8a1dfdc661c87b1c8e5035080928e953985461405ba87b656cc1"
+    },
+    {
+      "path": "assets/DashboardLayout-Bt5yoBW5.js",
+      "gitBlobSha": "19ccb769e2d80884cbacb12f395792e0ed04e510",
+      "sha256": "cdc50e6a8922eea7f94feb2daf3dc2c985ebad349b9c8d77976f036d82f8406a"
+    },
+    {
+      "path": "assets/IUWLMS-Gex8vqSo.js",
+      "gitBlobSha": "5aa297641fa3cbc0df72cf9ae5cbcf253c7f6af3",
+      "sha256": "ed72ac1913ecad951769abe8fe5771d5972e1adee38b108deb4bb5748d10ef71"
+    },
+    {
+      "path": "assets/Planner-C4VTLK7d.js",
+      "gitBlobSha": "cc83132c3b33bfa990a4175670b5e84bdbe22f6a",
+      "sha256": "696616b314fd2ac8b91531cdb60d43edd07c7b12b86b63496ad653bcc92e30a3"
+    },
+    {
+      "path": "assets/PaymentPortal-DtCNsEFW.js",
+      "gitBlobSha": "c3f3d93c366a59e16e304d79044b8442e062829a",
+      "sha256": "70ec06da57dd0d9fa05266160965f868f579d2db85fbfc18156145f8475d4b38"
+    },
+    {
+      "path": "assets/main-CQK6gg2w.js",
+      "gitBlobSha": "92c7149aaae7bba533d884455e9f1a62baf794c6",
+      "sha256": "641a4215468bdb11d6e2238db2d64b2c96bb1049f749d3508199f2adfe80b44b"
+    },
+    {
+      "path": "assets/DashboardLayout-TIsekLnS.css",
+      "gitBlobSha": "6f2a5544eaf17dd09e35aae83cc54b05cfa50895",
+      "sha256": "125a67b692fbe5327b5e5f3703152618b3f166e8cd6285e7a4a8750afe064558"
+    },
+    {
+      "path": "assets/main-Cqwrv3GF.css",
+      "gitBlobSha": "037783d0b0959d13582c9b584f32b1be44d2b889",
+      "sha256": "09a9515c3db97f3ab21cd034705a24d2c2e626f6291e7404c8ecbe093b6570c8"
     }
   ],
   "relatedPullRequests": [
-    "https://github.com/AVI-Wavey/PublicInterface/pull/65",
-    "https://github.com/AVI-Wavey/PublicInterface/pull/66"
+    "https://github.com/AVI-Wavey/PublicInterface/pull/68"
+  ],
+  "limitations": [
+    "Payment collection, live payouts and recurring billing are not connected. Checkout is simulated.",
+    "R&D files remain pending security review. Public submission/reviewer services are gated; private drafts use Cloud9."
   ]
 }
