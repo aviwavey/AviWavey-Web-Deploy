@@ -1,15 +1,17 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "fac091190af5ab164ac2b79cb10ab6a6b7c95c36",
+  "sourceCommit": "ba0a7d7eae2b5467b57d29aded2aa76cfc21627e",
   "sourceRef": "main",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/62",
-  "publicationMethod": "Manual execution of AutoPush validation and hosting adapters",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/63",
+  "publicationMethod": "Verified local build from the user-authorized existing preview, published to the existing deployment mirror",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-18T01:13:54.377Z",
-  "contents": "Complete connected creative demonstration; existing administration, account and backend artifacts preserved",
+  "publishedAt": "2026-11-18T07:19:58.992Z",
+  "contents": "Grouped studio locations and configurable room types/tiers; Motion dance workflows; explicit equipment ownership; connected marketplace, course and Cloud improvements. Existing administration and backend artifacts retained.",
   "validation": {
-    "connectedDemo": 19,
-    "existingAuthenticationNavigationToolkit": 43,
+    "connectedDemo": 30,
+    "directoryProfilesStorage": 27,
+    "authenticationNavigationToolkitHelpHero": 23,
+    "total": 80,
     "typecheck": "passed",
     "productionBuild": "passed",
     "browserVisualReview": "unavailable"
@@ -20,35 +22,73 @@
     "discoverProjects": 12,
     "services": 12,
     "studios": 7,
-    "studioRooms": 21,
+    "studioRooms": 43,
     "inboxMessages": 24,
     "localState": true,
     "simulatedTransactions": true
   },
+  "repositories": {
+    "UserDashboard": "4e23e4144825fa9ce68f9367797bfb15b15bc908",
+    "ConnectCenter": "538c5b5c6318c619acf5ee42b498f80b02b99478",
+    "Workspace": "6228b22f8bd184682a2763da0e026f8a936fcc58",
+    "CREATIVE": "8f38ad29c3d572853d5ca373a0a7a1f6605b082c",
+    "Modules": "adbfe9abb5f859dd97c52cbfb0ea335a9467d304",
+    "BackendLogic": "108b67ea5e54376e855d3a32543718a8847a9cee",
+    "FrontendView": "9793d8a79f1aac73d05be5c836f31153975e8ce1",
+    "Website": "31ee022780f2f3c5425bafb888234c63f1a8dd02",
+    "AVIWavey": "b0d6ff97815b96f27bc0bda05d8a4a9d03358fe8",
+    "DigitalPlatforms": "6bd50690f76d284177ceb7b25da90df5e043bab1"
+  },
   "artifactHashes": [
     {
       "path": "index.html",
-      "gitBlobSha": "dcbca49b1a050c1853d6ef713bef561d819f3342"
+      "gitBlobSha": "dfd49650a34cb0e977eb099facceec88cbceae0f",
+      "sha256": "83b01330963e2d98f9692fe6eb5031c84644b4a56ff6e07f446623d032241471"
     },
     {
-      "path": "assets/IUWLMS-b-Cx-KTY.js",
-      "gitBlobSha": "22cae9ab4fbf4558b8bcf14ae478384800ccd692"
+      "path": "demo-media/ATTRIBUTION.html",
+      "gitBlobSha": "80d3599f7ef1c0775791016233c00203b7ad288f",
+      "sha256": "9a8a9ebc9348d6c4b39abfd083351a042404a70dcc78dbedb53d8288fdf6f532"
     },
     {
-      "path": "assets/DashboardLayout-QKv-IrWQ.js",
-      "gitBlobSha": "bf834dffb37056f69214ef95d72ae55774fb8cfb"
+      "path": "demo-media/pirate-reference-dance.jpg",
+      "gitBlobSha": "7ef729cbe590edcf77d32af24dac7d2a6c3af241",
+      "sha256": "61a3356e0e9f95af07f003e80fd503fcee6522f5e027e7371a8ce5a5fe6d078a"
     },
     {
-      "path": "assets/TechnicalToolkit-CxTwSsGH.js",
-      "gitBlobSha": "6d7870093bd196e956fe6b14988791fa1d5fb6a3"
+      "path": "demo-media/acoustic-guitar.jpg",
+      "gitBlobSha": "6ce5abc18d99eabc4f0cab4fce52db9a7addf276",
+      "sha256": "d3d310ca8399a0865fa4793dbc95e7e31e67d14f905789725a45d7af224e2e1d"
     },
     {
-      "path": "assets/SocialLink-CEU-yY0S.js",
-      "gitBlobSha": "84bbb445344c4dcd83c82d0304b72d83d191d3e1"
+      "path": "assets/DashboardLayout-D79GgDLk.css",
+      "gitBlobSha": "7f7e00cd961812b7ab7eb6ec52c2f14de1f13a17",
+      "sha256": "147457c52390f3d2b2389063da1d19eacf9842e2bcebf33eeb8a8f994b14701c"
     },
     {
-      "path": "assets/Planner-Dc_iSiOE.js",
-      "gitBlobSha": "0bc842c0b26eb0f4a5f32d462ba7a3637fdac288"
+      "path": "assets/DashboardLayout-BLi8Ic3u.js",
+      "gitBlobSha": "1bd971f019f23caca4a661eb9abf9d234ed7f6a0",
+      "sha256": "a4e1a92b199dbfd7ec606560c225902e4fe857314b5b88bd3910683751969930"
+    },
+    {
+      "path": "assets/IUWLMS-dghHZFZW.js",
+      "gitBlobSha": "806880d03f4fe3319a5d19cc09aea086cb4283b1",
+      "sha256": "0d315c45bdcee5b21d2342096211a545f4767dcc9a5e18d5495459ec95e89566"
+    },
+    {
+      "path": "assets/TechnicalToolkit-ca-vkcmd.js",
+      "gitBlobSha": "ed6697b73a1d6c05fae86554c115442c2cd0bdbd",
+      "sha256": "16823ce005807a7827fbbb5903b3788b48348796732e2f2084d00f3f4da1e35d"
+    },
+    {
+      "path": "assets/Cloud9Reserve-CU44TQQF.js",
+      "gitBlobSha": "a5709a1908408103d53211c381a86a763d74f944",
+      "sha256": "cf562ab562b82e2c89e9ddf21eec674fb7c1871c9f9fe4e7410df290ea99d260"
+    },
+    {
+      "path": "assets/Planner-Dnmr4OuY.js",
+      "gitBlobSha": "6976123c157fd7d581e3025f218e09b71ae95325",
+      "sha256": "323b196c0ac3fc73759e06bef6c929305dd79dde05601f4d60324a48d459644e"
     }
   ]
 }
