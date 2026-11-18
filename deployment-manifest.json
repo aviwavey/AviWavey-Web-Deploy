@@ -1,20 +1,21 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "cd415afbfe3afb180197577af615ed7f8a6e1665",
+  "sourceCommit": "82cab14b3bc1ba31c6525a82817a64e3b3b19088",
   "sourceRef": "main",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/65",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/66",
   "publicationMethod": "Validated local build from the authorised existing Desktop preview, published to the existing Vercel deployment mirror",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-18T09:06:27.987Z",
-  "contents": "Releases and Socials navigation; grouped production schedules and promotional handoffs; fixed module/dialog navigation; declared directory owners, logos and tag counts; inbox categories and 50-message pagination; persistent Store bags, saved sellers, purchase/hire auctions and return/deposit simulation; populated profile banners, highlights and personal posts.",
+  "publishedAt": "2026-11-18T09:22:48.531Z",
+  "contents": "Releases and Socials navigation; grouped production schedules and promotional handoffs; fixed module/dialog navigation; declared directory owners, logos and tag counts; inbox categories and 50-message pagination; persistent Store bags, saved sellers, purchase/hire auctions and return/deposit simulation; populated profile banners, highlights and personal posts. Multi-select Merch, Equipment, Gift cards and Accessories filters, persisted categories and fixed auction hire windows.",
   "validation": {
     "typecheck": "passed",
     "productionBuild": "passed",
-    "connectedReleaseMailTradingChecks": 54,
+    "connectedReleaseMailTradingChecks": 57,
     "moduleGateChecks": 5,
     "existingRepositoryChecks": 23,
     "browserVisualReview": "unavailable",
-    "remoteJobs": "Failed before running steps; local validation explicitly authorised"
+    "remoteJobs": "Failed before running steps; local validation explicitly authorised",
+    "latestRegressionChecks": 42
   },
   "demo": {
     "accounts": 100,
@@ -24,7 +25,7 @@
     "services": 12,
     "studios": 7,
     "studioRooms": 43,
-    "storeListings": 24,
+    "storeListings": 26,
     "inboxMessages": 99,
     "localState": true,
     "simulatedTransactions": true,
@@ -35,23 +36,33 @@
     }
   },
   "repositories": {
-    "PublicInterface": "cd415afbfe3afb180197577af615ed7f8a6e1665",
-    "UserDashboard": "922be8bf91d2d3039b4c9e2b88da302803b16a83",
+    "PublicInterface": "82cab14b3bc1ba31c6525a82817a64e3b3b19088",
+    "UserDashboard": "f4d9ea265bd05f7fb7fe6400aba9c7e32536e88f",
     "Cloud9Reserve": "8b97bc2b7a7c7ed45fea5c38e71da8994e2cb5a2",
     "Garage": "13b8d43db2f0630a592e09912f56d206b04db9ec",
-    "FrontendView": "7f439392fa08ba772cf1293ff4d48cf0c470ff51",
+    "FrontendView": "14f470353b829ba3106cebf0a8f6f623cb9dafa1",
     "CREATIVE": "760782032b9260c7120e1d683c3921115af95b88",
     "Modules": "cd70c33b8bfdb1eb3c5272289ad20604b7de7a34",
     "BackendLogic": "d233eb28a02818f4c392909ccd69aa56509df198",
-    "Website": "691ec62b1485f310657e72c472e4e98480853de6",
-    "AVIWavey": "577ad6ff3b88383283d1681bb1154006a7b7ad42",
-    "DigitalPlatforms": "609ddb01d4a26def775a72737d7975ae431dbc21"
+    "Website": "74c8e1c4a36c6f205bcb1613b010873baa12af9e",
+    "AVIWavey": "dfe7de72771063be2eca4605b326235e0e9162ba",
+    "DigitalPlatforms": "ad52bb4da7efc406f70ebd3d0e79278fd8b23987"
   },
   "artifactHashes": [
     {
-      "path": "index.html",
-      "gitBlobSha": "86a50d477462c495bfd998e1acaeb46cfd51553a",
-      "sha256": "77644cc8c307790bff89de37c1ef01169e4c1914d1c0019f61be211ec3e21aed"
+      "path": "assets/DashboardLayout-COsH9Ilq.js",
+      "gitBlobSha": "0d2797d52ea5d96101fe70421338322357bf179c",
+      "sha256": "49bef3e96b8b4cad63377084dc677b4640757cbe41e29a20621ee1d56b704127"
+    },
+    {
+      "path": "assets/DashboardLayout-ehVC6ChV.css",
+      "gitBlobSha": "76a1c67e4aaec0ecef18ef1f3728f65a9de576a9",
+      "sha256": "e2fced626dac92b832271f7313a530d9fbe7537ac15e0055cc762d35f85dcad5"
+    },
+    {
+      "path": "assets/IUWLMS-Dl_UB5zW.js",
+      "gitBlobSha": "a75ea313ecd359d211da4f8db941e60e5bcd8858",
+      "sha256": "fbe74c36c587669bcc94d0b253aec4fcfb3bd7d359be93cc2e60445b1a172296"
     },
     {
       "path": "assets/Planner-B9uLI7ZK.css",
@@ -59,34 +70,9 @@
       "sha256": "fee6fd330224d0ec79097cc544a2320d4a4d6d6275274b1514bdf3298dbc3c6f"
     },
     {
-      "path": "assets/main-BQaVEL3e.css",
-      "gitBlobSha": "4a8168a61c3af1395476e978e3d0832457430d10",
-      "sha256": "1771b21ca9c0798f25a44821dca16a451f36849303a953350da8b23c283cb051"
-    },
-    {
-      "path": "assets/Planner-Ckwxh1Y-.js",
-      "gitBlobSha": "caba39b1d6cc6c3efc4ff7941629064b16e735b9",
-      "sha256": "2ea467914d593678022a92eaa4966dfa20a194616fb5f751e7fd9a3824bd9d45"
-    },
-    {
-      "path": "assets/SocialLink-BEAbl7Ra.js",
-      "gitBlobSha": "da2ae3350c308d2a664aa6aefe85dee148971686",
-      "sha256": "37d569ddf9846b30fd6ded779cb45234ae37d7af00e3d673908550c1eec46689"
-    },
-    {
-      "path": "assets/main-DCHTMa93.js",
-      "gitBlobSha": "1167bb34014dd3c97b1e6bdf147643db399c024a",
-      "sha256": "707e3f55a83f7221038efa725512ab08b70d54dd41dd5d0236363d70d771e90b"
-    },
-    {
-      "path": "assets/IUWLMS-B_mSg-Cu.js",
-      "gitBlobSha": "c40357e37fbe9a86ec604ae07652f1fa5dfa7bbc",
-      "sha256": "f20b4e9fd93c2c73d4073f1a1e3f5aa5be3f5ee0d974bf7b7bc4955479a95e06"
-    },
-    {
-      "path": "assets/DashboardLayout-D6btrvJs.css",
-      "gitBlobSha": "e1978d1498bbdb6f26308338f213eb116db9224b",
-      "sha256": "667078d119dc7fb9903ec37918870e458c2d8754fa80a39760de83045487b4ba"
+      "path": "assets/Planner-Cap6RHVc.js",
+      "gitBlobSha": "602298bf3d1e1021c211f3176ff38bccfed2a494",
+      "sha256": "5c2a36f8314758fe8fcee96f69bf7a532c996d466f323a61d0adb4f9d446eb07"
     },
     {
       "path": "assets/SocialLink-CdBYB864.css",
@@ -94,9 +80,27 @@
       "sha256": "18b04f87c69548388d5fb542d58bcb853f949f30e045684ffb22105313b73de8"
     },
     {
-      "path": "assets/DashboardLayout-BkomN6cg.js",
-      "gitBlobSha": "24787c3d001570c09d77f98742aae616d67152d3",
-      "sha256": "1523baf69eea7d541c23523bbd1ff45478f7155a7e4d7dfed2846a26170949db"
+      "path": "assets/SocialLink-OPQ6_fpM.js",
+      "gitBlobSha": "3001d59ab007c4c1d3116bbe36d3a1cd17350dca",
+      "sha256": "d8ac2293255bf71f5bbf8cfecdae234cccf1e97796379b37beedc203f7e3c2cf"
+    },
+    {
+      "path": "assets/main-BQaVEL3e.css",
+      "gitBlobSha": "4a8168a61c3af1395476e978e3d0832457430d10",
+      "sha256": "1771b21ca9c0798f25a44821dca16a451f36849303a953350da8b23c283cb051"
+    },
+    {
+      "path": "assets/main-Ua3YpdUp.js",
+      "gitBlobSha": "a2129a524fdce3ee900c9ec68977fd7a36857dee",
+      "sha256": "9e7aa20efb89c9295359773489f4328b93b5aebaecd7936f4b83eeaa27ebdf80"
+    },
+    {
+      "path": "index.html",
+      "gitBlobSha": "2f1ad59535823d6ecedccdbbec6d46bc1d8d1bd5",
+      "sha256": "57b1df3176728541d0840542da382fc7d12b9b35e73a7f4aeca98788ccae49f0"
     }
+  ],
+  "relatedPullRequests": [
+    "https://github.com/AVI-Wavey/PublicInterface/pull/65"
   ]
 }
