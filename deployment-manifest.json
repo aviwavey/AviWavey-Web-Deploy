@@ -1,68 +1,102 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "2976df327203dc459da2ff96098f06fdfaebc208",
+  "sourceCommit": "cd415afbfe3afb180197577af615ed7f8a6e1665",
   "sourceRef": "main",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/64",
-  "publicationMethod": "Verified local build from the user-authorized existing preview, published to the existing deployment mirror",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/65",
+  "publicationMethod": "Validated local build from the authorised existing Desktop preview, published to the existing Vercel deployment mirror",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-18T08:05:36.260Z",
-  "contents": "Directory Users navigation, singular top-left badges in All, contextual label and icon removal, compact Connect Center matching header and unsaved demo matching profile. Prior connected studio and marketplace improvements retained.",
+  "publishedAt": "2026-11-18T09:06:27.987Z",
+  "contents": "Releases and Socials navigation; grouped production schedules and promotional handoffs; fixed module/dialog navigation; declared directory owners, logos and tag counts; inbox categories and 50-message pagination; persistent Store bags, saved sellers, purchase/hire auctions and return/deposit simulation; populated profile banners, highlights and personal posts.",
   "validation": {
     "typecheck": "passed",
     "productionBuild": "passed",
+    "connectedReleaseMailTradingChecks": 54,
+    "moduleGateChecks": 5,
+    "existingRepositoryChecks": 23,
     "browserVisualReview": "unavailable",
-    "regressionBaseline": {
-      "sourceCommit": "ba0a7d7eae2b5467b57d29aded2aa76cfc21627e",
-      "checksPassed": 80
-    }
+    "remoteJobs": "Failed before running steps; local validation explicitly authorised"
   },
   "demo": {
     "accounts": 100,
     "ownerProjects": 6,
-    "discoverProjects": 12,
+    "productionReleases": 7,
+    "projectReleases": 1,
     "services": 12,
     "studios": 7,
     "studioRooms": 43,
-    "inboxMessages": 24,
+    "storeListings": 24,
+    "inboxMessages": 99,
     "localState": true,
-    "simulatedTransactions": true
+    "simulatedTransactions": true,
+    "hirePolicy": {
+      "depositPercent": 50,
+      "protectionPercent": 2,
+      "status": "Illustrative preview assumptions; no active insurance or payments"
+    }
   },
   "repositories": {
-    "UserDashboard": "7c4bd54726cbfe81427f4ce9ae0bd46f33171eac",
-    "ConnectCenter": "538c5b5c6318c619acf5ee42b498f80b02b99478",
-    "Workspace": "6228b22f8bd184682a2763da0e026f8a936fcc58",
-    "CREATIVE": "8f38ad29c3d572853d5ca373a0a7a1f6605b082c",
-    "Modules": "adbfe9abb5f859dd97c52cbfb0ea335a9467d304",
-    "BackendLogic": "108b67ea5e54376e855d3a32543718a8847a9cee",
-    "FrontendView": "4c1026a449c7d6044cdc33e3461a07eebd0fc90f",
-    "Website": "20617b5048dabb2249282618285913443583eaa9",
-    "AVIWavey": "f7d85a8da9d458a4894263d14818fde2b6b62485",
-    "DigitalPlatforms": "445a88846be719d7d663d4198a1f1912b3a5ec41"
+    "PublicInterface": "cd415afbfe3afb180197577af615ed7f8a6e1665",
+    "UserDashboard": "922be8bf91d2d3039b4c9e2b88da302803b16a83",
+    "Cloud9Reserve": "8b97bc2b7a7c7ed45fea5c38e71da8994e2cb5a2",
+    "Garage": "13b8d43db2f0630a592e09912f56d206b04db9ec",
+    "FrontendView": "7f439392fa08ba772cf1293ff4d48cf0c470ff51",
+    "CREATIVE": "760782032b9260c7120e1d683c3921115af95b88",
+    "Modules": "cd70c33b8bfdb1eb3c5272289ad20604b7de7a34",
+    "BackendLogic": "d233eb28a02818f4c392909ccd69aa56509df198",
+    "Website": "691ec62b1485f310657e72c472e4e98480853de6",
+    "AVIWavey": "577ad6ff3b88383283d1681bb1154006a7b7ad42",
+    "DigitalPlatforms": "609ddb01d4a26def775a72737d7975ae431dbc21"
   },
   "artifactHashes": [
     {
       "path": "index.html",
-      "gitBlobSha": "65d18ba05af6a5d03fac3c3ac834615f1f72cd15"
-    },
-    {
-      "path": "assets/IUWLMS-BN33cRcc.js",
-      "gitBlobSha": "f9f233f1b98aadcf8cc6f7b0e83be71c759a1d5b"
+      "gitBlobSha": "86a50d477462c495bfd998e1acaeb46cfd51553a",
+      "sha256": "77644cc8c307790bff89de37c1ef01169e4c1914d1c0019f61be211ec3e21aed"
     },
     {
       "path": "assets/Planner-B9uLI7ZK.css",
-      "gitBlobSha": "d10af4c4ad9eea3b7bc40a8987e214ee37a0d546"
+      "gitBlobSha": "d10af4c4ad9eea3b7bc40a8987e214ee37a0d546",
+      "sha256": "fee6fd330224d0ec79097cc544a2320d4a4d6d6275274b1514bdf3298dbc3c6f"
     },
     {
-      "path": "assets/DashboardLayout-y1VIb-kZ.css",
-      "gitBlobSha": "8a029893a26bc940fe5cdb0cb5c5951087695178"
+      "path": "assets/main-BQaVEL3e.css",
+      "gitBlobSha": "4a8168a61c3af1395476e978e3d0832457430d10",
+      "sha256": "1771b21ca9c0798f25a44821dca16a451f36849303a953350da8b23c283cb051"
     },
     {
-      "path": "assets/Planner-BeUq0QMC.js",
-      "gitBlobSha": "1566b3f1e03acf9d848ac196d1b6e4c606cd29d9"
+      "path": "assets/Planner-Ckwxh1Y-.js",
+      "gitBlobSha": "caba39b1d6cc6c3efc4ff7941629064b16e735b9",
+      "sha256": "2ea467914d593678022a92eaa4966dfa20a194616fb5f751e7fd9a3824bd9d45"
     },
     {
-      "path": "assets/DashboardLayout-DnP1isBs.js",
-      "gitBlobSha": "42b778e10d13d0bf92fce8e53db180b1b3ab5b7c"
+      "path": "assets/SocialLink-BEAbl7Ra.js",
+      "gitBlobSha": "da2ae3350c308d2a664aa6aefe85dee148971686",
+      "sha256": "37d569ddf9846b30fd6ded779cb45234ae37d7af00e3d673908550c1eec46689"
+    },
+    {
+      "path": "assets/main-DCHTMa93.js",
+      "gitBlobSha": "1167bb34014dd3c97b1e6bdf147643db399c024a",
+      "sha256": "707e3f55a83f7221038efa725512ab08b70d54dd41dd5d0236363d70d771e90b"
+    },
+    {
+      "path": "assets/IUWLMS-B_mSg-Cu.js",
+      "gitBlobSha": "c40357e37fbe9a86ec604ae07652f1fa5dfa7bbc",
+      "sha256": "f20b4e9fd93c2c73d4073f1a1e3f5aa5be3f5ee0d974bf7b7bc4955479a95e06"
+    },
+    {
+      "path": "assets/DashboardLayout-D6btrvJs.css",
+      "gitBlobSha": "e1978d1498bbdb6f26308338f213eb116db9224b",
+      "sha256": "667078d119dc7fb9903ec37918870e458c2d8754fa80a39760de83045487b4ba"
+    },
+    {
+      "path": "assets/SocialLink-CdBYB864.css",
+      "gitBlobSha": "f78aa31f35c99605681d85e6fcf13d81360e341b",
+      "sha256": "18b04f87c69548388d5fb542d58bcb853f949f30e045684ffb22105313b73de8"
+    },
+    {
+      "path": "assets/DashboardLayout-BkomN6cg.js",
+      "gitBlobSha": "24787c3d001570c09d77f98742aae616d67152d3",
+      "sha256": "1523baf69eea7d541c23523bbd1ff45478f7155a7e4d7dfed2846a26170949db"
     }
   ]
 }
