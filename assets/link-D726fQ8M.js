@@ -1,0 +1,1 @@
+import{j as a,L as o}from"./DashboardLayout-95f1Alpl.js";import{m}from"./PaymentPortal-CQqlj-32.js";function r({href:t,...s}){return/^https?:/.test(t)?a.jsx("a",{href:t,...s}):a.jsx(o,{to:m(t),...s})}export{r as P};

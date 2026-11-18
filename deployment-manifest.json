@@ -1,12 +1,12 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "82cab14b3bc1ba31c6525a82817a64e3b3b19088",
+  "sourceCommit": "8d34fca768ef2f39c21166d5c19431fdf9ef2f2e",
   "sourceRef": "main",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/66",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/67",
   "publicationMethod": "Validated local build from the authorised existing Desktop preview, published to the existing Vercel deployment mirror",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-18T09:22:48.531Z",
-  "contents": "Releases and Socials navigation; grouped production schedules and promotional handoffs; fixed module/dialog navigation; declared directory owners, logos and tag counts; inbox categories and 50-message pagination; persistent Store bags, saved sellers, purchase/hire auctions and return/deposit simulation; populated profile banners, highlights and personal posts. Multi-select Merch, Equipment, Gift cards and Accessories filters, persisted categories and fixed auction hire windows.",
+  "publishedAt": "2026-11-18T09:28:30.147Z",
+  "contents": "Releases and Socials navigation; grouped production schedules and promotional handoffs; fixed module/dialog navigation; declared directory owners, logos and tag counts; inbox categories and 50-message pagination; persistent Store bags, saved sellers, purchase/hire auctions and return/deposit simulation; populated profile banners, highlights and personal posts. Multi-select Merch, Equipment, Gift cards and Accessories filters, persisted categories and fixed auction hire windows. Shop filters reset when opening Inventory and Logistics.",
   "validation": {
     "typecheck": "passed",
     "productionBuild": "passed",
@@ -36,23 +36,23 @@
     }
   },
   "repositories": {
-    "PublicInterface": "82cab14b3bc1ba31c6525a82817a64e3b3b19088",
-    "UserDashboard": "f4d9ea265bd05f7fb7fe6400aba9c7e32536e88f",
+    "PublicInterface": "8d34fca768ef2f39c21166d5c19431fdf9ef2f2e",
+    "UserDashboard": "a7c718e3f4e7578daacee0b80fc8fef3b9a52b69",
     "Cloud9Reserve": "8b97bc2b7a7c7ed45fea5c38e71da8994e2cb5a2",
     "Garage": "13b8d43db2f0630a592e09912f56d206b04db9ec",
-    "FrontendView": "14f470353b829ba3106cebf0a8f6f623cb9dafa1",
+    "FrontendView": "01949a8734128b8516ca3a5183c3c4ac0c321757",
     "CREATIVE": "760782032b9260c7120e1d683c3921115af95b88",
     "Modules": "cd70c33b8bfdb1eb3c5272289ad20604b7de7a34",
     "BackendLogic": "d233eb28a02818f4c392909ccd69aa56509df198",
-    "Website": "74c8e1c4a36c6f205bcb1613b010873baa12af9e",
-    "AVIWavey": "dfe7de72771063be2eca4605b326235e0e9162ba",
-    "DigitalPlatforms": "ad52bb4da7efc406f70ebd3d0e79278fd8b23987"
+    "Website": "9b84df0ee03b09e3a66e4dfad54f4c27e75bf830",
+    "AVIWavey": "f1846a76fd8eaa176f193502336d423358935598",
+    "DigitalPlatforms": "2645952fda9cb2c9fd1e82d05094d5ed088860ac"
   },
   "artifactHashes": [
     {
-      "path": "assets/DashboardLayout-COsH9Ilq.js",
-      "gitBlobSha": "0d2797d52ea5d96101fe70421338322357bf179c",
-      "sha256": "49bef3e96b8b4cad63377084dc677b4640757cbe41e29a20621ee1d56b704127"
+      "path": "assets/DashboardLayout-95f1Alpl.js",
+      "gitBlobSha": "67846bb5c0519ecd0094122d3bf644e147bbb008",
+      "sha256": "efd7ff59f6f18a7b79ed5ea9f0fe327d268d708baa7fa89252c83be402b2b4e5"
     },
     {
       "path": "assets/DashboardLayout-ehVC6ChV.css",
@@ -60,9 +60,9 @@
       "sha256": "e2fced626dac92b832271f7313a530d9fbe7537ac15e0055cc762d35f85dcad5"
     },
     {
-      "path": "assets/IUWLMS-Dl_UB5zW.js",
-      "gitBlobSha": "a75ea313ecd359d211da4f8db941e60e5bcd8858",
-      "sha256": "fbe74c36c587669bcc94d0b253aec4fcfb3bd7d359be93cc2e60445b1a172296"
+      "path": "assets/IUWLMS-BlAvCyt2.js",
+      "gitBlobSha": "cf0c931619a25a6c5f529a974fcdaca2ab1036f2",
+      "sha256": "a62aed7f0d33b56a5295ba6eb36851bf4f8a2f7d9f1e3cd1119014e04c2a7266"
     },
     {
       "path": "assets/Planner-B9uLI7ZK.css",
@@ -70,9 +70,14 @@
       "sha256": "fee6fd330224d0ec79097cc544a2320d4a4d6d6275274b1514bdf3298dbc3c6f"
     },
     {
-      "path": "assets/Planner-Cap6RHVc.js",
-      "gitBlobSha": "602298bf3d1e1021c211f3176ff38bccfed2a494",
-      "sha256": "5c2a36f8314758fe8fcee96f69bf7a532c996d466f323a61d0adb4f9d446eb07"
+      "path": "assets/Planner-BHO56_7H.js",
+      "gitBlobSha": "755ce1f554ef2a4a1a0317ee2ec3e98371c34c0d",
+      "sha256": "e97a84e30f8502d211eff950bbc787327ac9f2393aadc8cc7bd124ee0d312bf8"
+    },
+    {
+      "path": "assets/SocialLink-1L2nLX7-.js",
+      "gitBlobSha": "9afee6a9196c49fe33f9b0fff5bc65b3ab823ed1",
+      "sha256": "11b6925f85a40a10324295f9b31aa9b6a7a28d126717e8b0f32673b0bf193f85"
     },
     {
       "path": "assets/SocialLink-CdBYB864.css",
@@ -80,27 +85,23 @@
       "sha256": "18b04f87c69548388d5fb542d58bcb853f949f30e045684ffb22105313b73de8"
     },
     {
-      "path": "assets/SocialLink-OPQ6_fpM.js",
-      "gitBlobSha": "3001d59ab007c4c1d3116bbe36d3a1cd17350dca",
-      "sha256": "d8ac2293255bf71f5bbf8cfecdae234cccf1e97796379b37beedc203f7e3c2cf"
-    },
-    {
       "path": "assets/main-BQaVEL3e.css",
       "gitBlobSha": "4a8168a61c3af1395476e978e3d0832457430d10",
       "sha256": "1771b21ca9c0798f25a44821dca16a451f36849303a953350da8b23c283cb051"
     },
     {
-      "path": "assets/main-Ua3YpdUp.js",
-      "gitBlobSha": "a2129a524fdce3ee900c9ec68977fd7a36857dee",
-      "sha256": "9e7aa20efb89c9295359773489f4328b93b5aebaecd7936f4b83eeaa27ebdf80"
+      "path": "assets/main-CyUQV5sq.js",
+      "gitBlobSha": "e73783a1b86f93af41a0db38b18b5da4ab2d9c7e",
+      "sha256": "46057d97cb4266022edd69ae0c183e296a3807d89d883c99616353a1bef3b5d5"
     },
     {
       "path": "index.html",
-      "gitBlobSha": "2f1ad59535823d6ecedccdbbec6d46bc1d8d1bd5",
-      "sha256": "57b1df3176728541d0840542da382fc7d12b9b35e73a7f4aeca98788ccae49f0"
+      "gitBlobSha": "4021011fa7090404df488061ac3d351319b1c51a",
+      "sha256": "063f5274ebed4a962d5acee988ab052a293c6515ef1e4e1abad8c9aac9c1969c"
     }
   ],
   "relatedPullRequests": [
-    "https://github.com/AVI-Wavey/PublicInterface/pull/65"
+    "https://github.com/AVI-Wavey/PublicInterface/pull/65",
+    "https://github.com/AVI-Wavey/PublicInterface/pull/66"
   ]
 }
