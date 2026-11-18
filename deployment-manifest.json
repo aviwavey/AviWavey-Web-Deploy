@@ -1,17 +1,54 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "68b0b892d2a432bfccaa3f86e67ab1bbb0504825",
+  "sourceCommit": "fac091190af5ab164ac2b79cb10ab6a6b7c95c36",
   "sourceRef": "main",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/61",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/62",
   "publicationMethod": "Manual execution of AutoPush validation and hosting adapters",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-18 00:03:23 UTC",
-  "contents": "Complete compiled website; existing authentication and administration preserved",
+  "publishedAt": "2026-11-18T01:13:54.377Z",
+  "contents": "Complete connected creative demonstration; existing administration, account and backend artifacts preserved",
   "validation": {
+    "connectedDemo": 19,
+    "existingAuthenticationNavigationToolkit": 43,
+    "typecheck": "passed",
     "productionBuild": "passed",
-    "authenticationHosting": 96,
-    "sharedModulesLaunch": 119,
-    "finalIntegration": 185,
-    "connectRequestContributorSuite": 6
-  }
+    "browserVisualReview": "unavailable"
+  },
+  "demo": {
+    "accounts": 100,
+    "ownerProjects": 6,
+    "discoverProjects": 12,
+    "services": 12,
+    "studios": 7,
+    "studioRooms": 21,
+    "inboxMessages": 24,
+    "localState": true,
+    "simulatedTransactions": true
+  },
+  "artifactHashes": [
+    {
+      "path": "index.html",
+      "gitBlobSha": "dcbca49b1a050c1853d6ef713bef561d819f3342"
+    },
+    {
+      "path": "assets/IUWLMS-b-Cx-KTY.js",
+      "gitBlobSha": "22cae9ab4fbf4558b8bcf14ae478384800ccd692"
+    },
+    {
+      "path": "assets/DashboardLayout-QKv-IrWQ.js",
+      "gitBlobSha": "bf834dffb37056f69214ef95d72ae55774fb8cfb"
+    },
+    {
+      "path": "assets/TechnicalToolkit-CxTwSsGH.js",
+      "gitBlobSha": "6d7870093bd196e956fe6b14988791fa1d5fb6a3"
+    },
+    {
+      "path": "assets/SocialLink-CEU-yY0S.js",
+      "gitBlobSha": "84bbb445344c4dcd83c82d0304b72d83d191d3e1"
+    },
+    {
+      "path": "assets/Planner-Dc_iSiOE.js",
+      "gitBlobSha": "0bc842c0b26eb0f4a5f32d462ba7a3637fdac288"
+    }
+  ]
 }
