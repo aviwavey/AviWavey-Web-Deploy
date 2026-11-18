@@ -1,9 +1,7 @@
-# AVI Wavey Website — Public Release
+# AVI Wavey — compiled public release
 
-This repository contains the compiled public release of the AVI Wavey website. It is maintained automatically by **AutoPush** from the private source repository.
+Published manually using AutoPush's validation and adapter sequence.
 
-- Source commit: 
-- AutoPush run: https://github.com/AVI-Wavey/PublicInterface/actions/runs/44094691500
-- Published output: compiled website; shared TrueMarkGate backend preserved
+Source: AVI-Wavey/PublicInterface @ 68b0b892d2a432bfccaa3f86e67ab1bbb0504825
 
-Do not develop directly in this repository. The next successful AutoPush run will replace these published files.
+Includes the complete website and preserves the shared account and administration services. Source development stays in the private repositories; future AutoPush runs publish those sources.

@@ -1,9 +1,17 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "a6c0108150b98cb30a1ce5d9a936000979c8647c",
+  "sourceCommit": "68b0b892d2a432bfccaa3f86e67ab1bbb0504825",
   "sourceRef": "main",
-  "workflowRun": "https://github.com/AVI-Wavey/PublicInterface/actions/runs/44094691500",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/61",
+  "publicationMethod": "Manual execution of AutoPush validation and hosting adapters",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-17T13:40:33Z",
-  "contents": "Compiled public website with the shared TrueMarkGate backend preserved"
+  "publishedAt": "2026-11-18 00:03:23 UTC",
+  "contents": "Complete compiled website; existing authentication and administration preserved",
+  "validation": {
+    "productionBuild": "passed",
+    "authenticationHosting": 96,
+    "sharedModulesLaunch": 119,
+    "finalIntegration": 185,
+    "connectRequestContributorSuite": 6
+  }
 }
