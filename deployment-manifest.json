@@ -1,28 +1,36 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "49cc66cde274d1a747c514694039d6f75ac32833",
+  "sourceCommit": "af3da8834d305ea407e7b851bed3037ece27a2a8",
   "sourceRef": "main",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/71",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/72",
   "publicationMethod": "User-authorized temporary validation and build; published to the existing Vercel deployment mirror. Source development and canonical sync remained on GitHub.",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-24T10:21:28.878Z",
+  "publishedAt": "2026-11-24T11:04:21.928Z",
   "contents": [
-    "Commesh with shared Socials conversations and Correspondence summaries",
-    "Metametrics with source-aware module snapshots",
-    "Payment Portal grouping by dashboard and source module",
-    "Back to home and one login / two platform accounts",
-    "Provider-specific Switch Google, Apple or email accounts",
-    "Mobile profile completion layout"
+    "Compact profile completion and calling-code selection",
+    "Verified Google photo reuse, uploads and circle/square previews",
+    "Full-page Payment Portal and unified dashboard styling",
+    "Commesh System notifications and unread conversation/update counters",
+    "Metametrics before/after immediate updates with private saved read state",
+    "Dashboard-specific horizontally scrolling sub-tabs",
+    "Collapsible dashboard groups only in All dashboards"
   ],
   "validation": {
     "frontend": "TypeScript and Vite production build passed",
-    "backend": "Packaged production TypeScript passed; 89 backend tests passed",
-    "authentication": "23 package tests including 14 authentication/onboarding scenarios passed",
-    "universalServices": "17 targeted model/account tests passed",
-    "moduleRegression": "109 module regression checks and 12 bundled autosave tests passed",
-    "lmsRegression": "177 regression tests passed",
-    "browser": "Desktop and mobile Google/Apple/email switching; shared message persistence and Socials navigation; analytics source states; grouped basket and fixed headers; mobile navigation",
-    "liveGoogleConsent": "External OAuth provider consent was stubbed in browser QA; no real user message or payment was sent",
+    "backend": "Packaged production TypeScript passed",
+    "authentication": "19 authentication/onboarding scenarios passed",
+    "activityModel": "6 metric activity tests passed",
+    "accountAndServices": "14 account/navigation/service tests passed",
+    "packageTests": "23 package tests passed",
+    "basket": "9 basket model/integration tests passed",
+    "storageHTTP": "10 Cloud9 HTTP tests passed",
+    "browser": "Isolated desktop/mobile profile, navigation, horizontal overflow, collapse controls, System notifications, analytics history, discounts and example checkout passed with no browser exceptions",
+    "analyticsStorage": "API-mocked account isolation, revision conflict retry, quota rollback, recovery/reload and cleanup reset passed",
+    "limitations": [
+      "GitHub Actions could not start due to account billing/spending restrictions; user-approved temporary validation used",
+      "Database-backed Cloud9 suites require a disposable database and were not run; storage engine unchanged",
+      "External OAuth consent was mocked in browser checks; no real messages, email or payments sent"
+    ],
     "repositoryHierarchy": {
       "repositoryRevisions": 143,
       "links": 149,
@@ -60,97 +68,52 @@
     "researchExamples": 6
   },
   "repositories": {
-    "PublicInterface": "49cc66cde274d1a747c514694039d6f75ac32833",
-    "UserDashboard": "75d2ee44cb0e3faaf211d4eec7b1c5255fb8f828",
+    "PublicInterface": "af3da8834d305ea407e7b851bed3037ece27a2a8",
+    "UserDashboard": "09c12ea4668ff4200fd8194e4b8a27b3c3c5ca0a",
     "IUWLearn": "ee50b2e30f1e9e393c62d4da5ab66a157ca30f2e",
     "Academy": "a6d5a1c3383acfc400bcde8d1fc6810630ed67a0",
-    "Cloud9Reserve": "c359e23a20b37efad8e95c9472f78ffb5d3df0db",
-    "Garage": "e01f9c1c24767131ea4f41279e454ddff7618c81",
-    "CREATIVE": "15e192c053ff41f4a7dce98196a698cdbaf81ffa",
-    "Modules": "d6075b4269d342cee2cf25e300c79897e01fa54d",
-    "BackendLogic": "7e82453cd8c8ee4e2671372fc0b2f897d8c15648",
-    "FrontendView": "74a4aa503842058519244870c59d834470b6f870",
-    "Website": "bcacb85f5d11c4dc59ed97decac28ed89006bbe3",
-    "AVIWavey": "13c24a207bbf9038bee0e183e5594874f6a1d0d9",
-    "DigitalPlatforms": "ab94ea87ea429ec8723e6c5ee0d1001bb6287cbc",
-    "TrueMarkGate": "966923fb0e6ee878e914e0eeb66196913e5a1170",
-    "SystemLayers": "42c2f21c1825df31e79dce6dc0c7b5331263d099",
-    "CommMesh": "1cbcce17ac1608fe51bf227a5152b5b5497dc2d8",
-    "MetaMetrics": "56cf25ee598eb01ef645c3b9b835ecf213646f97",
-    "AuraBackendLogic": "3e8d9c8798239897eeeb962b356148ce70ca0ea0",
-    "MikeTBackendLogic": "c70281474a9f7283a0fdc23b534c46f63aff3a3d",
-    "AuraWebsite": "9d9e499884121fa0e1fd8f24ef8cdb64b7742dc0",
-    "MikeTWebsite": "ad6acc7e8a2cacfe8972a11400008362bd8ba950",
-    "AuraAI": "3e822fa489c063990bc341e4a1892a78c1d4676e",
-    "MikeT.MMT": "ff41403c8f7c3c35b36fda00cbfdf05f06c8a300"
+    "Cloud9Reserve": "6b9d3e317edcad6f2506c378267ee27b3e6a752b",
+    "Garage": "9d02970addcf1d226d85e2928f3c62d41331c0f7",
+    "CREATIVE": "14865e1829c6f01cfdeef1630c88eb40f8911eb2",
+    "Modules": "4e3c8bb81479d455c53c63167af34ad4cddfa477",
+    "BackendLogic": "3dda78809b20981e64cb6455d3cc7a66784756c6",
+    "FrontendView": "9bb3dd16c8ba47215ee7448e56f538b707b7e396",
+    "Website": "4cab9b22812c27b3427158835535a13ee0369d31",
+    "AVIWavey": "3808a84e204f93083773535a0bd0f411574f2b1b",
+    "DigitalPlatforms": "1fabba2aff5365af352e2157fdcb89b63ec0ae0b",
+    "TrueMarkGate": "351e697dc120c6e66cc80facfeeb1c198f1417a6",
+    "SystemLayers": "22eed7b670341c1256fea4d442cfaba7b4e3ca60",
+    "CommMesh": "2698c1fd50198c7dd52ad9bacc93bbc49090e90a",
+    "MetaMetrics": "4e09de1776628880a22d68fd1f60b534872e9884",
+    "AuraBackendLogic": "151020634198e23a690dae594bbf670976710832",
+    "MikeTBackendLogic": "cba1a3c818de9c24ca7fcc9dccad0c697b68eb58",
+    "AuraWebsite": "11fc495e8611d47f124130d236cf01986f994206",
+    "MikeTWebsite": "25e823c5a15b8291a8ecec57748bc18d2ea5500a",
+    "AuraAI": "c4719a46a52ff7aa91e72c706f9da8248b1f1426",
+    "MikeT.MMT": "d355b94599c34942abe7d28c5149cab6f5ea0fc1"
   },
-  "artifactHashes": [
-    {
-      "path": "index.html",
-      "sha256": "3e68e7ee6911fb63301f456e18da95e0526accdb575b3a85bdcce74104af056d",
-      "bytes": 1386
-    },
-    {
-      "path": "api/auth.ts",
-      "sha256": "cec2a10871220629f257c56d14784aceea153ddca81a5204b2e621f7e25c2ac6",
-      "bytes": 30007
-    },
-    {
-      "path": "assets/Commesh-CPCI7kRQ.css",
-      "sha256": "b1cc91f4f5b2ec88f924bb70b0364f5c6b4e9a0a6b6fbdfe59ccf443be3f3269",
-      "bytes": 13045
-    },
-    {
-      "path": "assets/Commesh-CeAxEumq.js",
-      "sha256": "edfdbc37f3554f8313cd4856fb36b777c0cf3252bafe6cc4c5f2b6f99d7a3741",
-      "bytes": 21170
-    },
-    {
-      "path": "assets/CompleteProfile-CDxWlnpQ.js",
-      "sha256": "3af5786cca8d546f122e184465cf55ac9994db805f84533c91d5413bc84b364a",
-      "bytes": 6246
-    },
-    {
-      "path": "assets/DashboardLayout-BjZ7Izv5.js",
-      "sha256": "af7445b1bbbe7b967255545cbf1edbace49c73b3531d866fac9f606108111c1b",
-      "bytes": 5306278
-    },
-    {
-      "path": "assets/DashboardLayout-_w2NyoNw.css",
-      "sha256": "a45066cb33a1b9984824a03e622ad5a64bedc32deef7205a0fb4897833c908b5",
-      "bytes": 571179
-    },
-    {
-      "path": "assets/Metametrics-DAd7tLyE.js",
-      "sha256": "9d5eb6ccde02e8518e5d2f2a0bbd733621bc6dcd22f6d8a7f5f6184708c9aeee",
-      "bytes": 13425
-    },
-    {
-      "path": "assets/Metametrics-SeIdxIrb.css",
-      "sha256": "a66b8ec1f4a9b3c0361254f5b53bbe73026ab46111bbfed3cbee1a01fa25c873",
-      "bytes": 2364
-    },
-    {
-      "path": "assets/main-CC3vanxL.js",
-      "sha256": "1c4c9b9b4fe50d91223b408e717561d1d9ed6bd3a3d9880f812d094658b81ca4",
-      "bytes": 248582
-    },
-    {
-      "path": "assets/main-D3M-2XQQ.css",
-      "sha256": "d02c54190d27accc8d527a4d4cf17c66b446d60c8e9133a9ba17f4a303ca7410",
-      "bytes": 198717
-    }
-  ],
+  "artifactHashes": {
+    "index.html": "3a03d9375e5f344f8cb1310d0f1733200925cee7f07b01ebfd24786f8046541c",
+    "api/auth.ts": "b8ffdbb1778b89001934a3f8bc04fd52503b73b19ecc484023bec05782700e77",
+    "src/oauth.ts": "5a0ba40c8340136204abfe0bc2d63c5ccdfbdc204f6219adf4f99741fe1c0326",
+    "src/Cloud9Runtime.mjs": "fb3b7211caf3c22cf223a57b933220faed7a5a77c8492bbaee835d90fc808d44",
+    "assets/Commesh-C2x5RcsR.js": "acefd882041eed9afc15a649ec2a7b53da4338cb44568d56337d5d7e1df4fdc0",
+    "assets/Commesh-e5ZxswvO.css": "72b060184f4ebbb54acb2e6333dea96a00a1b7e58f95100173dea8f0f24b447d",
+    "assets/CompleteProfile-CnVFHj6I.css": "3ae28854f7dbee6f0773f258a60b265fbe3932727fea7ee11589e4d3996ecdc8",
+    "assets/CompleteProfile-DmP4dm7G.js": "0cd421dc8295b8649c0a18a91b0c975a71951584c1c693dd657ac45f51e9129e",
+    "assets/DashboardLayout-CF4vS0Z6.js": "d0bb7832311c258cc1f8d3346b0778d0f27d9044fd5e0f9ab4e418f44e1f7a85",
+    "assets/DashboardLayout-CsWQ3tLl.css": "9aca68a57d8193ebc69e5fe5640b641ad90403a6516447ee21e435dc358b5a41",
+    "assets/Metametrics-DumGwfG4.js": "e4acfa454c28115a984f4f505ae70747aeb79511fdc0e0ce19d16b36c1c84332",
+    "assets/Metametrics-SeIdxIrb.css": "a66b8ec1f4a9b3c0361254f5b53bbe73026ab46111bbfed3cbee1a01fa25c873",
+    "assets/main-CGXtW4lC.css": "6702981960927212a0f5a1d91eccb93273c8883a5296f8bd047131a96e6871e8",
+    "assets/main-W0tBu1o2.js": "831ccb3c7e6b19a3e96c11af50fe54060c48b0b2c98ecd743fa337dbb4fa9f48"
+  },
   "relatedPullRequests": [
-    "https://github.com/AVI-Wavey/PublicInterface/pull/68",
-    "https://github.com/AVI-Wavey/PublicInterface/pull/69",
-    "https://github.com/AVI-Wavey/PublicInterface/pull/70",
-    "https://github.com/AVI-Wavey/PublicInterface/pull/71",
-    "https://github.com/AVI-Wavey/UserDashboard/pull/30",
-    "https://github.com/AVI-Wavey/CommMesh/pull/2",
-    "https://github.com/AVI-Wavey/MetaMetrics/pull/1",
-    "https://github.com/AVI-Wavey/TrueMarkGate/pull/4",
-    "https://github.com/AVI-Wavey/SystemLayers/pull/1"
+    "https://github.com/AVI-Wavey/UserDashboard/pull/31",
+    "https://github.com/AVI-Wavey/TrueMarkGate/pull/5",
+    "https://github.com/AVI-Wavey/CommMesh/pull/3",
+    "https://github.com/AVI-Wavey/MetaMetrics/pull/2",
+    "https://github.com/AVI-Wavey/Cloud9Reserve/pull/7"
   ],
   "limitations": [
     "Payment collection, live payouts and recurring billing are not connected. Checkout is simulated.",
@@ -158,5 +121,16 @@
     "Inner Circle and IUW Link messaging await their source services; Compute and Capital analytics show unavailable sources.",
     "Older sessions without a verified sign-in marker use Switch accounts until a new sign-in."
   ],
-  "builtCommit": "e741e4fe8934bf135df4c6415f825093f4bdc2c1"
+  "builtCommit": "16079f602aca68d5af9a74a71cd1dc7c2423db34",
+  "analyticsActivity": {
+    "private": true,
+    "pollSeconds": 30,
+    "retentionUpdates": 200,
+    "firstRealSnapshotCreatesBaseline": true,
+    "exampleSnapshotsLabelled": true
+  },
+  "unreadCounter": {
+    "unit": "Unread conversations and system updates",
+    "boundedLabel": "99+ when capped"
+  }
 }

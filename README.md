@@ -1,3 +1,9 @@
+# Current release
+
+Source: AVI-Wavey/PublicInterface #72, af3da8834d305ea407e7b851bed3037ece27a2a8.
+
+Compact profile entry, unified shared pages, unread counters and persisted analytics activity. Validated in the user-approved temporary build; see deployment-manifest.json for checks and limitations.
+
 # AVI Wavey public deployment
 
 This repository contains the validated website artifact and existing production adapters for https://aviwavey.com.

@@ -81,21 +81,24 @@ export default async function handler(request: IncomingMessage, response: Server
     // Presentation metadata is signed and bound to the exact active session.
     // It never grants access or guesses a provider from an email address.
     const signInCookieName=config.sessionCookieName+'_method';
-    const signedInCookies=async(session:{cookie:string;expiresAt?:Date},signInMethod:'google'|'apple'|'email')=>{
+    const providerPhoto=(value:unknown)=>{if(typeof value!=='string'||value.length>2048)return undefined;try{const url=new URL(value);return url.protocol==='https:'&&!url.username&&!url.password?url.href:undefined;}catch{return undefined;}};
+    const signedInCookies=async(session:{cookie:string;expiresAt?:Date},signInMethod:'google'|'apple'|'email',picture?:unknown)=>{
       const token=cookieValue(session.cookie,config.sessionCookieName);
       if(!token)throw new Error('AUTHENTICATION_FAILED');
-      const marker=await new SignJWT({signInMethod})
+      const marker=await new SignJWT({signInMethod,...(signInMethod!=='email'&&providerPhoto(picture)?{providerPicture:providerPhoto(picture)}:{})})
         .setProtectedHeader({alg:'HS256'}).setIssuer('TrueMarkGate').setAudience('session-method')
         .setSubject(createHash('sha256').update(token).digest('base64url')).setIssuedAt()
         .setExpirationTime(session.expiresAt?Math.floor(session.expiresAt.getTime()/1000):'30d').sign(config.sessionSigningKey);
       return [...sessionCookies(config.sessionCookieName,session.cookie,config.baseUrl.hostname),tempCookie(signInCookieName,marker,30*24*60*60)];
     };
-    const readSignInMethod=async()=>{
+    const readSignInContext=async()=>{
       const marker=cookieValue(request.headers.cookie,signInCookieName);if(!marker||!authenticatedToken)return undefined;
       try{
         const {payload}=await jwtVerify(marker,config.sessionSigningKey,{algorithms:['HS256'],issuer:'TrueMarkGate',audience:'session-method'});
         if(payload.sub!==createHash('sha256').update(authenticatedToken).digest('base64url'))return undefined;
-        return ['google','apple','email'].includes(String(payload.signInMethod))?payload.signInMethod as 'google'|'apple'|'email':undefined;
+        if(!['google','apple','email'].includes(String(payload.signInMethod)))return undefined;
+        const signInMethod=payload.signInMethod as 'google'|'apple'|'email';
+        return {signInMethod,providerPicture:signInMethod==='email'?undefined:providerPhoto(payload.providerPicture)};
       }catch{return undefined;}
     };
 
@@ -233,7 +236,7 @@ export default async function handler(request: IncomingMessage, response: Server
       const returnTo = validatedReturnPath(product, String(verifiedState.payload.returnTo ?? ""));
       response.statusCode = 302;
       response.setHeader("Cache-Control", "no-store");
-      response.setHeader("Set-Cookie", [...await signedInCookies(result.session,provider), ...clear]);
+      response.setHeader("Set-Cookie", [...await signedInCookies(result.session,provider,'picture' in identity?identity.picture:undefined), ...clear]);
       response.setHeader("Location", new URL(result.profileComplete ? returnTo : product === "avi" ? "/complete-profile" : "/AuraAI/complete-profile/", config.baseUrl).toString());
       return response.end();
     }
@@ -244,7 +247,8 @@ export default async function handler(request: IncomingMessage, response: Server
       if (!user || user.status !== "active") return json(response, 200, { authenticated: false });
       const completed = profileComplete(user);
       const publicSettings = await settings.read(authenticated.userId).catch(() => undefined);
-      return json(response, 200, { authenticated: true, signInMethod: await readSignInMethod(), profileComplete: completed, name: [user.firstName, user.lastName].filter(Boolean).join(" "), email: user.primaryEmail, picture: publicSettings?.public.profilePicture || user.profilePictureKey, memberships: user.memberships, assurance: user.assurance, moduleAccess: moduleAccess(user,process.env) });
+      const signIn=await readSignInContext();
+      return json(response, 200, { authenticated: true, signInMethod: signIn?.signInMethod, providerPicture: signIn?.providerPicture, profileComplete: completed, name: [user.firstName, user.lastName].filter(Boolean).join(" "), email: user.primaryEmail, picture: publicSettings?.public.profilePicture || user.profilePictureKey, memberships: user.memberships, assurance: user.assurance, moduleAccess: moduleAccess(user,process.env) });
     }
 
     if(requestUrl.pathname.endsWith('/creative-profile')&&['GET','POST'].includes(request.method||'')){
@@ -306,8 +310,15 @@ export default async function handler(request: IncomingMessage, response: Server
       if (contentType.includes("application/json")) {
         const body = await jsonBody(request, 2_800_000);
         username = string(body.username); telephone = string(body.telephone); picture = string(body.profilePicture);
-        const match = /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(picture);
-        if (!match || Buffer.from(match[2], "base64").byteLength > 2_000_000) return json(response, 400, { code: "PROFILE_PICTURE_REQUIRED", message: "Choose a JPEG, PNG or WebP image smaller than 2 MB." });
+        if(body.useProviderPicture===true){
+          // The browser sends a choice, never a trusted provider URL. Reuse only
+          // the provider picture signed for this exact authenticated session.
+          picture=(await readSignInContext())?.providerPicture||'';
+          if(!picture)return json(response,400,{code:'PROVIDER_PICTURE_UNAVAILABLE',message:'Your sign-in photo is unavailable. Upload a picture or sign in again.'});
+        }else{
+          const match = /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(picture);
+          if (!match || !Buffer.from(match[2],"base64").byteLength || Buffer.from(match[2], "base64").byteLength > 2_000_000) return json(response, 400, { code: "PROFILE_PICTURE_REQUIRED", message: "Choose a JPEG, PNG or WebP image smaller than 2 MB." });
+        }
       } else {
         const form = await formBody(request, requestUrl.toString());
         const photo = form.get("profilePicture");

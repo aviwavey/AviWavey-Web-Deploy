@@ -65,7 +65,7 @@ export async function exchangeGoogleCode(config: TrueMarkConfig, product: Produc
   const verified = await jwtVerify(token.id_token, googleKeys, { issuer: ["https://accounts.google.com", "accounts.google.com"], audience: client.clientId });
   const claims = verified.payload;
   if (claims.nonce !== expectedNonce || !claims.sub || !claims.email || claims.email_verified !== true) throw new Error("GOOGLE_IDENTITY_INVALID");
-  return { provider: "google" as const, subject: claims.sub, verifiedEmail: String(claims.email), firstName: typeof claims.given_name === "string" ? claims.given_name : undefined, lastName: typeof claims.family_name === "string" ? claims.family_name : undefined };
+  return { provider: "google" as const, subject: claims.sub, verifiedEmail: String(claims.email), picture: typeof claims.picture === "string" ? claims.picture : undefined, firstName: typeof claims.given_name === "string" ? claims.given_name : undefined, lastName: typeof claims.family_name === "string" ? claims.family_name : undefined };
 }
 
 const appleKeys=createRemoteJWKSet(new URL("https://appleid.apple.com/auth/keys"));
