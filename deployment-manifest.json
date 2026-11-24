@@ -1,19 +1,18 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "be3dcfe9989052bf0a293b6c9f7aa8cf92ab762d",
+  "sourceCommit": "66d8f6a4679a17788497047347fd4faab1048033",
   "sourceRef": "main",
-  "featureHead": "75e3afede77cb9d5964b1760aecc5034af2a0114",
-  "sourceTree": "4658fc0cf0f79444035c5bab218b34c2eaa23ced",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/77",
+  "featureHead": "88f40fe28c2a5fc79c3441b36978b6a4cada98ce",
+  "sourceTree": "5fe288864c21b805abd0ba8773d1fc2306835840",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/78",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-24T17:57:18.060Z",
+  "publishedAt": "2026-11-24T18:28:51.012910+00:00",
   "publication": "User-authorized manual AutoPush equivalent; GitHub Actions blocked before validation steps",
   "validation": {
     "frontend": "passed",
-    "backend": "passed; production adapters unchanged",
-    "automatedChecks": 167,
-    "browser": "Desktop/mobile: equal-width categories, full-width 56px rows, avatar and star alignment, keyboard/select-all, read/unread and star persistence, Starred filtering, pagination, fixed tabs and no overflow",
-    "canonicalSource": "Three changed UserDashboard files verified byte-for-byte"
+    "backend": "24 focused module ordering, inbox, dashboard and basket tests passed; prior 188 release checks passed; production adapters unchanged",
+    "browser": "Desktop/mobile mail selection, full-width reader, swipes, cancelled gestures, Undo, platform handles and Contracts tabs passed; all four universal workspaces ordered consistently, sender/group photos and dashboard isolation passed with no runtime errors",
+    "canonicalSource": "UserDashboard, CommMesh, GeoSphereGrid and shared SystemLayers synchronised"
   },
-  "contents": "Compact full-width correspondence inbox, portrait selection and far-right stars; includes regular-module Contracts styling"
+  "contents": "Unified universal-module order, Commesh sender/group portraits, full-width email reader, swipe actions with Undo, linked usernames, and five Contracts tabs"
 }
