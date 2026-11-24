@@ -1,23 +1,33 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "5e9e003e458cc7773abb0f09f676d9454765d46e",
+  "sourceCommit": "49cc66cde274d1a747c514694039d6f75ac32833",
   "sourceRef": "main",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/69",
-  "publicationMethod": "Validated local build from the authorised existing Desktop preview, published to the existing Vercel deployment mirror",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/71",
+  "publicationMethod": "User-authorized temporary validation and build; published to the existing Vercel deployment mirror. Source development and canonical sync remained on GitHub.",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-18T11:08:41.431Z",
+  "publishedAt": "2026-11-24T10:21:28.878Z",
   "contents": [
-    "Existing connected Payment Portal and R&D release",
-    "Independent OAuth attempts and existing-session reuse",
-    "Recoverable profile completion and 2 MB images",
-    "Country-specific E.164 telephone inputs",
-    "Required Creative discipline onboarding",
-    "Additional breadcrumb spacing"
+    "Commesh with shared Socials conversations and Correspondence summaries",
+    "Metametrics with source-aware module snapshots",
+    "Payment Portal grouping by dashboard and source module",
+    "Back to home and one login / two platform accounts",
+    "Provider-specific Switch Google, Apple or email accounts",
+    "Mobile profile completion layout"
   ],
   "validation": {
-    "frontend": "TypeScript build and Vite production build passed",
-    "authentication": "16 regression checks passed",
-    "liveGoogleConsent": "Requires a real account/browser; not covered by automated checks"
+    "frontend": "TypeScript and Vite production build passed",
+    "backend": "Packaged production TypeScript passed; 89 backend tests passed",
+    "authentication": "23 package tests including 14 authentication/onboarding scenarios passed",
+    "universalServices": "17 targeted model/account tests passed",
+    "moduleRegression": "109 module regression checks and 12 bundled autosave tests passed",
+    "lmsRegression": "177 regression tests passed",
+    "browser": "Desktop and mobile Google/Apple/email switching; shared message persistence and Socials navigation; analytics source states; grouped basket and fixed headers; mobile navigation",
+    "liveGoogleConsent": "External OAuth provider consent was stubbed in browser QA; no real user message or payment was sent",
+    "repositoryHierarchy": {
+      "repositoryRevisions": 143,
+      "links": 149,
+      "failures": []
+    }
   },
   "demo": {
     "accounts": 100,
@@ -50,71 +60,103 @@
     "researchExamples": 6
   },
   "repositories": {
-    "PublicInterface": "db6a33fe35bb25a87155371722e335fa50fd49b7",
-    "UserDashboard": "e03cb7ce7cc6495fb4f2d6cd6a08c16b16ebd66b",
+    "PublicInterface": "49cc66cde274d1a747c514694039d6f75ac32833",
+    "UserDashboard": "75d2ee44cb0e3faaf211d4eec7b1c5255fb8f828",
     "IUWLearn": "ee50b2e30f1e9e393c62d4da5ab66a157ca30f2e",
     "Academy": "a6d5a1c3383acfc400bcde8d1fc6810630ed67a0",
     "Cloud9Reserve": "c359e23a20b37efad8e95c9472f78ffb5d3df0db",
     "Garage": "e01f9c1c24767131ea4f41279e454ddff7618c81",
     "CREATIVE": "15e192c053ff41f4a7dce98196a698cdbaf81ffa",
     "Modules": "d6075b4269d342cee2cf25e300c79897e01fa54d",
-    "BackendLogic": "4943b0ad37085b333ac667a45fc9b62cc50856b6",
-    "FrontendView": "cb5bf7f7c21589a2d1a3a87ac0b3427fa9809149",
-    "Website": "553e11690c44b6a896cbdc42af80e93cd69ce4fb",
-    "AVIWavey": "0120fbb61b1669e85596e12561317e9dc106a6a5",
-    "DigitalPlatforms": "c1af68cdd5b2c530e35286b71f29df385b592857",
-    "TrueMarkGate": "6acbfdc0bd1d66bf9fbbc464deabd6ac32d846d0",
-    "SystemLayers": "3a75d1afb572c9f8c65761286348f6f601e3a90d"
+    "BackendLogic": "7e82453cd8c8ee4e2671372fc0b2f897d8c15648",
+    "FrontendView": "74a4aa503842058519244870c59d834470b6f870",
+    "Website": "bcacb85f5d11c4dc59ed97decac28ed89006bbe3",
+    "AVIWavey": "13c24a207bbf9038bee0e183e5594874f6a1d0d9",
+    "DigitalPlatforms": "ab94ea87ea429ec8723e6c5ee0d1001bb6287cbc",
+    "TrueMarkGate": "966923fb0e6ee878e914e0eeb66196913e5a1170",
+    "SystemLayers": "42c2f21c1825df31e79dce6dc0c7b5331263d099",
+    "CommMesh": "1cbcce17ac1608fe51bf227a5152b5b5497dc2d8",
+    "MetaMetrics": "56cf25ee598eb01ef645c3b9b835ecf213646f97",
+    "AuraBackendLogic": "3e8d9c8798239897eeeb962b356148ce70ca0ea0",
+    "MikeTBackendLogic": "c70281474a9f7283a0fdc23b534c46f63aff3a3d",
+    "AuraWebsite": "9d9e499884121fa0e1fd8f24ef8cdb64b7742dc0",
+    "MikeTWebsite": "ad6acc7e8a2cacfe8972a11400008362bd8ba950",
+    "AuraAI": "3e822fa489c063990bc341e4a1892a78c1d4676e",
+    "MikeT.MMT": "ff41403c8f7c3c35b36fda00cbfdf05f06c8a300"
   },
   "artifactHashes": [
     {
       "path": "index.html",
-      "sha256": "6622baea2fde4e9e577565ea76c63dc5225ed0bc76038c802236203849637181",
+      "sha256": "3e68e7ee6911fb63301f456e18da95e0526accdb575b3a85bdcce74104af056d",
       "bytes": 1386
     },
     {
-      "path": "assets/Login-KBpzVNAM.js",
-      "sha256": "49d7e91eebaa544faa0704a67f133688f1d7acd8b1c08bb081de0786caf0e2b8",
-      "bytes": 9938
+      "path": "api/auth.ts",
+      "sha256": "cec2a10871220629f257c56d14784aceea153ddca81a5204b2e621f7e25c2ac6",
+      "bytes": 30007
     },
     {
-      "path": "assets/CompleteProfile-BJhn4efG.js",
-      "sha256": "da13ad59ab2ace732343d227e89e90b356e34d1c34f50ca63c20b8532a77e12b",
-      "bytes": 3590
+      "path": "assets/Commesh-CPCI7kRQ.css",
+      "sha256": "b1cc91f4f5b2ec88f924bb70b0364f5c6b4e9a0a6b6fbdfe59ccf443be3f3269",
+      "bytes": 13045
     },
     {
-      "path": "assets/DashboardLayout-5a9xoHZP.js",
-      "sha256": "5ba6a533d36a51d5c73195816eea7dbdfeba728d2ad65f63bdc1d6b46a9c93f7",
-      "bytes": 5297538
+      "path": "assets/Commesh-CeAxEumq.js",
+      "sha256": "edfdbc37f3554f8313cd4856fb36b777c0cf3252bafe6cc4c5f2b6f99d7a3741",
+      "bytes": 21170
     },
     {
-      "path": "assets/main-BWbMUmhL.js",
-      "sha256": "5c00789968d1a74ed49d207c9aca466cfb44c2976c7bf04f958ed61a282ff3eb",
-      "bytes": 248038
+      "path": "assets/CompleteProfile-CDxWlnpQ.js",
+      "sha256": "3af5786cca8d546f122e184465cf55ac9994db805f84533c91d5413bc84b364a",
+      "bytes": 6246
     },
     {
-      "path": "assets/main-moTs7NLZ.css",
-      "sha256": "85f4070e806e98115042f7a96c465c2de815f16ecae3d4e7c576706c856b51ac",
-      "bytes": 198544
+      "path": "assets/DashboardLayout-BjZ7Izv5.js",
+      "sha256": "af7445b1bbbe7b967255545cbf1edbace49c73b3531d866fac9f606108111c1b",
+      "bytes": 5306278
     },
     {
-      "path": "assets/DashboardLayout-BNXOjcZ0.css",
-      "sha256": "ff900a58c48e39dcde45c48c0fb46c893c47ab6091b725da18d2b8adcaf0049a",
-      "bytes": 570726
+      "path": "assets/DashboardLayout-_w2NyoNw.css",
+      "sha256": "a45066cb33a1b9984824a03e622ad5a64bedc32deef7205a0fb4897833c908b5",
+      "bytes": 571179
     },
     {
-      "path": "assets/Settings-ATyWXhDJ.js",
-      "sha256": "d0e9b5600c10ccb234a4a37ffd52c20a2e1841637097eb1dfeee68842d1ae49a",
-      "bytes": 39748
+      "path": "assets/Metametrics-DAd7tLyE.js",
+      "sha256": "9d5eb6ccde02e8518e5d2f2a0bbd733621bc6dcd22f6d8a7f5f6184708c9aeee",
+      "bytes": 13425
+    },
+    {
+      "path": "assets/Metametrics-SeIdxIrb.css",
+      "sha256": "a66b8ec1f4a9b3c0361254f5b53bbe73026ab46111bbfed3cbee1a01fa25c873",
+      "bytes": 2364
+    },
+    {
+      "path": "assets/main-CC3vanxL.js",
+      "sha256": "1c4c9b9b4fe50d91223b408e717561d1d9ed6bd3a3d9880f812d094658b81ca4",
+      "bytes": 248582
+    },
+    {
+      "path": "assets/main-D3M-2XQQ.css",
+      "sha256": "d02c54190d27accc8d527a4d4cf17c66b446d60c8e9133a9ba17f4a303ca7410",
+      "bytes": 198717
     }
   ],
   "relatedPullRequests": [
     "https://github.com/AVI-Wavey/PublicInterface/pull/68",
     "https://github.com/AVI-Wavey/PublicInterface/pull/69",
-    "https://github.com/AVI-Wavey/PublicInterface/pull/70"
+    "https://github.com/AVI-Wavey/PublicInterface/pull/70",
+    "https://github.com/AVI-Wavey/PublicInterface/pull/71",
+    "https://github.com/AVI-Wavey/UserDashboard/pull/30",
+    "https://github.com/AVI-Wavey/CommMesh/pull/2",
+    "https://github.com/AVI-Wavey/MetaMetrics/pull/1",
+    "https://github.com/AVI-Wavey/TrueMarkGate/pull/4",
+    "https://github.com/AVI-Wavey/SystemLayers/pull/1"
   ],
   "limitations": [
     "Payment collection, live payouts and recurring billing are not connected. Checkout is simulated.",
-    "R&D files remain pending security review. Public submission/reviewer services are gated; private drafts use Cloud9."
-  ]
+    "R&D files remain pending security review. Public submission/reviewer services are gated; private drafts use Cloud9.",
+    "Inner Circle and IUW Link messaging await their source services; Compute and Capital analytics show unavailable sources.",
+    "Older sessions without a verified sign-in marker use Switch accounts until a new sign-in."
+  ],
+  "builtCommit": "e741e4fe8934bf135df4c6415f825093f4bdc2c1"
 }

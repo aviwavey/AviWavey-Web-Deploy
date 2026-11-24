@@ -1,7 +1,7 @@
-# AVI Wavey — compiled public release
+# AVI Wavey public deployment
 
-Published manually using AutoPush's validation and adapter sequence.
+This repository contains the validated website artifact and existing production adapters for https://aviwavey.com.
 
-Source: AVI-Wavey/PublicInterface @ 68b0b892d2a432bfccaa3f86e67ab1bbb0504825
+Source: AVI-Wavey/PublicInterface, main commit 49cc66cde274d1a747c514694039d6f75ac32833. Canonical frontend and backend module references are recorded in deployment-manifest.json.
 
-Includes the complete website and preserves the shared account and administration services. Source development stays in the private repositories; future AutoPush runs publish those sources.
+Published through the existing Vercel project after the user-authorized temporary build and checks. No paid plan changes.

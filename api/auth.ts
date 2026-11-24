@@ -67,14 +67,36 @@ export default async function handler(request: IncomingMessage, response: Server
     const accounts = new AccountService(identities, new ScryptPasswordHasher(), sessions, () => crypto.randomUUID());
     const contacts = new ContactVerificationService(config);
     const settings = new AccountSettingsService(config.databaseUrl);
+    let authenticatedToken='';
     const current = async () => {
       // Legacy host-only, domain-wide and path-scoped cookies can arrive in any
       // order. Select the first token that is still a valid database session.
       for (const token of cookieValues(request.headers.cookie, config.sessionCookieName)) {
         const authenticated = await sessions.authenticate(token);
-        if (authenticated) return authenticated;
+        if (authenticated){authenticatedToken=token;return authenticated;}
       }
       return undefined;
+    };
+
+    // Presentation metadata is signed and bound to the exact active session.
+    // It never grants access or guesses a provider from an email address.
+    const signInCookieName=config.sessionCookieName+'_method';
+    const signedInCookies=async(session:{cookie:string;expiresAt?:Date},signInMethod:'google'|'apple'|'email')=>{
+      const token=cookieValue(session.cookie,config.sessionCookieName);
+      if(!token)throw new Error('AUTHENTICATION_FAILED');
+      const marker=await new SignJWT({signInMethod})
+        .setProtectedHeader({alg:'HS256'}).setIssuer('TrueMarkGate').setAudience('session-method')
+        .setSubject(createHash('sha256').update(token).digest('base64url')).setIssuedAt()
+        .setExpirationTime(session.expiresAt?Math.floor(session.expiresAt.getTime()/1000):'30d').sign(config.sessionSigningKey);
+      return [...sessionCookies(config.sessionCookieName,session.cookie,config.baseUrl.hostname),tempCookie(signInCookieName,marker,30*24*60*60)];
+    };
+    const readSignInMethod=async()=>{
+      const marker=cookieValue(request.headers.cookie,signInCookieName);if(!marker||!authenticatedToken)return undefined;
+      try{
+        const {payload}=await jwtVerify(marker,config.sessionSigningKey,{algorithms:['HS256'],issuer:'TrueMarkGate',audience:'session-method'});
+        if(payload.sub!==createHash('sha256').update(authenticatedToken).digest('base64url'))return undefined;
+        return ['google','apple','email'].includes(String(payload.signInMethod))?payload.signInMethod as 'google'|'apple'|'email':undefined;
+      }catch{return undefined;}
     };
 
     const sql=neon(config.databaseUrl);
@@ -135,7 +157,7 @@ export default async function handler(request: IncomingMessage, response: Server
           const result=await accounts.login({email:string(form.get('email')),password:typeof form.get('password')==='string'?String(form.get('password')):'',product:parseProduct(p.product),remember:false});if(result.userId!==p.target)throw new Error('AUTHENTICATION_FAILED');a={userId:result.userId,sessionId:''};cookie=result.session.cookie;}
         const target=await identities.findUserById(a.userId);if(target?.status!=='active')throw new Error('AUTHENTICATION_FAILED');
         await consume(String(p.jti));await accounts.linkProvider(a.userId,identity);
-        return redirect(settingsPath(String(p.product)),[clearCookie('avi_link_proof'),...(cookie?sessionCookies(config.sessionCookieName,cookie,config.baseUrl.hostname):[])]);
+        return redirect(settingsPath(String(p.product)),[clearCookie('avi_link_proof'),...(cookie?await signedInCookies({cookie},'email'):[])]);
       }
       const a=await current();const signedIn=a?.userId===p.target;
       response.setHeader('Content-Type','text/html; charset=utf-8');response.setHeader('Cache-Control','no-store');response.setHeader('Content-Security-Policy',"default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'");
@@ -152,12 +174,12 @@ export default async function handler(request: IncomingMessage, response: Server
     if (request.method === "POST" && requestUrl.pathname.endsWith("/register")) {
       const body = await jsonBody(request);
       const result = await accounts.register({ firstName: string(body.firstName), lastName: string(body.lastName), email: string(body.email), password: typeof body.password==="string"?body.password:"", product: parseProduct(body.product), termsAccepted: body.termsAccepted === true });
-      return json(response, 201, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": sessionCookies(config.sessionCookieName, result.session.cookie, config.baseUrl.hostname) });
+      return json(response, 201, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": await signedInCookies(result.session,'email') });
     }
     if (request.method === "POST" && requestUrl.pathname.endsWith("/login")) {
       const body = await jsonBody(request);
       const result = await accounts.login({ email: string(body.email), password: typeof body.password==="string"?body.password:"", product: parseProduct(body.product), remember: body.remember === true });
-      return json(response, 200, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": sessionCookies(config.sessionCookieName, result.session.cookie, config.baseUrl.hostname) });
+      return json(response, 200, { authenticated: true, profileComplete: result.profileComplete }, { "Set-Cookie": await signedInCookies(result.session,'email') });
     }
     if (request.method === "GET" && requestUrl.pathname.endsWith("/start")) {
       const product = parseProduct(requestUrl.searchParams.get("product"));
@@ -211,7 +233,7 @@ export default async function handler(request: IncomingMessage, response: Server
       const returnTo = validatedReturnPath(product, String(verifiedState.payload.returnTo ?? ""));
       response.statusCode = 302;
       response.setHeader("Cache-Control", "no-store");
-      response.setHeader("Set-Cookie", [...sessionCookies(config.sessionCookieName, result.session.cookie, config.baseUrl.hostname), ...clear]);
+      response.setHeader("Set-Cookie", [...await signedInCookies(result.session,provider), ...clear]);
       response.setHeader("Location", new URL(result.profileComplete ? returnTo : product === "avi" ? "/complete-profile" : "/AuraAI/complete-profile/", config.baseUrl).toString());
       return response.end();
     }
@@ -222,7 +244,7 @@ export default async function handler(request: IncomingMessage, response: Server
       if (!user || user.status !== "active") return json(response, 200, { authenticated: false });
       const completed = profileComplete(user);
       const publicSettings = await settings.read(authenticated.userId).catch(() => undefined);
-      return json(response, 200, { authenticated: true, profileComplete: completed, name: [user.firstName, user.lastName].filter(Boolean).join(" "), email: user.primaryEmail, picture: publicSettings?.public.profilePicture || user.profilePictureKey, memberships: user.memberships, assurance: user.assurance, moduleAccess: moduleAccess(user,process.env) });
+      return json(response, 200, { authenticated: true, signInMethod: await readSignInMethod(), profileComplete: completed, name: [user.firstName, user.lastName].filter(Boolean).join(" "), email: user.primaryEmail, picture: publicSettings?.public.profilePicture || user.profilePictureKey, memberships: user.memberships, assurance: user.assurance, moduleAccess: moduleAccess(user,process.env) });
     }
 
     if(requestUrl.pathname.endsWith('/creative-profile')&&['GET','POST'].includes(request.method||'')){
@@ -299,7 +321,7 @@ export default async function handler(request: IncomingMessage, response: Server
     if (request.method === "POST" && requestUrl.pathname.endsWith("/logout")) {
       const authenticated = await current();
       if (authenticated) await sessions.revoke(authenticated.sessionId);
-      return json(response, 200, { authenticated: false }, { "Set-Cookie": [clearCookie(config.sessionCookieName, "/api/auth"), clearDomainCookie(config.sessionCookieName, config.baseUrl.hostname, "/api/auth"), clearDomainCookie(config.sessionCookieName, config.baseUrl.hostname, "/"), clearCookie(config.sessionCookieName, "/")] });
+      return json(response, 200, { authenticated: false }, { "Set-Cookie": [clearCookie(signInCookieName), clearCookie(config.sessionCookieName, "/api/auth"), clearDomainCookie(config.sessionCookieName, config.baseUrl.hostname, "/api/auth"), clearDomainCookie(config.sessionCookieName, config.baseUrl.hostname, "/"), clearCookie(config.sessionCookieName, "/")] });
     }
     return json(response, 404, { code: "AUTH_ROUTE_NOT_FOUND", message: "This authentication route is not available." });
   } catch (error) {
