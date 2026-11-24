@@ -1,19 +1,19 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "5fa89b25d04cf47a35b58c68704c80bd5f46af2f",
+  "sourceCommit": "254bf78d1f4c2c1008218476f7f3098bccec3ed0",
   "sourceRef": "main",
-  "featureHead": "d7056a88edc96ab824770675ddd295ea4f2650e8",
-  "sourceTree": "bc724c3764417096e767733dcf1b5cd8fa4a3e73",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/75",
+  "featureHead": "2f822becc46c31aa1b4ab4008a7f34a02f89b6e0",
+  "sourceTree": "dac88804c8f6ca486c8c5b0f782996b7bddddf26",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/76",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-24T17:27:02.200Z",
+  "publishedAt": "2026-11-24T17:46:29.465Z",
   "publication": "User-authorized manual AutoPush equivalent; GitHub Actions blocked before validation steps",
   "validation": {
     "frontend": "passed",
     "backend": "passed",
-    "automatedChecks": 205,
-    "browser": "Desktop/mobile: drafting and reload, required fields, review, signing and reload, PDF, Commesh links, dashboard-scoped tabs",
-    "storage": "Mocked account isolation, actual bytes, quota rollback, revision conflicts and protected signed evidence"
+    "automatedChecks": 184,
+    "browser": "Desktop/mobile: matching breadcrumb, tabs and toolbar dimensions against Office, Store and Academy; fixed chrome; search and filters; modal heading and close; no horizontal overflow",
+    "canonicalSource": "Two changed UserDashboard files verified byte-for-byte"
   },
-  "contents": "Business Contracts and dashboard-specific subtabs; existing production adapters and release gates preserved"
+  "contents": "Compact Contracts layout using regular Creative module styles; existing backend adapters and release gates preserved"
 }
