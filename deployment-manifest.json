@@ -1,19 +1,19 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "254bf78d1f4c2c1008218476f7f3098bccec3ed0",
+  "sourceCommit": "be3dcfe9989052bf0a293b6c9f7aa8cf92ab762d",
   "sourceRef": "main",
-  "featureHead": "2f822becc46c31aa1b4ab4008a7f34a02f89b6e0",
-  "sourceTree": "dac88804c8f6ca486c8c5b0f782996b7bddddf26",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/76",
+  "featureHead": "75e3afede77cb9d5964b1760aecc5034af2a0114",
+  "sourceTree": "4658fc0cf0f79444035c5bab218b34c2eaa23ced",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/77",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-24T17:46:29.465Z",
+  "publishedAt": "2026-11-24T17:57:18.060Z",
   "publication": "User-authorized manual AutoPush equivalent; GitHub Actions blocked before validation steps",
   "validation": {
     "frontend": "passed",
-    "backend": "passed",
-    "automatedChecks": 184,
-    "browser": "Desktop/mobile: matching breadcrumb, tabs and toolbar dimensions against Office, Store and Academy; fixed chrome; search and filters; modal heading and close; no horizontal overflow",
-    "canonicalSource": "Two changed UserDashboard files verified byte-for-byte"
+    "backend": "passed; production adapters unchanged",
+    "automatedChecks": 167,
+    "browser": "Desktop/mobile: equal-width categories, full-width 56px rows, avatar and star alignment, keyboard/select-all, read/unread and star persistence, Starred filtering, pagination, fixed tabs and no overflow",
+    "canonicalSource": "Three changed UserDashboard files verified byte-for-byte"
   },
-  "contents": "Compact Contracts layout using regular Creative module styles; existing backend adapters and release gates preserved"
+  "contents": "Compact full-width correspondence inbox, portrait selection and far-right stars; includes regular-module Contracts styling"
 }
