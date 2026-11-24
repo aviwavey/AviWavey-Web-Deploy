@@ -248,7 +248,7 @@ export default async function handler(request: IncomingMessage, response: Server
       const completed = profileComplete(user);
       const publicSettings = await settings.read(authenticated.userId).catch(() => undefined);
       const signIn=await readSignInContext();
-      return json(response, 200, { authenticated: true, signInMethod: signIn?.signInMethod, providerPicture: signIn?.providerPicture, profileComplete: completed, name: [user.firstName, user.lastName].filter(Boolean).join(" "), email: user.primaryEmail, picture: publicSettings?.public.profilePicture || user.profilePictureKey, memberships: user.memberships, assurance: user.assurance, moduleAccess: moduleAccess(user,process.env) });
+      return json(response, 200, { authenticated: true, accountId: authenticated.userId, signInMethod: signIn?.signInMethod, providerPicture: signIn?.providerPicture, profileComplete: completed, name: [user.firstName, user.lastName].filter(Boolean).join(" "), email: user.primaryEmail, picture: publicSettings?.public.profilePicture || user.profilePictureKey, memberships: user.memberships, assurance: user.assurance, moduleAccess: moduleAccess(user,process.env) });
     }
 
     if(requestUrl.pathname.endsWith('/creative-profile')&&['GET','POST'].includes(request.method||'')){
