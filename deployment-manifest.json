@@ -1,18 +1,45 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "66d8f6a4679a17788497047347fd4faab1048033",
+  "sourceCommit": "b5a9b0a6dbefe76607da6b4f93af108e8372f1ba",
+  "sourceTree": "6c7c631a5e1b036389ea25ea7e0ebb0fa5708857",
   "sourceRef": "main",
-  "featureHead": "88f40fe28c2a5fc79c3441b36978b6a4cada98ce",
-  "sourceTree": "5fe288864c21b805abd0ba8773d1fc2306835840",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/78",
+  "featureHead": "60808c038fb651df4466af9300d6a74c0379e641",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/79",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-24T18:28:51.012910+00:00",
-  "publication": "User-authorized manual AutoPush equivalent; GitHub Actions blocked before validation steps",
-  "validation": {
-    "frontend": "passed",
-    "backend": "24 focused module ordering, inbox, dashboard and basket tests passed; prior 188 release checks passed; production adapters unchanged",
-    "browser": "Desktop/mobile mail selection, full-width reader, swipes, cancelled gestures, Undo, platform handles and Contracts tabs passed; all four universal workspaces ordered consistently, sender/group photos and dashboard isolation passed with no runtime errors",
-    "canonicalSource": "UserDashboard, CommMesh, GeoSphereGrid and shared SystemLayers synchronised"
+  "publication": "User-authorized manual AutoPush equivalent; remote jobs blocked by GitHub billing limit",
+  "publishedAt": "2026-11-24T19:46:13.438Z",
+  "canonicalRepositories": {
+    "PublicInterface": "b5a9b0a6dbefe76607da6b4f93af108e8372f1ba",
+    "FlowHub": "503f7f7320172ae6dc7efb3a64218f71b82bbd9d",
+    "SentinelGuard": "6d1df0af42c715d4af8d98610d0b01f709630e23",
+    "IUWLearn": "d06c57b1d659daf24e60f347b0373c2e1e392b20",
+    "TrueMarkGate": "fde4b884056ea934f2c10f879ea707f2c0de2845",
+    "Cloud9Reserve": "19b3ba376a64dd52bd3094297840cd5bf0e7490a",
+    "ConnectCenter": "e2d74b4148d41bfc9f8ddd382ac5c2591d12bb25",
+    "UserDashboard": "1c31b64a6dcabb2ba335b6b48d324c9457c288c1",
+    "Workspace": "52e2290e678e468772c8d1b73fabd1f281cec1ba",
+    "Academy": "4d0fa698e13c5e2f5ee533fe8afb5825520fe802",
+    "Garage": "3cdd6c471b9c10f93f343e72ac2b8f37f2b0fc20",
+    "SystemLayers": "141875917676ca291ab0b2ec5ce1f1989db03bee",
+    "CREATIVE": "07f8c6d41c6f842bb9ec6d6f8342e2becd8b5cf9",
+    "Modules": "91ecbe83e8e4cd1641ce109d55d3f1f4b0b3ca59",
+    "BackendLogic": "ca344dea262506430075b9aaebffcdb9224978dc",
+    "FrontendView": "cb9cf21cfe18815e71e6bf23ed4f2883e3cda86d",
+    "Website": "4db87e03cb2fd0200c28b3bbe4b044fcf0421be2",
+    "AVIWavey": "ce02441c56107b8c9dd358129438b88bda5ef91c",
+    "AuraBackendLogic": "75eb289d6ce257ff83e3437f4f7404090bed4a1a",
+    "MikeTBackendLogic": "654a3a791b891bcff255331f1b8f4a783c2b25fe",
+    "AuraWebsite": "9c404500a5b5459a6ed979823c81bce7d98dd9f2",
+    "MikeTWebsite": "8b388a8cac2b229589d21e474bc230b7ea2c4899",
+    "AuraAI": "ac74432d83c0fe0ecc689442bbf5adf61b0cf157",
+    "MikeT.MMT": "9599c793450105ea0a136b6ccc7ac9038bdf5adc",
+    "DigitalPlatforms": "966f946c1a46859557355105811ac8b0861d86b8"
   },
-  "contents": "Unified universal-module order, Commesh sender/group portraits, full-width email reader, swipe actions with Undo, linked usernames, and five Contracts tabs"
+  "validation": {
+    "frontend": "TypeScript and production Vite build passed",
+    "backend": "Published API adapters assembled; release TypeScript check passed; authentication/hosting, module, demo/privacy, learning/routing, autosave and storage checks passed",
+    "browser": "Desktop and mobile Flow Hub save/reopen, shared boards, private pins, source links, fixed dialog heading and Sentinel blocking passed"
+  },
+  "contents": "Flow Hub workspaces, seven studio families with 25 disciplines and 266 roles, shared Inspiration pins/boards and Sentinel Guard basic policy reviews",
+  "preserved": "Existing hosted media and shared login backend"
 }

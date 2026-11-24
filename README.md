@@ -1,9 +1,8 @@
 # AVI Wavey Website — Public Release
 
-Compiled release from AVI-Wavey/PublicInterface. Shared authentication and module adapters are preserved.
+Compiled public website from AVI-Wavey/PublicInterface. Development stays in the private source repositories.
 
-- Source revision: bb864ab77228a21164845a21378852f1bba0d062
-- Release: https://github.com/AVI-Wavey/PublicInterface/pull/73
-- Published using the approved manual AutoPush steps after frontend/backend builds, regression checks and desktop/mobile browser validation. See deployment-manifest.json.
+Source commit: b5a9b0a6dbefe76607da6b4f93af108e8372f1ba
+Pull request: https://github.com/AVI-Wavey/PublicInterface/pull/79
 
-Develop in the private source repositories. This mirror contains the publishable artifact.
+Validated and published through the user-authorised manual equivalent of AutoPush. Existing hosted media and the shared authentication backend are preserved. See deployment-manifest.json for source and validation details.
