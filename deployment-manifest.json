@@ -1,19 +1,19 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "23ccab153aa533ceffef64dc0fb67dfda7939524",
+  "sourceCommit": "5fa89b25d04cf47a35b58c68704c80bd5f46af2f",
   "sourceRef": "main",
-  "featureHead": "048420089ccc43e258db6c31f42a620cc9846200",
-  "sourceTree": "e5be8d4b02cf276de204f5696efb8bb893f418b3",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/74",
+  "featureHead": "d7056a88edc96ab824770675ddd295ea4f2650e8",
+  "sourceTree": "bc724c3764417096e767733dcf1b5cd8fa4a3e73",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/75",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-24T14:26:03.301Z",
-  "publication": "User-authorized manual AutoPush equivalent; GitHub Actions blocked by billing",
+  "publishedAt": "2026-11-24T17:27:02.200Z",
+  "publication": "User-authorized manual AutoPush equivalent; GitHub Actions blocked before validation steps",
   "validation": {
     "frontend": "passed",
     "backend": "passed",
-    "automatedChecks": 184,
-    "browser": "Desktop/mobile: location result counts, unread/read/reload, source links, dashboard filtering, hidden-tab suppression, monochrome icons and navbar order",
-    "storage": "Mocked account isolation, actual byte measurement, quotas/rollback, conflicts, reload and cleanup; no disposable PostgreSQL database"
+    "automatedChecks": 205,
+    "browser": "Desktop/mobile: drafting and reload, required fields, review, signing and reload, PDF, Commesh links, dashboard-scoped tabs",
+    "storage": "Mocked account isolation, actual bytes, quota rollback, revision conflicts and protected signed evidence"
   },
-  "contents": "Geosphere location updates and shared navigation; existing production adapters preserved"
+  "contents": "Business Contracts and dashboard-specific subtabs; existing production adapters and release gates preserved"
 }
