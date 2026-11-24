@@ -1,1 +1,0 @@
-import{j as e,N as s}from"./DashboardLayout-CF4vS0Z6.js";function a(){return e.jsx(s,{replace:!0,to:"/dashboard/messages?dashboard=creative&source=system&thread=creative%3Asystem%3Aupdates"})}export{a as default};

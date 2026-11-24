@@ -1,136 +1,20 @@
 {
   "sourceRepository": "AVI-Wavey/PublicInterface",
-  "sourceCommit": "af3da8834d305ea407e7b851bed3037ece27a2a8",
+  "sourceCommit": "bb864ab77228a21164845a21378852f1bba0d062",
   "sourceRef": "main",
-  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/72",
-  "publicationMethod": "User-authorized temporary validation and build; published to the existing Vercel deployment mirror. Source development and canonical sync remained on GitHub.",
+  "featureHead": "12735fc91e29873d0890aff7451189e5bcd993be",
+  "sourceTree": "4a28e1834a84a3216c1b9d40a809878caaa68eb1",
+  "pullRequest": "https://github.com/AVI-Wavey/PublicInterface/pull/73",
   "artifactDirectory": "dist",
-  "publishedAt": "2026-11-24T11:04:21.928Z",
-  "contents": [
-    "Compact profile completion and calling-code selection",
-    "Verified Google photo reuse, uploads and circle/square previews",
-    "Full-page Payment Portal and unified dashboard styling",
-    "Commesh System notifications and unread conversation/update counters",
-    "Metametrics before/after immediate updates with private saved read state",
-    "Dashboard-specific horizontally scrolling sub-tabs",
-    "Collapsible dashboard groups only in All dashboards"
-  ],
+  "publishedAt": "2026-11-24T11:57:32.767Z",
+  "publication": "User-authorized manual AutoPush equivalent; GitHub Actions blocked by billing",
   "validation": {
-    "frontend": "TypeScript and Vite production build passed",
-    "backend": "Packaged production TypeScript passed",
-    "authentication": "19 authentication/onboarding scenarios passed",
-    "activityModel": "6 metric activity tests passed",
-    "accountAndServices": "14 account/navigation/service tests passed",
-    "packageTests": "23 package tests passed",
-    "basket": "9 basket model/integration tests passed",
-    "storageHTTP": "10 Cloud9 HTTP tests passed",
-    "browser": "Isolated desktop/mobile profile, navigation, horizontal overflow, collapse controls, System notifications, analytics history, discounts and example checkout passed with no browser exceptions",
-    "analyticsStorage": "API-mocked account isolation, revision conflict retry, quota rollback, recovery/reload and cleanup reset passed",
-    "limitations": [
-      "GitHub Actions could not start due to account billing/spending restrictions; user-approved temporary validation used",
-      "Database-backed Cloud9 suites require a disposable database and were not run; storage engine unchanged",
-      "External OAuth consent was mocked in browser checks; no real messages, email or payments sent"
-    ],
-    "repositoryHierarchy": {
-      "repositoryRevisions": 143,
-      "links": 149,
-      "failures": []
-    }
+    "frontend": "passed",
+    "backend": "passed",
+    "automatedChecks": 467,
+    "browser": "Desktop and mobile, fixed navigation, System scope, nested collapse, saved locations and selected checkout",
+    "canonicalParityFiles": 34,
+    "postgresSuites": "Not run: no disposable PostgreSQL database; storage HTTP and mocked account/quota/conflict/reload/cleanup tests passed"
   },
-  "demo": {
-    "accounts": 100,
-    "ownerProjects": 6,
-    "productionReleases": 7,
-    "projectReleases": 1,
-    "services": 12,
-    "studios": 7,
-    "studioRooms": 43,
-    "storeListings": 26,
-    "inboxMessages": 99,
-    "localState": true,
-    "simulatedTransactions": true,
-    "hirePolicy": {
-      "depositPercent": 50,
-      "protectionPercent": 2,
-      "status": "Illustrative preview assumptions; no active insurance or payments"
-    },
-    "basketExample": {
-      "modules": [
-        "Store",
-        "Learn",
-        "Atelier Index",
-        "Connect Center"
-      ],
-      "reusable": true,
-      "preservesExistingSelections": true,
-      "discountCode": "WAVE5"
-    },
-    "researchExamples": 6
-  },
-  "repositories": {
-    "PublicInterface": "af3da8834d305ea407e7b851bed3037ece27a2a8",
-    "UserDashboard": "09c12ea4668ff4200fd8194e4b8a27b3c3c5ca0a",
-    "IUWLearn": "ee50b2e30f1e9e393c62d4da5ab66a157ca30f2e",
-    "Academy": "a6d5a1c3383acfc400bcde8d1fc6810630ed67a0",
-    "Cloud9Reserve": "6b9d3e317edcad6f2506c378267ee27b3e6a752b",
-    "Garage": "9d02970addcf1d226d85e2928f3c62d41331c0f7",
-    "CREATIVE": "14865e1829c6f01cfdeef1630c88eb40f8911eb2",
-    "Modules": "4e3c8bb81479d455c53c63167af34ad4cddfa477",
-    "BackendLogic": "3dda78809b20981e64cb6455d3cc7a66784756c6",
-    "FrontendView": "9bb3dd16c8ba47215ee7448e56f538b707b7e396",
-    "Website": "4cab9b22812c27b3427158835535a13ee0369d31",
-    "AVIWavey": "3808a84e204f93083773535a0bd0f411574f2b1b",
-    "DigitalPlatforms": "1fabba2aff5365af352e2157fdcb89b63ec0ae0b",
-    "TrueMarkGate": "351e697dc120c6e66cc80facfeeb1c198f1417a6",
-    "SystemLayers": "22eed7b670341c1256fea4d442cfaba7b4e3ca60",
-    "CommMesh": "2698c1fd50198c7dd52ad9bacc93bbc49090e90a",
-    "MetaMetrics": "4e09de1776628880a22d68fd1f60b534872e9884",
-    "AuraBackendLogic": "151020634198e23a690dae594bbf670976710832",
-    "MikeTBackendLogic": "cba1a3c818de9c24ca7fcc9dccad0c697b68eb58",
-    "AuraWebsite": "11fc495e8611d47f124130d236cf01986f994206",
-    "MikeTWebsite": "25e823c5a15b8291a8ecec57748bc18d2ea5500a",
-    "AuraAI": "c4719a46a52ff7aa91e72c706f9da8248b1f1426",
-    "MikeT.MMT": "d355b94599c34942abe7d28c5149cab6f5ea0fc1"
-  },
-  "artifactHashes": {
-    "index.html": "3a03d9375e5f344f8cb1310d0f1733200925cee7f07b01ebfd24786f8046541c",
-    "api/auth.ts": "b8ffdbb1778b89001934a3f8bc04fd52503b73b19ecc484023bec05782700e77",
-    "src/oauth.ts": "5a0ba40c8340136204abfe0bc2d63c5ccdfbdc204f6219adf4f99741fe1c0326",
-    "src/Cloud9Runtime.mjs": "fb3b7211caf3c22cf223a57b933220faed7a5a77c8492bbaee835d90fc808d44",
-    "assets/Commesh-C2x5RcsR.js": "acefd882041eed9afc15a649ec2a7b53da4338cb44568d56337d5d7e1df4fdc0",
-    "assets/Commesh-e5ZxswvO.css": "72b060184f4ebbb54acb2e6333dea96a00a1b7e58f95100173dea8f0f24b447d",
-    "assets/CompleteProfile-CnVFHj6I.css": "3ae28854f7dbee6f0773f258a60b265fbe3932727fea7ee11589e4d3996ecdc8",
-    "assets/CompleteProfile-DmP4dm7G.js": "0cd421dc8295b8649c0a18a91b0c975a71951584c1c693dd657ac45f51e9129e",
-    "assets/DashboardLayout-CF4vS0Z6.js": "d0bb7832311c258cc1f8d3346b0778d0f27d9044fd5e0f9ab4e418f44e1f7a85",
-    "assets/DashboardLayout-CsWQ3tLl.css": "9aca68a57d8193ebc69e5fe5640b641ad90403a6516447ee21e435dc358b5a41",
-    "assets/Metametrics-DumGwfG4.js": "e4acfa454c28115a984f4f505ae70747aeb79511fdc0e0ce19d16b36c1c84332",
-    "assets/Metametrics-SeIdxIrb.css": "a66b8ec1f4a9b3c0361254f5b53bbe73026ab46111bbfed3cbee1a01fa25c873",
-    "assets/main-CGXtW4lC.css": "6702981960927212a0f5a1d91eccb93273c8883a5296f8bd047131a96e6871e8",
-    "assets/main-W0tBu1o2.js": "831ccb3c7e6b19a3e96c11af50fe54060c48b0b2c98ecd743fa337dbb4fa9f48"
-  },
-  "relatedPullRequests": [
-    "https://github.com/AVI-Wavey/UserDashboard/pull/31",
-    "https://github.com/AVI-Wavey/TrueMarkGate/pull/5",
-    "https://github.com/AVI-Wavey/CommMesh/pull/3",
-    "https://github.com/AVI-Wavey/MetaMetrics/pull/2",
-    "https://github.com/AVI-Wavey/Cloud9Reserve/pull/7"
-  ],
-  "limitations": [
-    "Payment collection, live payouts and recurring billing are not connected. Checkout is simulated.",
-    "R&D files remain pending security review. Public submission/reviewer services are gated; private drafts use Cloud9.",
-    "Inner Circle and IUW Link messaging await their source services; Compute and Capital analytics show unavailable sources.",
-    "Older sessions without a verified sign-in marker use Switch accounts until a new sign-in."
-  ],
-  "builtCommit": "16079f602aca68d5af9a74a71cd1dc7c2423db34",
-  "analyticsActivity": {
-    "private": true,
-    "pollSeconds": 30,
-    "retentionUpdates": 200,
-    "firstRealSnapshotCreatesBaseline": true,
-    "exampleSnapshotsLabelled": true
-  },
-  "unreadCounter": {
-    "unit": "Unread conversations and system updates",
-    "boundedLabel": "99+ when capped"
-  }
+  "contents": "Compiled public website with shared authentication, learning, routing and Cloud9 adapters preserved"
 }
