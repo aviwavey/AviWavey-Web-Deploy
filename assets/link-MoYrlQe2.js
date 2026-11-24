@@ -1,0 +1,1 @@
+import{a as s,k as o}from"./DashboardLayout-ChZZ-Woa.js";import{m}from"./PaymentPortal-Cp4MaNBf.js";function r({href:t,...a}){return/^https?:/.test(t)?s.jsx("a",{href:t,...a}):s.jsx(o,{to:m(t),...a})}export{r as P};
