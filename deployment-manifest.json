@@ -40,13 +40,31 @@
     "integration": "35 final integration checks passed; earlier 70 focused and 63 connected-commerce checks passed",
     "browser": "Nine journeys passed including creation-to-project/release, inventory/returns, WAV-to-ZIP, saved settings, source evidence/file mismatch and mobile system navigation",
     "hosted": "Final ConnectedCloud9 composition bundled and syntax checked; readiness host transition tests passed",
-    "preservation": "668 frontend source mappings and 21 backend canonical files verified; 66 original LMS references and 793 hosted media files preserved"
+    "preservation": "668 frontend source mappings and 21 backend canonical files verified; 66 original LMS references and 793 hosted media files preserved",
+    "live": "Vercel completed; homepage and BlockchainEngine bundle match tested build byte-for-byte; auth session200, signed-out integrity401, authenticated integrity capability response verified; live dashboard presents grouped browser examples."
   },
   "databaseSetup": {
-    "status": "unconfirmed",
-    "reason": "Neon console token exchange failed during migration; user sign-in handoff pending",
-    "behaviour": "Read-only readiness checks activate evidence hooks only after both migrations are confirmed. Missing setup returns INTEGRITY_SETUP_REQUIRED while ordinary work remains available without claimed receipts; database/permission failures fail closed."
+    "status": "confirmed",
+    "confirmedAt": "2026-11-25T00:27:08.648Z",
+    "migrations": [
+      {
+        "file": "001_integrity_receipts.sql",
+        "sha256": "ae91cfaf1be57300279a7e8a19fc05cc0ff0a216931194501af47a251925b44f"
+      },
+      {
+        "file": "002_verified_file_receipts.sql",
+        "sha256": "53bd44a75e33bb81e8661df9e32c4ab1e2f44992639d97b276b881132acb0f66"
+      }
+    ],
+    "checks": {
+      "tables": true,
+      "protections": true,
+      "verifiedFiles": true,
+      "access": true
+    },
+    "authenticatedService": "Verified live integrity response with platform-integrity-record capabilities and empty owner history; browser examples remain separate."
   },
   "contents": "Role-specific creation desks and output handoffs; ordered collapsible Organiser tasks; Audio/Visual/Interactive releases; buyer/seller and borrower/lender inventory/logistics; real supported toolkit processing; account-isolated source evidence; shared module catalogue and source refresh.",
-  "boundaries": "No public-chain anchor, digital signing key, live escrow/payment/carrier provider or hosted stem/STT/social extractor is represented as connected."
+  "boundaries": "No public-chain anchor, digital signing key, live escrow/payment/carrier provider or hosted stem/STT/social extractor is represented as connected.",
+  "publishedAt": "2026-11-25T00:28:29.253Z"
 }

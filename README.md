@@ -10,3 +10,5 @@ Validated through the user-authorised temporary build and manual AutoPush equiva
 This release connects role-specific creation outputs to projects/releases, expands owned/temporary inventory and logistics, runs supported media processing and adds BlockchainEngine evidence/history/file checks. The deployment manifest records exact source, validation and canonical revisions.
 
 Protected evidence activates only after both additive database migrations are present. Until then the evidence API reports setup required; existing work remains available without claiming receipts. Database permission or connectivity failures fail closed. This platform-managed hash history does not represent a public blockchain or live escrow service.
+
+Both protected evidence migrations were confirmed in the existing Neon database on 25 November 2026. Tables, enabled protections, verified-file guard and access checks passed. The live authenticated evidence service returned platform-integrity-record capabilities; existing example records remain separate.
