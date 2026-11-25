@@ -21,8 +21,12 @@ export async function toolkitBridge(request, { authenticate, speechUrl, secret, 
   let body; try { body = JSON.parse(Buffer.concat(chunks).toString()); } catch { return reply({ detail: 'Invalid request.' }, 400); }
   if (typeof body.text !== 'string' || !body.text.trim() || body.text.length > 5000) return reply({ detail: 'Enter up to 5,000 characters.' }, 400);
   if (body.voice !== undefined && (typeof body.voice !== 'string' || !/^[A-Za-z]{1,40}$/.test(body.voice))) return reply({ detail: 'Invalid voice.' }, 400);
-  const response = await fetcher(new URL('/api/upload-text', endpoint), { method: 'POST', redirect: 'error', signal: AbortSignal.timeout(65000), headers: { 'content-type': 'application/json', authorization: 'Bearer ' + secret, 'x-avw-user-id': user.id }, body: JSON.stringify({ text: body.text, voice: body.voice }) });
+  const response = await fetcher(new URL('/api/upload-text', endpoint), { method: 'POST', redirect: 'error', signal: AbortSignal.any([request.signal,AbortSignal.timeout(65000)]), headers: { 'content-type': 'application/json', authorization: 'Bearer ' + secret, 'x-avw-user-id': user.id }, body: JSON.stringify({ text: body.text, voice: body.voice }) });
   if (!response.ok || !response.headers.get('content-type')?.startsWith('audio/wav')) return reply({ detail: 'Speech could not be generated. Please try again.' }, 502);
-  return new Response(response.body, { headers: { ...headers, 'content-type': 'audio/wav', 'content-disposition': 'attachment; filename="speech.wav"' } });
+  const audio = response.body?.getReader(); if(!audio)return reply({detail:'Speech returned no audio.'},502);
+  const pieces=[];let total=0;
+  try{while(true){const {done,value}=await audio.read();if(done)break;total+=value.byteLength;if(total>16*1024*1024){await audio.cancel();return reply({detail:'Speech output is too large. Try a shorter text.'},502);}pieces.push(value);}}finally{audio.releaseLock();}
+  const wav=Buffer.concat(pieces);if(wav.length<44||wav.toString('ascii',0,4)!=='RIFF'||wav.toString('ascii',8,12)!=='WAVE')return reply({detail:'Speech did not return a valid WAV file.'},502);
+  return new Response(wav, { headers: { ...headers, 'content-type': 'audio/wav', 'content-disposition': 'attachment; filename="speech.wav"' } });
  } catch { return reply({ detail: 'Speech is temporarily unavailable.' }, 503); }
 }

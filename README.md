@@ -1,21 +1,12 @@
 # AVI Wavey Website — Public Release
 
-Compiled public website from AVI-Wavey/PublicInterface. Development stays in the private source repositories.
+Compiled public website from AVI-Wavey/PublicInterface. Source development remains in the original private repositories.
 
-Source commit: b5a9b0a6dbefe76607da6b4f93af108e8372f1ba
-Pull request: https://github.com/AVI-Wavey/PublicInterface/pull/79
+Source commit: 4b7431ae2da5006bad91cfa333648afcc89cceea
+Pull requests: https://github.com/AVI-Wavey/PublicInterface/pull/82 and https://github.com/AVI-Wavey/PublicInterface/pull/83
 
-Validated and published through the user-authorised manual equivalent of AutoPush. Existing hosted media and the shared authentication backend are preserved. See deployment-manifest.json for source and validation details.
+Validated through the user-authorised temporary build and manual AutoPush equivalent. Source code, frontend/backend mirrors and parent repository references are synchronized. Existing hosted media, authentication, standalone originals and LMS restrictions remain preserved.
 
-## Dashboard consistency release
+This release connects role-specific creation outputs to projects/releases, expands owned/temporary inventory and logistics, runs supported media processing and adds BlockchainEngine evidence/history/file checks. The deployment manifest records exact source, validation and canonical revisions.
 
-Published source: AVI-Wavey/PublicInterface pull request #80. This release standardises module toolbars, system icon badges and product names, adds isolated SentinelGuard presentation scenarios, and preserves unselected Store items during filtered checkout.
-
-The deployment manifest records the validated source tree and canonical repository revisions. Existing media and authentication endpoints are retained.
-
-
-## Connected workspace release — 24 November 2026
-
-Source: AVI-Wavey/PublicInterface PR #81, merged commit a4d8a67e8635fc4859ee3e6c73857879324bb770.
-
-Includes stable account navigation, linked tasks/calendar/service deliveries, private meeting preparation, Capital commitments and saved platform preferences. Validated with the production build, 104 focused checks and five browser journeys. Source repositories and parent references are synchronized; provider-dependent live services retain their connection gates.
+Protected evidence activates only after both additive database migrations are present. Until then the evidence API reports setup required; existing work remains available without claiming receipts. Database permission or connectivity failures fail closed. This platform-managed hash history does not represent a public blockchain or live escrow service.
