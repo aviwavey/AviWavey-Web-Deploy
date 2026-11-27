@@ -1,14 +1,14 @@
-# AVI Wavey Website — Public Release
+# AVI Wavey website release
 
-Compiled public website from AVI-Wavey/PublicInterface. Source development remains in the original private repositories.
+Compiled website and hosted adapters for the existing AVI Wavey deployment.
 
-Source commit: 4b7431ae2da5006bad91cfa333648afcc89cceea
-Pull requests: https://github.com/AVI-Wavey/PublicInterface/pull/82 and https://github.com/AVI-Wavey/PublicInterface/pull/83
+Source: [PublicInterface PR84](https://github.com/AVI-Wavey/PublicInterface/pull/84), merged at a9596ac062e155a80865d87d9a63b1ff748d7db7.
+The production bundle was built and tested at e444f652e7cf571cc4920cabaa260956fea19f40; later changes were tests and readiness documents only.
 
-Validated through the user-authorised temporary build and manual AutoPush equivalent. Source code, frontend/backend mirrors and parent repository references are synchronized. Existing hosted media, authentication, standalone originals and LMS restrictions remain preserved.
+Academy includes teaching modules and pages, assessment workflows, authorised learning materials, protected course access, institutional tutoring and shared agenda entries. Repository links are synchronized through DigitalPlatforms.
 
-This release connects role-specific creation outputs to projects/releases, expands owned/temporary inventory and logistics, runs supported media processing and adds BlockchainEngine evidence/history/file checks. The deployment manifest records exact source, validation and canonical revisions.
+Validation used the user-approved temporary environment because GitHub-hosted jobs were blocked before execution by billing limits. Connected browser acceptance passed in two parts; see the source readiness record and deployment manifest for exact scope.
 
-Protected evidence activates only after both additive database migrations are present. Until then the evidence API reports setup required; existing work remains available without claiming receipts. Database permission or connectivity failures fail closed. This platform-managed hash history does not represent a public blockchain or live escrow service.
+The live Neon Office-format migration remains pending because its monthly transfer allowance is exhausted. Upload controls use installed database capabilities. Existing records, accounts and unrelated hosted services are preserved.
 
-Both protected evidence migrations were confirmed in the existing Neon database on 25 November 2026. Tables, enabled protections, verified-file guard and access checks passed. The live authenticated evidence service returned platform-integrity-record capabilities; existing example records remain separate.
+This release does not represent full LMS feature parity, completed institutional onboarding or activated payment/provider integrations.
