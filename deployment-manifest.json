@@ -50,7 +50,7 @@
     "browser": "Navigation, focused Link and example LMS checks passed. Connected acceptance passed in two parts: original journeys through institution updates, followed by private concerns and student-led tutoring on a fresh disposable database. Not a single uninterrupted full-suite run.",
     "preservation": "Final packaging test passed;764 existing media files matched byte-for-byte,12functions retained, unrelated service/router/admin files preserved.",
     "repositoryLinks": "All10parent tree diffs verified: intended gitlinks only, zero deletions, unrelated pins preserved.",
-    "live": "Pending deployment verification.",
+    "live": "Vercel deployment succeeded; homepage, LMS and Cloud9 bundles matched the tested package; auth session200 and signed-out agenda401 verified. Homepage and sign-in dialog rendered. Live Cloud9 status503 STORAGE_UNAVAILABLE; no live institution data or Office migration success claimed.",
     "repositoryGraph": "Authenticated pinned-revision graph passed:146 revisions,156 links,zero failures; CoreIntelligence remains empty.",
     "hostedDispatch": "Final compiled Cloud9/LMS/Toolkit dispatch checks and both runtime syntax checks passed. Existing complete route table and module composition restored byte-for-byte after the adapter rehearsal."
   },
@@ -82,9 +82,12 @@
   "postBuildChanges": "Only the connected browser test and four readiness Markdown files changed between the tested runtime and merged source.",
   "academyDatabaseSetup": {
     "status": "pending",
-    "migration": "006_office_learning_materials.sql",
+    "migration": "shared/Cloud9Reserve/006_preview_office_files.sql",
     "reason": "Live Neon monthly network transfer allowance exhausted. No migration applied or live institutional upload success claimed.",
     "fallback": "Server advertises supported file types from the installed database constraint and rejects unavailable formats before writing. Existing content is preserved.",
-    "validation": "Additive migration, existing-record preservation and rollback passed against disposable PostgreSQL."
-  }
+    "validation": "Additive migration, existing-record preservation and rollback passed against disposable PostgreSQL.",
+    "canonicalMigration": "migrations/006_preview_office_files.sql"
+  },
+  "publishedAt": "2026-11-27T14:07:09.120566+00:00",
+  "metadataCorrection": "Corrected pending Office migration filename; runtime package unchanged from ceb53d326cd940781c1d6305272559290d4eed4d."
 }
